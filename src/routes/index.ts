@@ -7,7 +7,7 @@ import { authenticate } from '../middlewares/authenticate';
 const apiRoutePrefix = `/api`;
 export const registerRoutes = (application: Application) => {
   application.app.get('/', (req: Request, res: Response) => {
-    res.send(`Hello from Men MVC framework.`);
+    res.send(`Hello from MEN MVC framework.`);
   });
   const protectedRouter = Router();
   const publicRouter = Router();
