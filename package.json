@@ -9,8 +9,7 @@
     "dev": "ts-node-dev src/server.ts",
     "format": "prettier --config .prettierrc . --write",
     "test": "jest --testPathPattern=tests --runInBand --forceExit",
-    "test:coverage": "jest --testPathPattern=tests --runInBand --coverage --forceExit",
-    "fresh-install": "rm -r -f node_modules && rm -f package-lock.json && npm i --legacy-peer-deps && npm run build"
+    "test:coverage": "jest --testPathPattern=tests --runInBand --coverage --forceExit"
   },
   "keywords": [],
   "author": "Wai Yan Hein",
