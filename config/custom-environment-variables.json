@@ -1,0 +1,40 @@
+{
+  "app": {
+    "name": "APP_NAME",
+    "feUrl": "APP_FE_URL"
+  },
+  "database": {
+    "mongo": {
+      "uri": "DATABASE_URI"
+    }
+  },
+  "server": {
+    "port": "SERVER_PORT"
+  },
+  "auth": {
+    "secret": "AUTH_TOKEN_SECRET_KEY",
+    "tokenExpiresIn": "AUTH_TOKEN_EXPIRES_IN",
+    "passwordResetLinkDuration": "PASSWORD_RESET_LINK_DURATION",
+    "emailVerificationLinkDuration": "EMAIL_VERIFICATION_LINK_DURATION"
+  },
+  "mail": {
+    "address": "MAIL_ADDRESS",
+    "password": "MAIL_PASSWORD",
+    "host": "MAIL_HOST",
+    "port": "MAIL_PORT",
+    "service": "MAIL_SERVICE"
+  },
+  "cache": {
+    "driver": "CACHE_DRIVER",
+    "redis": {
+      "port": "REDIS_PORT",
+      "host": "REDIS_HOST",
+      "password": "REDIS_PASSWORD",
+      "database": "REDIS_DATABASE"
+    }
+  },
+  "fileSystem": {
+    "storageDriver": "FILESYSTEM_STORAGE_DRIVER",
+    "maxUploadLimit": "FILESYSTEM_MAX_FILE_UPLOAD_LIMIT"
+  }
+}
