@@ -44,7 +44,6 @@ export default class Application extends AbstractApplication {
     this.app.use(mongoSanitise());
     this.app.disable(`x-powered-by`);
     this.app.use(cors());
-
     if (getAppEnv() !== 'production' && getAppEnv() !== 'test') {
       this.app.use(
         morgan(
@@ -59,9 +58,11 @@ export default class Application extends AbstractApplication {
         )
       );
     }
+    // register new middlewares here.
   };
 
   public initialisePostMiddlewares = () => {
+    // register new middlewares here
     this.app.use(errorHandler);
   };
 
