@@ -11,6 +11,7 @@ import { StatusCodes } from 'http-status-codes';
 import {
   changePassword,
   checkIfVerificationTokenValid,
+  generateEmailVerificationLink,
   generatePasswordResetLink,
   loginUser,
   registerUser,
@@ -18,15 +19,19 @@ import {
   verifyEmail as verifyUserEmail
 } from '../services/authService';
 import { findUserByEmail } from '../services/userService';
-import { sendPasswordResetMail } from '../services/mailService';
+import {
+  sendPasswordResetMail,
+  sendVerifyEmailMail
+} from '../services/mailService';
 import { User } from '../models/user';
 import {
   loginValSchema,
   registerValSchema,
   requestPasswordResetValSchema,
+  resendVerifyEmailLinkValSchema,
   resetPasswordValSchema,
   verifyEmailValSchema
-} from '../validators/authSchema';
+} from '../validation/authSchema';
 import { VerificationTokenType } from '../types';
 
 export const register = async (req: Request, res: Response) => {
@@ -48,6 +53,24 @@ export const login = async (req: Request, res: Response) => {
   }
 
   return successResponse(res, constructLoginResponse(accessToken, user));
+};
+
+export const resendVerifyEmailLink = async (req: Request, res: Response) => {
+  validateRequest(resendVerifyEmailLinkValSchema, req.body);
+  const user = await findUserByEmail(req.body.email);
+  if (!user) {
+    return accountDoesNotExistResponse(res);
+  }
+  const verificationLink = await generateEmailVerificationLink(user);
+  await sendVerifyEmailMail(
+    {
+      email: user.email,
+      name: user.name
+    },
+    verificationLink
+  );
+
+  return emptyResponse(res);
 };
 
 export const verifyEmail = async (req: Request, res: Response) => {

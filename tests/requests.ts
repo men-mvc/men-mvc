@@ -53,3 +53,10 @@ export const makeVerifyEmailRequest = async (
   supertest(await getExpressApp())
     .put(`${apiRoutePrefix}/auth/verify-email`)
     .send(payload);
+
+export const makeResendVerifyEmailLinkRequest = async (
+  email: string
+): Promise<supertest.Test> =>
+  supertest(await getExpressApp())
+    .post(`${apiRoutePrefix}/auth/email-verification-link/resend`)
+    .send({ email });

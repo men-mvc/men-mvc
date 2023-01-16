@@ -100,3 +100,10 @@ export const verifyEmailValSchema = joi.object().keys({
     'any.required': `Token is required.`
   })
 });
+
+export const resendVerifyEmailLinkValSchema = joi.object().keys({
+  email: joi.string().required().trim().messages({
+    'string.empty': `Email is required.`,
+    'any.required': `Email is required.`
+  })
+});

@@ -30,6 +30,9 @@ export const registerRoutes = (application: Application) => {
   publicRouter
     .route(`/auth/verify-email`)
     .put(asyncRequestHandler(authController.verifyEmail));
+  publicRouter
+    .route(`/auth/email-verification-link/resend`)
+    .post(asyncRequestHandler(authController.resendVerifyEmailLink));
   protectedRouter.route(`/auth/me`).get(requestHandler(authController.me));
   /**
    * end auth routes
