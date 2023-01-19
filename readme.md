@@ -7,13 +7,13 @@ MEN MVC is a wrapper framework built on top of Express JS to make web API develo
 ## Documentation
 - http://www.menmvc.com.s3-website.eu-west-2.amazonaws.com/
 
-### Running the application locally
+### Running the project locally
 - Install the dependencies - `npm i -f`
 - Set the config variables for mail, database, etc in the `.env` file or the `environment-specific config file` in the `config` folder
 - Then run `npm run dev` 
 Your application should be running on http://localhost:8000
 
-### Running tests
+### Running the tests
 - Set the database URI and other necessary config variables in the `config/test.json` file
 - Then run `npm run test`
 
