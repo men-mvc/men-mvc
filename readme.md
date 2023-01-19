@@ -7,7 +7,7 @@ MVC pattern as well as offering the additional built-in features such as authent
 It's using TypeScript so you must know TypeScript too.
 
 ## Documentation
-- http://www.menmvc.com.s3-website.eu-west-2.amazonaws.com/
+- http://menmvc.com/
 
 ### Running the project locally
 - Install the dependencies - `npm i -f`

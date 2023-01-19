@@ -20,9 +20,9 @@
   "mail": {
     "address": "",
     "password": "",
-    "host": "smtp.mailtrap.io",
-    "port": 2525,
-    "service": "Gmail"
+    "host": "",
+    "port": 0,
+    "service": ""
   },
   "cache": {
     "driver": "redis",
