@@ -10,9 +10,12 @@ It's using TypeScript so you must know TypeScript too.
 
 - http://menmvc.com/
 
+### Installation
+- First, you need to install the `create-men-mvc-app` command globally by executing `npm i -g @men-mvc/men-mvc-cli`
+- After installing the command, you can run, `create-men-mvc-app {{YOUR_PROJECT_FOLDER}}` replacing the placeholder with your project's folder.
+
 ### Running the project locally
 
-- Install the dependencies - `npm i -f`
 - Set the config variables for mail, database, etc in the `.env` file or the `environment-specific config file` in the `config` folder
 - Then run `npm run dev`
   Your application should be running on http://localhost:8000
