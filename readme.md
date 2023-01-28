@@ -14,6 +14,8 @@ It's using TypeScript so you must know TypeScript too.
 - First, you need to install the `create-men-mvc-app` command globally by executing `npm i -g @men-mvc/men-mvc-cli`
 - After installing the command, you can run, `create-men-mvc-app {{YOUR_PROJECT_FOLDER}}` replacing the placeholder with your project's folder.
 
+**NOTE**: The command is mainly designed for and tested on the `Mac OS`. If you run into problem running the command on the `Windows`, you can still manually install it as mentioned in the documentation (https://menmvc.com).
+
 ### Running the project locally
 
 - Set the config variables for mail, database, etc in the `.env` file or the `environment-specific config file` in the `config` folder
