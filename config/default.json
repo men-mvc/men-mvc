@@ -18,11 +18,20 @@
     "emailVerificationLinkDuration": 7200
   },
   "mail": {
-    "address": "",
-    "password": "",
-    "host": "",
-    "port": 0,
-    "service": ""
+    "driver": "",
+    "user": "543387e9397589",
+    "password": "ca43f9e78cec09",
+    "host": "smtp.mailtrap.io",
+    "port": 25,
+    "service": "",
+    "secure": "",
+    "authType": "",
+    "tlsCiphers": "",
+    "clientId": "",
+    "clientSecret": "",
+    "refreshToken": "",
+    "accessToken": "",
+    "expires": ""
   },
   "cache": {
     "driver": "redis",
