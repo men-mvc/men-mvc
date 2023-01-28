@@ -19,7 +19,7 @@
   },
   "mail": {
     "driver": "MAIL_DRIVER",
-    "user": "MAIL_ADDRESS",
+    "user": "MAIL_USER",
     "password": "MAIL_PASSWORD",
     "host": "MAIL_HOST",
     "port": "MAIL_PORT",
