@@ -2,19 +2,6 @@ import { DocumentType } from '@typegoose/typegoose';
 import { ValidationErrorResponse } from '@men-mvc/core';
 import { User } from '../src/models/user';
 
-export const assertSameDynamicDateTimes = (
-  actualDatetime: Date,
-  expectedDatetime: Date
-) => {
-  // can be one sec less or one sec later because there might be very split second delay between each lines of code in the tests
-  const expectedFrom: number = expectedDatetime.getTime() - 1000;
-  const expectedUntil: number = expectedDatetime.getTime() + 1000;
-  return (
-    actualDatetime.getTime() >= expectedFrom &&
-    actualDatetime.getTime() <= expectedUntil
-  );
-};
-
 export const assertResponseHasValidationError = (
   response: ValidationErrorResponse,
   field: string,

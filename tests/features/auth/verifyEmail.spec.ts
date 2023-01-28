@@ -5,7 +5,9 @@ import dateAndTime from 'date-and-time';
 import {
   clearDatabase,
   closeDatabaseConnection,
-  initApplication
+  initApplication,
+  mockNow,
+  restoreNowMock
 } from '../../testUtilities';
 import { createTestVerificationToken } from '../../factories/verificationTokenFactory';
 import { User } from '../../../src/models/user';
@@ -17,17 +19,16 @@ import {
 import { findUserById } from '../../../src/services/userService';
 import { createTestUser } from '../../factories/userFactory';
 import { TestValidationRequestItem } from '../../types';
-import {
-  assertSameDynamicDateTimes,
-  assertResponseHasValidationError
-} from '../../assertions';
+import { assertResponseHasValidationError } from '../../assertions';
 import { VerificationTokenType } from '../../../src/types';
 
 describe(`Auth Route - Verify Email`, () => {
   beforeAll(async () => {
+    mockNow();
     await initApplication();
   });
   afterAll(async () => {
+    restoreNowMock();
     await closeDatabaseConnection();
   });
   afterEach(async () => {
@@ -50,9 +51,8 @@ describe(`Auth Route - Verify Email`, () => {
       verificationToken = (await VerificationTokenModel.findById(
         verificationToken.id
       )) as DocumentType<VerificationToken>;
-      assertSameDynamicDateTimes(
-        verificationToken.verifiedAt as Date,
-        new Date()
+      expect((verificationToken.verifiedAt as Date).getTime()).toBe(
+        new Date().getTime()
       );
     });
 
@@ -69,7 +69,9 @@ describe(`Auth Route - Verify Email`, () => {
 
       expect(status).toBe(StatusCodes.NO_CONTENT);
       user = (await findUserById(user.id)) as DocumentType<User>;
-      assertSameDynamicDateTimes(user.emailVerifiedAt as Date, new Date());
+      expect((user.emailVerifiedAt as Date).getTime()).toBe(
+        new Date().getTime()
+      );
     });
 
     it(`should return error when the token does not exist`, async () => {

@@ -1,4 +1,8 @@
 import type { Config } from '@jest/types';
+
+// set the default timezone for the tests
+process.env.TZ = 'GMT';
+
 // Sync object
 const config: Config.InitialOptions = {
   verbose: true,

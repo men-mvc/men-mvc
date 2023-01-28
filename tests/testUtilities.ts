@@ -1,12 +1,16 @@
 import express, { Express, NextFunction, Request } from 'express';
 import { DeepPartial } from '@men-mvc/core';
 import { faker } from '@faker-js/faker';
+import sinon from 'sinon';
 import _ from 'lodash';
 import Application from '../src/application';
 import { CustomExpressRequest, FakeExpressRequestData } from './types';
 import { database } from '../src/database';
 
+// shared variables
 let application: Application | null;
+let dateNowStub: sinon.SinonStub;
+
 export const initApplication = async (): Promise<Application> => {
   if (!application) {
     const app: Express = express();
@@ -57,6 +61,28 @@ export const mockExpressRequest = (
       return faker.datatype.uuid();
     }
   } as Request;
+};
+
+export const mockNow = (now: string | number = '2023-01-28T13:02:04.147Z') => {
+  class MockDate extends Date {
+    constructor(date?: number | string) {
+      if (date) {
+        super(date);
+      } else {
+        // set default now
+        super(now);
+      }
+    }
+
+    static now = () => new Date(now).getTime();
+  }
+
+  dateNowStub = sinon.stub(global, 'Date').value(MockDate);
+};
+export const restoreNowMock = () => {
+  if (dateNowStub) {
+    dateNowStub.restore();
+  }
 };
 
 export const getPasswordValidationTestData = (field: string = `password`) => [

@@ -18,11 +18,20 @@
     "emailVerificationLinkDuration": "EMAIL_VERIFICATION_LINK_DURATION"
   },
   "mail": {
-    "address": "MAIL_ADDRESS",
+    "driver": "MAIL_DRIVER",
+    "user": "MAIL_ADDRESS",
     "password": "MAIL_PASSWORD",
     "host": "MAIL_HOST",
     "port": "MAIL_PORT",
-    "service": "MAIL_SERVICE"
+    "service": "MAIL_SERVICE",
+    "secure": "MAIL_SECURE",
+    "authType": "MAIL_AUTH_TYPE",
+    "tlsCiphers": "MAIL_TLS_CIPHERS",
+    "clientId": "MAIL_CLIENT_ID",
+    "clientSecret": "MAIL_CLIENT_SECRET",
+    "refreshToken": "MAIL_REFRESH_TOKEN",
+    "accessToken": "MAIL_ACCESS_TOKEN",
+    "expires": "MAIL_EXPIRES"
   },
   "cache": {
     "driver": "CACHE_DRIVER",

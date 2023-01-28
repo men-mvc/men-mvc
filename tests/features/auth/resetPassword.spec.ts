@@ -7,7 +7,9 @@ import {
   clearDatabase,
   closeDatabaseConnection,
   getPasswordValidationTestData,
-  initApplication
+  initApplication,
+  mockNow,
+  restoreNowMock
 } from '../../testUtilities';
 import { ResetPasswordPayload, TestValidationRequestItem } from '../../types';
 import { createTestUser } from '../../factories/userFactory';
@@ -26,19 +28,18 @@ import {
   makeResetPasswordRequest
 } from '../../requests';
 import { USER_PASSWORD } from '../../globals';
-import {
-  assertSameDynamicDateTimes,
-  assertResponseHasValidationError
-} from '../../assertions';
+import { assertResponseHasValidationError } from '../../assertions';
 import { VerificationTokenType } from '../../../src/types';
 const testConfig = require('../../../config/test.json');
 
 describe(`Auth Route - Reset Password`, () => {
   let sendPasswordResetMailStub: SinonStub;
   beforeAll(async () => {
+    mockNow();
     await initApplication();
   });
   afterAll(async () => {
+    restoreNowMock();
     await closeDatabaseConnection();
   });
   beforeEach(async () => {
@@ -146,9 +147,8 @@ describe(`Auth Route - Reset Password`, () => {
         verificationToken.id
       )) as DocumentType<VerificationToken>;
       expect(verificationToken.verifiedAt).not.toBeUndefined();
-      assertSameDynamicDateTimes(
-        verificationToken.verifiedAt as Date,
-        new Date()
+      expect((verificationToken.verifiedAt as Date).getTime()).toBe(
+        new Date().getTime()
       );
     });
 
