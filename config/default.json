@@ -19,8 +19,8 @@
   },
   "mail": {
     "driver": "",
-    "user": "543387e9397589",
-    "password": "ca43f9e78cec09",
+    "user": "",
+    "password": "",
     "host": "smtp.mailtrap.io",
     "port": 25,
     "service": "",
