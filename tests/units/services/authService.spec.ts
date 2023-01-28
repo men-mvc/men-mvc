@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 import dateAndTime from 'date-and-time';
 import { faker } from '@faker-js/faker';
 import sinon, { SinonStub } from 'sinon';
-import _ from 'lodash';
 import { User } from '../../../src/models/user';
 import {
   changePassword,
@@ -23,7 +22,9 @@ import {
 import {
   clearDatabase,
   closeDatabaseConnection,
-  initApplication
+  initApplication,
+  mockNow,
+  restoreNowMock
 } from '../../testUtilities';
 import { createTestUser } from '../../factories/userFactory';
 import {
@@ -37,7 +38,6 @@ import {
 import * as mailService from '../../../src/services/mailService';
 import { createTestVerificationToken } from '../../factories/verificationTokenFactory';
 import { USER_PASSWORD } from '../../globals';
-import { assertSameDynamicDateTimes } from '../../assertions';
 import { AuthTokenPayload } from '../../../src/types';
 import { getRandomVerificationTokenType } from '../../factories/utilities';
 const testConfig = require('../../../config/test.json');
@@ -46,9 +46,11 @@ describe(`AuthService`, () => {
   let sendWelcomeMailStub: SinonStub;
   let sendVerifyEmailMailStub: SinonStub;
   beforeAll(async () => {
+    mockNow();
     await initApplication();
   });
   afterAll(async () => {
+    restoreNowMock();
     await closeDatabaseConnection();
   });
   beforeEach(async () => {
@@ -87,11 +89,12 @@ describe(`AuthService`, () => {
     expect(token.user).toBe(data.userId);
     const createdUser = await token.getUser();
     expect(createdUser).not.toBeNull();
-    if (createdUser) {
-      expect(createdUser.name).toBe(user.name);
-      expect(createdUser.email).toBe(user.email);
-      assertSameDynamicDateTimes(createdUser.createdAt, new Date());
+    if (!createdUser) {
+      throw new Error('User does not exist.');
     }
+    expect(createdUser.name).toBe(user.name);
+    expect(createdUser.email).toBe(user.email);
+    expect(createdUser.createdAt.getTime()).toBe(new Date().getTime());
   });
 
   it(`should generate password-reset link in correct format creating verification token`, async () => {
@@ -264,9 +267,8 @@ describe(`AuthService`, () => {
       throw new Error(`Verification token does not exist.`);
     }
     expect(verificationToken.verifiedAt).not.toBeUndefined();
-    assertSameDynamicDateTimes(
-      verificationToken.verifiedAt as Date,
-      new Date()
+    expect((verificationToken.verifiedAt as Date).getTime()).toBe(
+      new Date().getTime()
     );
   });
 
@@ -361,7 +363,7 @@ describe(`AuthService`, () => {
       throw new Error(`User does not exist.`);
     }
     expect(user.emailVerifiedAt).not.toBeUndefined();
-    assertSameDynamicDateTimes(user.emailVerifiedAt as Date, new Date());
+    expect((user.emailVerifiedAt as Date).getTime()).toBe(new Date().getTime());
   });
 
   it(`should also use the verification token`, async () => {
@@ -378,9 +380,8 @@ describe(`AuthService`, () => {
       throw new Error(`Verification token does not exist.`);
     }
     expect(verificationToken.verifiedAt).not.toBeUndefined();
-    assertSameDynamicDateTimes(
-      verificationToken.verifiedAt as Date,
-      new Date()
+    expect((verificationToken.verifiedAt as Date).getTime()).toBe(
+      new Date().getTime()
     );
   });
 

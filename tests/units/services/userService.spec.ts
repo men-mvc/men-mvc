@@ -4,7 +4,9 @@ import dateAndTime from 'date-and-time';
 import {
   clearDatabase,
   closeDatabaseConnection,
-  initApplication
+  initApplication,
+  mockNow,
+  restoreNowMock
 } from '../../testUtilities';
 import {
   createUser,
@@ -14,14 +16,15 @@ import {
 } from '../../../src/services/userService';
 import { User, UserModel } from '../../../src/models/user';
 import { createTestUsers } from '../../factories/userFactory';
-import { assertSameDynamicDateTimes } from '../../assertions';
 import { FAKE_MONGODB_OBJECT_ID } from '../../globals';
 
 describe(`UserService`, () => {
   beforeAll(async () => {
+    mockNow();
     await initApplication();
   });
   afterAll(async () => {
+    restoreNowMock();
     await closeDatabaseConnection();
   });
   afterEach(async () => {
@@ -96,7 +99,7 @@ describe(`UserService`, () => {
       data.emailVerifiedAt?.getTime()
     );
     expect(user.isActive).toBe(data.isActive);
-    assertSameDynamicDateTimes(user.createdAt, new Date());
+    expect(user.createdAt.getTime()).toBe(new Date().getTime());
   };
 
   const generateUserData = (): CreateUserParams => ({
