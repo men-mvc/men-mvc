@@ -16,7 +16,7 @@
   "author": "Wai Yan Hein",
   "license": "ISC",
   "dependencies": {
-    "@men-mvc/core": "^0.42.0",
+    "@men-mvc/core": "^0.43.0",
     "@typegoose/typegoose": "^9.13.2",
     "@types/config": "^3.3.0",
     "bcryptjs": "^2.4.3",
