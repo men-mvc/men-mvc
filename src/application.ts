@@ -24,7 +24,7 @@ export default class Application extends AbstractApplication {
   }
 
   public initialise = async () => {
-    if (config.get<string>("database.mongo.uri")) {
+    if (config.get<string>('database.mongo.uri')) {
       await database.connect();
     }
   };

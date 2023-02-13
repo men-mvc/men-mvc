@@ -1,6 +1,6 @@
 import express, { Express } from 'express';
-import Application from './application';
 import { setServerDirectory } from '@men-mvc/core';
+import Application from './application';
 const app: Express = express();
 
 const start = async (): Promise<void> => {
