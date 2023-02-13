@@ -11,6 +11,7 @@ It's using TypeScript so you must know TypeScript too.
 - http://menmvc.com/
 
 ### Installation
+
 - First, you need to install the `create-men-mvc-app` command globally by executing `npm i -g @men-mvc/men-mvc-cli`
 - After installing the command, you can run, `create-men-mvc-app {{YOUR_PROJECT_FOLDER}}` replacing the placeholder with your project's folder.
 

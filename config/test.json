@@ -5,7 +5,7 @@
   },
   "database": {
     "mongo": {
-      "uri": "mongodb://localhost:27017/mst-kanban-test"
+      "uri": ""
     }
   },
   "server": {
