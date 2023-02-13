@@ -27,6 +27,7 @@
     "secure": "",
     "authType": "",
     "tlsCiphers": "",
+    "tlsRejectUnauthorized": "",
     "clientId": "",
     "clientSecret": "",
     "refreshToken": "",

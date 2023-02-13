@@ -27,6 +27,7 @@
     "secure": "MAIL_SECURE",
     "authType": "MAIL_AUTH_TYPE",
     "tlsCiphers": "MAIL_TLS_CIPHERS",
+    "tlsRejectUnauthorized": "MAIL_TLS_REJECT_UNAUTHORIZED",
     "clientId": "MAIL_CLIENT_ID",
     "clientSecret": "MAIL_CLIENT_SECRET",
     "refreshToken": "MAIL_REFRESH_TOKEN",
