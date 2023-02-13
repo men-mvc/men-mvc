@@ -2,7 +2,6 @@ import { mailer, SendMailOptions } from '@men-mvc/core';
 
 const templateLayout = `layout`; // set the layout file, src/views/emails/layout.handlebars
 
-// TODO: this is not even necessary, can use mailer.send directly.
 export const sendMail = async (options: SendMailOptions): Promise<void> => {
   await mailer.send(options);
 };
