@@ -1,21 +1,27 @@
-import { mailer, MailAttachment } from '@men-mvc/core';
-import config from 'config';
+import { mailer, SendMailOptions } from '@men-mvc/core';
 
-export const sendMail = async (options: {
-  to: string;
-  subject: string;
-  body: string;
-  attachments?: MailAttachment[];
-}): Promise<void> => {
+const templateLayout = `layout`; // set the layout file, src/views/emails/layout.handlebars
+
+export const sendMail = async (options: SendMailOptions): Promise<void> => {
   await mailer.send(options);
 };
 
-export const sendWelcomeMail = async (user: { email: string; name: string }) =>
-  sendMail({
+export const sendWelcomeMail = async (user: {
+  email: string;
+  name: string;
+}) => {
+  await sendMail({
     to: user.email,
     subject: `Welcome`,
-    body: `Hey ${user.name}, welcome to ${config.get(`app.name`)}`
+    template: {
+      view: `welcome`,
+      data: {
+        name: user.name
+      },
+      layout: templateLayout
+    }
   });
+};
 
 export const sendVerifyEmailMail = async (
   user: {
@@ -27,7 +33,13 @@ export const sendVerifyEmailMail = async (
   sendMail({
     to: user.email,
     subject: `Verify your email`,
-    body: `Please verify your email by visiting the link, <a href="${emailVerificationLink}">${emailVerificationLink}</a>`
+    template: {
+      view: `verifyEmail`,
+      data: {
+        emailVerificationLink
+      },
+      layout: templateLayout
+    }
   });
 
 export const sendPasswordResetMail = async (
@@ -40,5 +52,11 @@ export const sendPasswordResetMail = async (
   sendMail({
     to: user.email,
     subject: `Reset Password`,
-    body: `Please reset your account's password by visiting the link, <a href="${passwordResetLink}">${passwordResetLink}</a>`
+    template: {
+      view: `resetPassword`,
+      data: {
+        passwordResetLink
+      },
+      layout: templateLayout
+    }
   });
