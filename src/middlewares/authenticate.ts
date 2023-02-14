@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from '@men-mvc/core/lib/express';
 import {
   unauthorisedErrorResponse,
   asyncRequestHandler,

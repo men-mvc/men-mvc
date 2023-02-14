@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from '@men-mvc/core/lib/express';
 import { ValidationError as JoiValidationError } from 'joi';
 import { StatusCodes } from 'http-status-codes';
 import {

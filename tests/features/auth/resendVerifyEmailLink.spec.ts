@@ -10,9 +10,7 @@ import * as mailService from '../../../src/services/mailService';
 import { sendVerifyEmailMail } from '../../../src/services/mailService';
 import { createTestUser } from '../../factories/userFactory';
 import { makeResendVerifyEmailLinkRequest } from '../../requests';
-import {
-  VerificationTokenModel
-} from '../../../src/models/verificationToken';
+import { VerificationTokenModel } from '../../../src/models/verificationToken';
 import { VerificationTokenType } from '../../../src/types';
 import { assertResponseHasValidationError } from '../../assertions';
 const testConfig = require('../../../config/test.json');

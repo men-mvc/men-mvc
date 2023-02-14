@@ -1,4 +1,4 @@
-import { NextFunction, Response } from 'express';
+import { Response, NextFunction } from '@men-mvc/core/lib/express';
 import {
   logger,
   UploadMaxFileSizeException,

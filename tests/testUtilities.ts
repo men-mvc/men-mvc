@@ -1,4 +1,4 @@
-import express, { Express, NextFunction, Request } from 'express';
+import { express, Request, Express, NextFunction } from '@men-mvc/core/lib/express';
 import { DeepPartial } from '@men-mvc/core';
 import { faker } from '@faker-js/faker';
 import sinon from 'sinon';

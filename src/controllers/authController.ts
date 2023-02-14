@@ -1,4 +1,3 @@
-import { Request, Response } from 'express';
 import { DocumentType } from '@typegoose/typegoose';
 import {
   emptyResponse,
@@ -7,6 +6,7 @@ import {
   validateRequest,
   validateRequestAsync
 } from '@men-mvc/core';
+import { Request, Response } from '@men-mvc/core/lib/express';
 import { StatusCodes } from 'http-status-codes';
 import {
   changePassword,

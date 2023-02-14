@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import express, { Express } from 'express';
+import { Express, express } from '@men-mvc/core/lib/express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';

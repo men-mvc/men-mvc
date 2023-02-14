@@ -1,4 +1,4 @@
-import { Response, NextFunction } from 'express';
+import { Response, NextFunction } from '@men-mvc/core/lib/express';
 import { ErrorResponse } from '@men-mvc/core';
 import sinon, { SinonSpy } from 'sinon';
 import { faker } from '@faker-js/faker';
