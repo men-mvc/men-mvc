@@ -11,7 +11,6 @@ import { sendVerifyEmailMail } from '../../../src/services/mailService';
 import { createTestUser } from '../../factories/userFactory';
 import { makeResendVerifyEmailLinkRequest } from '../../requests';
 import {
-  VerificationToken,
   VerificationTokenModel
 } from '../../../src/models/verificationToken';
 import { VerificationTokenType } from '../../../src/types';
