@@ -30,7 +30,7 @@ import {
 import { USER_PASSWORD } from '../../globals';
 import { assertResponseHasValidationError } from '../../assertions';
 import { VerificationTokenType } from '../../../src/types';
-const testConfig = require('../../../config/test.json');
+import testConfig from '../../../config/test.json';
 
 describe(`Auth Route - Reset Password`, () => {
   let sendPasswordResetMailStub: SinonStub;
@@ -115,7 +115,7 @@ describe(`Auth Route - Reset Password`, () => {
       expect(
         await validatePassword(USER_PASSWORD, user.password as string)
       ).toBeTruthy();
-      const { body, status } = await makeResetPasswordRequest(
+      const { status } = await makeResetPasswordRequest(
         getResetPasswordPayload({
           email: user.email,
           token: verificationToken.token
@@ -134,7 +134,7 @@ describe(`Auth Route - Reset Password`, () => {
         type: VerificationTokenType.PASSWORD_RESET
       });
       expect(verificationToken.verifiedAt).toBeUndefined();
-      let user = (await verificationToken.getUser()) as DocumentType<User>;
+      const user = (await verificationToken.getUser()) as DocumentType<User>;
       const { status } = await makeResetPasswordRequest(
         getResetPasswordPayload({
           email: user.email,
@@ -156,7 +156,7 @@ describe(`Auth Route - Reset Password`, () => {
       const verificationToken = await createTestVerificationToken({
         type: VerificationTokenType.PASSWORD_RESET
       });
-      let user = (await verificationToken.getUser()) as DocumentType<User>;
+      const user = (await verificationToken.getUser()) as DocumentType<User>;
       const { status: resetStatus } = await makeResetPasswordRequest(
         getResetPasswordPayload({
           email: user.email,

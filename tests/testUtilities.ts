@@ -1,4 +1,9 @@
-import { express, Request, Express, NextFunction } from '@men-mvc/core/lib/express';
+import {
+  express,
+  Request,
+  Express,
+  NextFunction
+} from '@men-mvc/core/lib/express';
 import { DeepPartial } from '@men-mvc/core';
 import { faker } from '@faker-js/faker';
 import sinon from 'sinon';
@@ -85,7 +90,7 @@ export const restoreNowMock = () => {
   }
 };
 
-export const getPasswordValidationTestData = (field: string = `password`) => [
+export const getPasswordValidationTestData = (field = `password`) => [
   {
     field,
     value: `Test2in`,
