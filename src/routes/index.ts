@@ -16,18 +16,24 @@ export const registerRoutes = (application: Application) => {
   /**
    * auth routes
    */
-  publicRouter
-    .post(`/register`, asyncRequestHandler(authController.register));
-  publicRouter
-    .post(`/login`, asyncRequestHandler(authController.login));
-  publicRouter
-    .post(`/request-password-reset`, asyncRequestHandler(authController.requestPasswordReset));
-  publicRouter
-    .put(`/reset-password`, asyncRequestHandler(authController.resetPassword));
-  publicRouter
-    .put(`/verify-email`, asyncRequestHandler(authController.verifyEmail));
-  publicRouter
-    .post(`/email-verification-link/resend`, asyncRequestHandler(authController.resendVerifyEmailLink));
+  publicRouter.post(`/register`, asyncRequestHandler(authController.register));
+  publicRouter.post(`/login`, asyncRequestHandler(authController.login));
+  publicRouter.post(
+    `/request-password-reset`,
+    asyncRequestHandler(authController.requestPasswordReset)
+  );
+  publicRouter.put(
+    `/reset-password`,
+    asyncRequestHandler(authController.resetPassword)
+  );
+  publicRouter.put(
+    `/verify-email`,
+    asyncRequestHandler(authController.verifyEmail)
+  );
+  publicRouter.post(
+    `/email-verification-link/resend`,
+    asyncRequestHandler(authController.resendVerifyEmailLink)
+  );
   protectedRouter.get(`/me`, requestHandler(authController.me));
   /**
    * end auth routes

@@ -55,9 +55,9 @@ export const makeResendVerifyEmailLinkRequest = async (
     .send({ email });
 
 export const makeMeRequest = async (
-    accessToken: string
+  accessToken: string
 ): Promise<supertest.Test> =>
-    supertest(await getExpressApp())
-        .get(`${protectedRoutePrefix}/me`)
-        .set(`Authorization`, accessToken ? `Bearer ${accessToken}` : ``)
-        .send({});
+  supertest(await getExpressApp())
+    .get(`${protectedRoutePrefix}/me`)
+    .set(`Authorization`, accessToken ? `Bearer ${accessToken}` : ``)
+    .send({});

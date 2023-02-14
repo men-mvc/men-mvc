@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from '@men-mvc/core/lib/express';
-import { ValidationError as JoiValidationError } from 'joi';
+import joi from '@men-mvc/core/lib/joi';
 import { StatusCodes } from 'http-status-codes';
 import {
   errorResponse,
@@ -27,7 +27,7 @@ export const errorHandler = (
   if (err instanceof ValidationError) {
     return validationErrorResponse(res, err);
   }
-  if (err instanceof JoiValidationError) {
+  if (err instanceof joi.ValidationError) {
     /**
      * Joi async validation failed.
      */
