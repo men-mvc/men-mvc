@@ -34,7 +34,7 @@ export const createTestUsers = async (
   count: number,
   data: DeepPartial<User> = {}
 ): Promise<DocumentType<User>[]> => {
-  let manyData: DeepPartial<User>[] = [];
+  const manyData: DeepPartial<User>[] = [];
   for (let i = 0; i < count; i++) {
     const finalData = await getData(data);
     manyData.push(finalData);

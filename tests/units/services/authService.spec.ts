@@ -40,7 +40,7 @@ import { createTestVerificationToken } from '../../factories/verificationTokenFa
 import { USER_PASSWORD } from '../../globals';
 import { AuthTokenPayload } from '../../../src/types';
 import { getRandomVerificationTokenType } from '../../factories/utilities';
-const testConfig = require('../../../config/test.json');
+import testConfig from '../../../config/test.json';
 
 describe(`AuthService`, () => {
   let sendWelcomeMailStub: SinonStub;
@@ -353,7 +353,7 @@ describe(`AuthService`, () => {
 
   it(`should set user's emailVerifiedAt field with current date time`, async () => {
     let user: DocumentType<User> | null = await createTestUser();
-    let verificationToken: DocumentType<VerificationToken> | null =
+    const verificationToken: DocumentType<VerificationToken> | null =
       await createTestVerificationToken({
         userId: user.id
       });
@@ -367,7 +367,7 @@ describe(`AuthService`, () => {
   });
 
   it(`should also use the verification token`, async () => {
-    let user: DocumentType<User> | null = await createTestUser();
+    const user: DocumentType<User> | null = await createTestUser();
     let verificationToken: DocumentType<VerificationToken> | null =
       await createTestVerificationToken({
         userId: user.id

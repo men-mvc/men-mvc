@@ -1,4 +1,4 @@
-import sinon, { SinonStub } from 'sinon';
+import { SinonStub, stub, assert } from 'sinon';
 import { StatusCodes } from 'http-status-codes';
 import { faker } from '@faker-js/faker';
 import {
@@ -7,13 +7,12 @@ import {
   initApplication
 } from '../../testUtilities';
 import * as mailService from '../../../src/services/mailService';
-import { sendVerifyEmailMail } from '../../../src/services/mailService';
 import { createTestUser } from '../../factories/userFactory';
 import { makeResendVerifyEmailLinkRequest } from '../../requests';
 import { VerificationTokenModel } from '../../../src/models/verificationToken';
 import { VerificationTokenType } from '../../../src/types';
 import { assertResponseHasValidationError } from '../../assertions';
-const testConfig = require('../../../config/test.json');
+import testConfig from '../../../config/test.json';
 
 describe(`Auth Route - Resent Verify Email Link`, () => {
   beforeAll(async () => {
@@ -29,10 +28,8 @@ describe(`Auth Route - Resent Verify Email Link`, () => {
   describe(`POST /api/auth/email-verification-link/resend`, () => {
     let sendVerifyEmailMailStub: SinonStub;
     beforeEach(() => {
-      sendVerifyEmailMailStub = sinon.stub(mailService, `sendVerifyEmailMail`);
-      sendVerifyEmailMailStub.callsFake(
-        jest.fn().mockImplementation((user, verificationLink) => {})
-      );
+      sendVerifyEmailMailStub = stub(mailService, `sendVerifyEmailMail`);
+      sendVerifyEmailMailStub.callsFake(jest.fn());
     });
     afterEach(() => {
       sendVerifyEmailMailStub.restore();
@@ -53,7 +50,7 @@ describe(`Auth Route - Resent Verify Email Link`, () => {
       const expectedVerificationLink = encodeURI(
         `${testConfig.app.feUrl}/auth/verify-email?token=${verificationToken.token}&email=${user.email}`
       );
-      sinon.assert.calledOnceWithExactly(
+      assert.calledOnceWithExactly(
         sendVerifyEmailMailStub,
         {
           email: user.email,

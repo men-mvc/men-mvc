@@ -1,4 +1,4 @@
-import sinon, { SinonStub } from 'sinon';
+import { SinonStub, stub, assert } from 'sinon';
 import { faker } from '@faker-js/faker';
 import { StatusCodes } from 'http-status-codes';
 import {
@@ -22,7 +22,7 @@ import {
   assertResponseHasValidationError,
   assertUserResponse
 } from '../../assertions';
-const testConfig = require('../../../config/test.json');
+import testConfig from '../../../config/test.json';
 
 describe(`Auth Route - Register`, () => {
   beforeAll(async () => {
@@ -38,8 +38,8 @@ describe(`Auth Route - Register`, () => {
     let sendWelcomeMailStub: SinonStub;
     let sendVerifyEmailMailStub: SinonStub;
     beforeEach(async () => {
-      sendWelcomeMailStub = sinon.stub(mailService, `sendWelcomeMail`);
-      sendVerifyEmailMailStub = sinon.stub(mailService, `sendVerifyEmailMail`);
+      sendWelcomeMailStub = stub(mailService, `sendWelcomeMail`);
+      sendVerifyEmailMailStub = stub(mailService, `sendVerifyEmailMail`);
     });
     afterEach(async () => {
       sendWelcomeMailStub.restore();
@@ -103,7 +103,7 @@ describe(`Auth Route - Register`, () => {
       if (!user) {
         throw new Error(`User does not exist.`);
       }
-      sinon.assert.calledOnceWithExactly(sendWelcomeMailStub, {
+      assert.calledOnceWithExactly(sendWelcomeMailStub, {
         name: user.name,
         email: user.email
       });
@@ -127,7 +127,7 @@ describe(`Auth Route - Register`, () => {
       const expectedVerificationLink = encodeURI(
         `${testConfig.app.feUrl}/auth/verify-email?token=${verificationToken.token}&email=${user.email}`
       );
-      sinon.assert.calledOnceWithExactly(
+      assert.calledOnceWithExactly(
         sendVerifyEmailMailStub,
         {
           name: user.name,

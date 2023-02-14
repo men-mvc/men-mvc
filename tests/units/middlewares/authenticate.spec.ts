@@ -123,7 +123,7 @@ describe(`Authenticate Middleware`, () => {
       }
     });
     let nextFuncData: string | undefined = `should-be-undefined`;
-    let nextFuncCalled: boolean = false;
+    let nextFuncCalled = false;
     const next = ((data: string | undefined) => {
       nextFuncData = data;
       nextFuncCalled = true;
@@ -144,7 +144,7 @@ describe(`Authenticate Middleware`, () => {
         Authorization: `Bearer ${accessToken}`
       }
     });
-    const next = (() => {}) as NextFunction;
+    const next = jest.fn() as NextFunction;
     await authenticate(request, response, next);
 
     expect(request.authUser).not.toBeUndefined();

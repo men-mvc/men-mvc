@@ -8,7 +8,9 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "typeRoots": ["./node_modules/@types", "./typings"]
+    "typeRoots": ["./node_modules/@types", "./typings"],
+    "moduleResolution": "node",
+    "resolveJsonModule": true
   },
   "include": ["src"],
   "files": ["typings/express/index.d.ts"]
