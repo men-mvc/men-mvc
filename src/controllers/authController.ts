@@ -4,7 +4,7 @@ import {
   errorResponse,
   successResponse,
   validateRequest,
-  validateRequestAsync
+  validateRequestAsync,
 } from '@men-mvc/core';
 import { Request, Response } from '@men-mvc/core/lib/express';
 import { StatusCodes } from 'http-status-codes';
