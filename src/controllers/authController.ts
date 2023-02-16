@@ -5,9 +5,9 @@ import {
   successResponse,
   validateRequest,
   validateRequestAsync,
+  StatusCodes
 } from '@men-mvc/core';
 import { Request, Response } from '@men-mvc/core/lib/express';
-import { StatusCodes } from 'http-status-codes';
 import {
   changePassword,
   checkIfVerificationTokenValid,

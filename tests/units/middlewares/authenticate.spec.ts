@@ -1,8 +1,7 @@
 import { Response, NextFunction } from '@men-mvc/core/lib/express';
-import { ErrorResponse } from '@men-mvc/core';
+import { ErrorResponse, StatusCodes } from '@men-mvc/core';
 import sinon, { SinonSpy } from 'sinon';
 import { faker } from '@faker-js/faker';
-import { StatusCodes } from 'http-status-codes';
 import { authenticate } from '../../../src/middlewares/authenticate';
 import { createTestUser } from '../../factories/userFactory';
 import { generateAuthToken } from '../../../src/services/authService';

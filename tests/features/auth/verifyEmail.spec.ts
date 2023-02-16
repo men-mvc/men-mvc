@@ -1,6 +1,6 @@
 import { DocumentType } from '@typegoose/typegoose';
 import { faker } from '@faker-js/faker';
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from '@men-mvc/core';
 import dateAndTime from 'date-and-time';
 import {
   clearDatabase,

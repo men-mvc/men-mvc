@@ -1,5 +1,5 @@
-import { StatusCodes } from 'http-status-codes';
 import sinon, { SinonStub } from 'sinon';
+import { StatusCodes } from '@men-mvc/core';
 import dateAndTime from 'date-and-time';
 import { DocumentType } from '@typegoose/typegoose';
 import { faker } from '@faker-js/faker';

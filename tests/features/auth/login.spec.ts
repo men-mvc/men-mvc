@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from '@men-mvc/core';
 import {
   clearDatabase,
   closeDatabaseConnection,

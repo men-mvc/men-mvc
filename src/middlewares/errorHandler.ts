@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from '@men-mvc/core/lib/express';
 import joi from '@men-mvc/core/lib/joi';
-import { StatusCodes } from 'http-status-codes';
 import {
   errorResponse,
   validationErrorResponse,
@@ -9,7 +8,8 @@ import {
   ValidationError,
   resolveValidationError,
   InsufficientPermissionError,
-  insufficientPermissionsResponse
+  insufficientPermissionsResponse,
+  StatusCodes
 } from '@men-mvc/core';
 
 export const errorHandler = (
