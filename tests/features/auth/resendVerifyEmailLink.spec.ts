@@ -1,5 +1,5 @@
 import { SinonStub, stub, assert } from 'sinon';
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from '@men-mvc/core';
 import { faker } from '@faker-js/faker';
 import {
   clearDatabase,
