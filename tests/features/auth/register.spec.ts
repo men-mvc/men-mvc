@@ -1,6 +1,7 @@
 import { SinonStub, stub, assert } from 'sinon';
 import { faker } from '@faker-js/faker';
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from '@men-mvc/core';
+import { config } from '../../../src/config';
 import {
   clearDatabase,
   closeDatabaseConnection,
@@ -22,7 +23,6 @@ import {
   assertResponseHasValidationError,
   assertUserResponse
 } from '../../assertions';
-import testConfig from '../../../config/test.json';
 
 describe(`Auth Route - Register`, () => {
   beforeAll(async () => {
@@ -125,7 +125,7 @@ describe(`Auth Route - Register`, () => {
         throw new Error(`Verification token does not exist.`);
       }
       const expectedVerificationLink = encodeURI(
-        `${testConfig.app.feUrl}/auth/verify-email?token=${verificationToken.token}&email=${user.email}`
+        `${config.app.feUrl}/auth/verify-email?token=${verificationToken.token}&email=${user.email}`
       );
       assert.calledOnceWithExactly(
         sendVerifyEmailMailStub,

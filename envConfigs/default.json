@@ -1,15 +1,15 @@
 {
   "app": {
-    "name": "Men MVC test",
+    "name": "Men MVC",
     "feUrl": "http://localhost"
   },
   "database": {
     "mongo": {
-      "uri": ""
+      "uri": "mongodb://localhost:27017/men-mvc"
     }
   },
   "server": {
-    "port": 8080
+    "port": 8000
   },
   "auth": {
     "secret": "private-auth-secret",
@@ -18,19 +18,29 @@
     "emailVerificationLinkDuration": 7200
   },
   "mail": {
-    "address": "",
+    "driver": "",
+    "user": "",
     "password": "",
-    "host": "",
-    "port": 0,
-    "service": ""
+    "host": "smtp.mailtrap.io",
+    "port": 25,
+    "service": "",
+    "secure": "",
+    "authType": "",
+    "tlsCiphers": "",
+    "tlsRejectUnauthorized": "",
+    "clientId": "",
+    "clientSecret": "",
+    "refreshToken": "",
+    "accessToken": "",
+    "expires": ""
   },
   "cache": {
-    "driver": "in-memory",
+    "driver": "redis",
     "redis": {
       "port": 6379,
       "host": "127.0.0.1",
       "password": null,
-      "database": 1
+      "database": 0
     }
   },
   "fileSystem": {

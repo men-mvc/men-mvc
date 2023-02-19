@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import dateAndTime from 'date-and-time';
+import { config } from '../config';
 import { AuthTokenPayload, VerificationTokenType } from '../types';
 import { User, UserModel } from '../models/user';
 import {
@@ -12,7 +13,6 @@ import {
 } from '../models/verificationToken';
 import { createUser } from './userService';
 import { sendVerifyEmailMail, sendWelcomeMail } from './mailService';
-import config from 'config';
 
 export const generateAuthToken = (user: DocumentType<User>): string => {
   const payload: AuthTokenPayload = {
@@ -20,8 +20,8 @@ export const generateAuthToken = (user: DocumentType<User>): string => {
     name: user.name,
     email: user.email
   };
-  return jwt.sign(payload, config.get(`auth.secret`), {
-    expiresIn: config.get(`auth.tokenExpiresIn`)
+  return jwt.sign(payload,config.auth.secret, {
+    expiresIn: config.auth.tokenExpiresIn
   });
 };
 
@@ -29,7 +29,7 @@ export const verifyAuthToken = async (
   token: string
 ): Promise<null | AuthTokenPayload> => {
   try {
-    const payload = await jwt.verify(token, config.get(`auth.secret`));
+    const payload = await jwt.verify(token, config.auth.secret);
 
     return payload ? (payload as AuthTokenPayload) : null;
   } catch (e) {
@@ -58,7 +58,7 @@ const generatePasswordResetVerificationToken = async (
 ): Promise<VerificationToken> => {
   const expiresAt = dateAndTime.addSeconds(
     new Date(),
-    config.get(`auth.passwordResetLinkDuration`)
+    config.auth.passwordResetLinkDuration
   );
   const token = generateVerificationToken();
   return await createVerificationToken({
@@ -74,7 +74,7 @@ const generateVerifyEmailVerificationToken = async (
 ): Promise<VerificationToken> => {
   const expiresAt = dateAndTime.addSeconds(
     new Date(),
-    config.get(`auth.emailVerificationLinkDuration`)
+    config.auth.emailVerificationLinkDuration
   );
   const token = generateVerificationToken();
   return await createVerificationToken({
@@ -91,7 +91,7 @@ export const generatePasswordResetLink = async (
   const token = await generatePasswordResetVerificationToken(user);
 
   return encodeURI(
-    `${config.get(`app.feUrl`)}/auth/reset-password?token=${
+    `${config.app.feUrl}/auth/reset-password?token=${
       token.token
     }&email=${user.email}`
   );
@@ -103,7 +103,7 @@ export const generateEmailVerificationLink = async (
   const token = await generateVerifyEmailVerificationToken(user);
 
   return encodeURI(
-    `${config.get(`app.feUrl`)}/auth/verify-email?token=${token.token}&email=${
+    `${config.app.feUrl}/auth/verify-email?token=${token.token}&email=${
       user.email
     }`
   );

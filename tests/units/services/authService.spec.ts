@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import dateAndTime from 'date-and-time';
 import { faker } from '@faker-js/faker';
 import sinon, { SinonStub } from 'sinon';
+import { config } from '../../../src/config';
 import { User } from '../../../src/models/user';
 import {
   changePassword,
@@ -40,7 +41,6 @@ import { createTestVerificationToken } from '../../factories/verificationTokenFa
 import { USER_PASSWORD } from '../../globals';
 import { AuthTokenPayload } from '../../../src/types';
 import { getRandomVerificationTokenType } from '../../factories/utilities';
-import testConfig from '../../../config/test.json';
 
 describe(`AuthService`, () => {
   let sendWelcomeMailStub: SinonStub;
@@ -107,7 +107,7 @@ describe(`AuthService`, () => {
       throw new Error(`Verification token cannot be null`);
     }
     const expectedLink = encodeURI(
-      `${testConfig.app.feUrl}/auth/reset-password?token=${verificationToken.token}&email=${user.email}`
+      `${config.app.feUrl}/auth/reset-password?token=${verificationToken.token}&email=${user.email}`
     );
     expect(actualLink).toBe(expectedLink);
   });
@@ -122,7 +122,7 @@ describe(`AuthService`, () => {
       throw new Error(`Verification token cannot be null`);
     }
     const expectedLink = encodeURI(
-      `${testConfig.app.feUrl}/auth/verify-email?token=${verificationToken.token}&email=${user.email}`
+      `${config.app.feUrl}/auth/verify-email?token=${verificationToken.token}&email=${user.email}`
     );
     expect(actualLink).toBe(expectedLink);
   });
@@ -198,7 +198,7 @@ describe(`AuthService`, () => {
       throw new Error(`Verification token does not exist.`);
     }
     const expectedVerificationLink = encodeURI(
-      `${testConfig.app.feUrl}/auth/verify-email?token=${verificationToken.token}&email=${user.email}`
+      `${config.app.feUrl}/auth/verify-email?token=${verificationToken.token}&email=${user.email}`
     );
     sinon.assert.calledOnceWithExactly(
       sendVerifyEmailMailStub,
