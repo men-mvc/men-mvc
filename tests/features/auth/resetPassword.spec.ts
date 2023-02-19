@@ -3,6 +3,7 @@ import { StatusCodes } from '@men-mvc/core';
 import dateAndTime from 'date-and-time';
 import { DocumentType } from '@typegoose/typegoose';
 import { faker } from '@faker-js/faker';
+import { config } from '../../../src/config';
 import {
   clearDatabase,
   closeDatabaseConnection,
@@ -30,7 +31,6 @@ import {
 import { USER_PASSWORD } from '../../globals';
 import { assertResponseHasValidationError } from '../../assertions';
 import { VerificationTokenType } from '../../../src/types';
-import testConfig from '../../../config/test.json';
 
 describe(`Auth Route - Reset Password`, () => {
   let sendPasswordResetMailStub: SinonStub;
@@ -77,7 +77,7 @@ describe(`Auth Route - Reset Password`, () => {
         user: user.id
       })) as DocumentType<VerificationToken>;
       const expectedLink = encodeURI(
-        `${testConfig.app.feUrl}/auth/reset-password?token=${verificationToken.token}&email=${user.email}`
+        `${config.app.feUrl}/auth/reset-password?token=${verificationToken.token}&email=${user.email}`
       );
       sinon.assert.calledOnceWithExactly(
         sendPasswordResetMailStub,

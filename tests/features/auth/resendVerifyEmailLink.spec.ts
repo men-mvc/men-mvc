@@ -1,5 +1,6 @@
 import { SinonStub, stub, assert } from 'sinon';
 import { StatusCodes } from '@men-mvc/core';
+import { config } from '../../../src/config';
 import { faker } from '@faker-js/faker';
 import {
   clearDatabase,
@@ -12,7 +13,6 @@ import { makeResendVerifyEmailLinkRequest } from '../../requests';
 import { VerificationTokenModel } from '../../../src/models/verificationToken';
 import { VerificationTokenType } from '../../../src/types';
 import { assertResponseHasValidationError } from '../../assertions';
-import testConfig from '../../../config/test.json';
 
 describe(`Auth Route - Resent Verify Email Link`, () => {
   beforeAll(async () => {
@@ -48,7 +48,9 @@ describe(`Auth Route - Resent Verify Email Link`, () => {
         throw new Error(`Verification token was not generated.`);
       }
       const expectedVerificationLink = encodeURI(
-        `${testConfig.app.feUrl}/auth/verify-email?token=${verificationToken.token}&email=${user.email}`
+        `${config.app.feUrl}/auth/verify-email?token=${
+          verificationToken.token
+        }&email=${user.email}`
       );
       assert.calledOnceWithExactly(
         sendVerifyEmailMailStub,

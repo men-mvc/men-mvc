@@ -21,11 +21,7 @@ export const loginValSchema = joi.object().keys({
     .string()
     .required()
     .trim()
-    .email({
-      tlds: {
-        allow: false
-      }
-    })
+    .email()
     .messages({
       'string.empty': `Email is required.`,
       'any.required': `Email is required.`,
@@ -46,11 +42,7 @@ export const registerValSchema = joi.object().keys({
     .string()
     .required()
     .trim()
-    .email({
-      tlds: {
-        allow: false
-      }
-    })
+    .email()
     .external(async (value) => {
       await validateUserEmailUnique(value, `email`);
     })

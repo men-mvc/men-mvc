@@ -5,7 +5,7 @@
   "homepage": "https://menmvc.com",
   "main": "src/server.ts",
   "scripts": {
-    "build": "rm -r -f dist && mkdir dist && cp -r config dist && npx tsc",
+    "build": "rm -r -f dist && mkdir dist && cp -r envConfigs dist && npx tsc",
     "start": "node dist/server.js",
     "dev": "ts-node-dev src/server.ts",
     "lint": "eslint . --ext .ts",
@@ -17,11 +17,9 @@
   "author": "Wai Yan Hein",
   "license": "ISC",
   "dependencies": {
-    "@men-mvc/core": "^0.50.0",
+    "@men-mvc/core": "^0.53.0",
     "@typegoose/typegoose": "^9.13.2",
-    "@types/config": "^3.3.0",
     "bcryptjs": "^2.4.3",
-    "config": "^3.3.8",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "date-and-time": "^2.4.1",

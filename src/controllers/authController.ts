@@ -4,8 +4,7 @@ import {
   errorResponse,
   successResponse,
   validateRequest,
-  validateRequestAsync,
-  StatusCodes
+  validateRequestAsync
 } from '@men-mvc/core';
 import { Request, Response } from '@men-mvc/core/lib/express';
 import {
@@ -38,7 +37,7 @@ export const register = async (req: Request, res: Response) => {
   await validateRequestAsync(registerValSchema, req.body);
   const user = await registerUser(req.body);
 
-  return successResponse(res, user.toJSON(), StatusCodes.CREATED);
+  return successResponse(res, user.toJSON(), 201);
 };
 
 export const login = async (req: Request, res: Response) => {
@@ -86,7 +85,7 @@ export const verifyEmail = async (req: Request, res: Response) => {
       user
     ))
   ) {
-    return emptyResponse(res, StatusCodes.BAD_REQUEST);
+    return emptyResponse(res, 400);
   }
   await verifyUserEmail(user, req.body.token);
 
@@ -124,7 +123,7 @@ export const resetPassword = async (req: Request, res: Response) => {
       user
     ))
   ) {
-    return emptyResponse(res, StatusCodes.BAD_REQUEST);
+    return emptyResponse(res, 400);
   }
   await changePassword(user, req.body.newPassword);
   await useVerificationToken(req.body.token);
@@ -147,7 +146,7 @@ const constructLoginResponse = (
 });
 
 const accountDoesNotExistResponse = (res: Response) =>
-  errorResponse(res, `Account does not exist.`, StatusCodes.BAD_REQUEST);
+  errorResponse(res, `Account does not exist.`,  400);
 
 const loginInvalidCredentialsResponse = (res: Response) =>
-  errorResponse(res, `Invalid credentials.`, StatusCodes.UNPROCESSABLE_ENTITY);
+  errorResponse(res, `Invalid credentials.`, 422);
