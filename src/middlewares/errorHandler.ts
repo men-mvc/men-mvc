@@ -3,7 +3,6 @@ import joi from '@men-mvc/core/lib/joi';
 import {
   errorResponse,
   validationErrorResponse,
-  logger,
   UploadMaxFileSizeException,
   ValidationError,
   resolveValidationError,
@@ -11,6 +10,7 @@ import {
   insufficientPermissionsResponse,
   StatusCodes
 } from '@men-mvc/core';
+import { logger } from '@men-mvc/logger';
 
 export const errorHandler = (
   err: Error | null,
@@ -37,7 +37,10 @@ export const errorHandler = (
     return insufficientPermissionsResponse(res, err);
   }
 
-  // log the error
+  /**
+   * You can replace with your own logger class here
+   * If you are using your own custom error logging class, you can uninstall @men-mvc/logger module.
+   */
   logger.logError(err);
 
   if (err instanceof UploadMaxFileSizeException) {

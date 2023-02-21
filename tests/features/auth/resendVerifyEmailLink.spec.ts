@@ -48,9 +48,7 @@ describe(`Auth Route - Resent Verify Email Link`, () => {
         throw new Error(`Verification token was not generated.`);
       }
       const expectedVerificationLink = encodeURI(
-        `${config.app.feUrl}/auth/verify-email?token=${
-          verificationToken.token
-        }&email=${user.email}`
+        `${config.app.feUrl}/auth/verify-email?token=${verificationToken.token}&email=${user.email}`
       );
       assert.calledOnceWithExactly(
         sendVerifyEmailMailStub,

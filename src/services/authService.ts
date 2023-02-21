@@ -20,7 +20,7 @@ export const generateAuthToken = (user: DocumentType<User>): string => {
     name: user.name,
     email: user.email
   };
-  return jwt.sign(payload,config.auth.secret, {
+  return jwt.sign(payload, config.auth.secret, {
     expiresIn: config.auth.tokenExpiresIn
   });
 };
@@ -91,9 +91,7 @@ export const generatePasswordResetLink = async (
   const token = await generatePasswordResetVerificationToken(user);
 
   return encodeURI(
-    `${config.app.feUrl}/auth/reset-password?token=${
-      token.token
-    }&email=${user.email}`
+    `${config.app.feUrl}/auth/reset-password?token=${token.token}&email=${user.email}`
   );
 };
 
@@ -103,9 +101,7 @@ export const generateEmailVerificationLink = async (
   const token = await generateVerifyEmailVerificationToken(user);
 
   return encodeURI(
-    `${config.app.feUrl}/auth/verify-email?token=${token.token}&email=${
-      user.email
-    }`
+    `${config.app.feUrl}/auth/verify-email?token=${token.token}&email=${user.email}`
   );
 };
 

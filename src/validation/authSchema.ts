@@ -17,16 +17,11 @@ const passwordRule = joi
   });
 
 export const loginValSchema = joi.object().keys({
-  email: joi
-    .string()
-    .required()
-    .trim()
-    .email()
-    .messages({
-      'string.empty': `Email is required.`,
-      'any.required': `Email is required.`,
-      'string.email': `Email format is invalid.`
-    }),
+  email: joi.string().required().trim().email().messages({
+    'string.empty': `Email is required.`,
+    'any.required': `Email is required.`,
+    'string.email': `Email format is invalid.`
+  }),
   password: joi.string().required().messages({
     'string.empty': `Password is required.`,
     'any.required': `Password is required.`

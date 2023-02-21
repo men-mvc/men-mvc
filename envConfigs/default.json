@@ -46,5 +46,8 @@
   "fileSystem": {
     "storageDriver": "local",
     "maxUploadLimit": 524288000
+  },
+  "logger": {
+    "disabled": false
   }
 }

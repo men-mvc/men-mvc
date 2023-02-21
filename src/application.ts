@@ -7,11 +7,11 @@ import morgan from 'morgan';
 import hpp from 'hpp';
 import mongoSanitise from 'express-mongo-sanitize';
 import {
-  logger,
   getAppEnv,
   AbstractApplication,
   registerMultipartFormParser
 } from '@men-mvc/core';
+import { logger } from '@men-mvc/logger';
 import { config } from './config';
 import { registerRoutes } from './routes';
 import { errorHandler } from './middlewares/errorHandler';

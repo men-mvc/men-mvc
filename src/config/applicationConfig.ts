@@ -10,10 +10,10 @@ type CustomConfig = {
     feUrl: string;
   };
   database: {
-      mongo: {
-          uri: string
-      }
-  }
+    mongo: {
+      uri: string;
+    };
+  };
 };
 
 type ApplicationConfig = CustomConfig & BaseConfig;
