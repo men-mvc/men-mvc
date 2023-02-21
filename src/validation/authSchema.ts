@@ -1,4 +1,4 @@
-import joi from 'joi';
+import joi from '@men-mvc/core/lib/joi';
 import { validateUserEmailUnique } from './rules';
 
 const passwordRule = joi
@@ -17,20 +17,11 @@ const passwordRule = joi
   });
 
 export const loginValSchema = joi.object().keys({
-  email: joi
-    .string()
-    .required()
-    .trim()
-    .email({
-      tlds: {
-        allow: false
-      }
-    })
-    .messages({
-      'string.empty': `Email is required.`,
-      'any.required': `Email is required.`,
-      'string.email': `Email format is invalid.`
-    }),
+  email: joi.string().required().trim().email().messages({
+    'string.empty': `Email is required.`,
+    'any.required': `Email is required.`,
+    'string.email': `Email format is invalid.`
+  }),
   password: joi.string().required().messages({
     'string.empty': `Password is required.`,
     'any.required': `Password is required.`
@@ -46,11 +37,7 @@ export const registerValSchema = joi.object().keys({
     .string()
     .required()
     .trim()
-    .email({
-      tlds: {
-        allow: false
-      }
-    })
+    .email()
     .external(async (value) => {
       await validateUserEmailUnique(value, `email`);
     })

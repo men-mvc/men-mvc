@@ -1,12 +1,12 @@
 import { Response, NextFunction } from '@men-mvc/core/lib/express';
 import {
-  logger,
   UploadMaxFileSizeException,
   ErrorResponse,
-  ErrorCodes
+  ErrorCodes,
+  StatusCodes
 } from '@men-mvc/core';
+import { logger } from '@men-mvc/logger';
 import sinon, { SinonSpy, SinonStub } from 'sinon';
-import { StatusCodes } from 'http-status-codes';
 import { mockErrorNextFunction, mockExpressRequest } from '../../testUtilities';
 import { errorHandler } from '../../../src/middlewares/errorHandler';
 import { FakeExpressResponse } from '../../types';
