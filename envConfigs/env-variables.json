@@ -22,7 +22,10 @@
     "user": "MAIL_USER",
     "password": "MAIL_PASSWORD",
     "host": "MAIL_HOST",
-    "port": "MAIL_PORT",
+    "port": {
+      "name": "MAIL_PORT",
+      "type": "number"
+    },
     "service": "MAIL_SERVICE",
     "secure": "MAIL_SECURE",
     "authType": "MAIL_AUTH_TYPE",
@@ -37,7 +40,10 @@
   "cache": {
     "driver": "CACHE_DRIVER",
     "redis": {
-      "port": "REDIS_PORT",
+      "port": {
+        "name": "REDIS_PORT",
+        "type": "number"
+      },
       "host": "REDIS_HOST",
       "password": "REDIS_PASSWORD",
       "database": "REDIS_DATABASE"
@@ -45,6 +51,15 @@
   },
   "fileSystem": {
     "storageDriver": "FILESYSTEM_STORAGE_DRIVER",
-    "maxUploadLimit": "FILESYSTEM_MAX_FILE_UPLOAD_LIMIT"
+    "maxUploadLimit": {
+      "name": "FILESYSTEM_MAX_FILE_UPLOAD_LIMIT",
+      "type": "number"
+    }
+  },
+  "logger": {
+    "disabled": {
+      "name": "LOGGING_DISABLED",
+      "type": "boolean"
+    }
   }
 }

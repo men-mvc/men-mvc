@@ -7,12 +7,12 @@ import morgan from 'morgan';
 import hpp from 'hpp';
 import mongoSanitise from 'express-mongo-sanitize';
 import {
-  logger,
   getAppEnv,
   AbstractApplication,
   registerMultipartFormParser
 } from '@men-mvc/core';
-import config from 'config';
+import { logger } from '@men-mvc/logger';
+import { config } from './config';
 import { registerRoutes } from './routes';
 import { errorHandler } from './middlewares/errorHandler';
 import { apiThrottle } from './middlewares/apiThrottle';
@@ -24,7 +24,7 @@ export default class Application extends AbstractApplication {
   }
 
   public initialise = async () => {
-    if (config.get<string>('database.mongo.uri')) {
+    if (config.database.mongo.uri) {
       await database.connect();
     }
   };
@@ -69,11 +69,9 @@ export default class Application extends AbstractApplication {
   };
 
   public start = () => {
-    this.app.listen(config.get<number>('server.port'), () => {
+    this.app.listen(config.server.port, () => {
       console.log(
-        `⚡️[server]: Server is running on port ${config.get<number>(
-          'server.port'
-        )}`
+        `⚡️[server]: Server is running on port ${config.server.port}`
       );
     });
   };
