@@ -18,7 +18,7 @@
     "emailVerificationLinkDuration": 7200
   },
   "mail": {
-    "driver": "",
+    "driver": "console_log",
     "user": "",
     "password": "",
     "host": "smtp.mailtrap.io",

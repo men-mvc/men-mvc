@@ -3,9 +3,9 @@ import {
   emptyResponse,
   errorResponse,
   successResponse,
-  validateRequest,
-  validateRequestAsync,
-  StatusCodes
+  StatusCodes,
+  ValidateRequest,
+  ValidateRequestAsync
 } from '@men-mvc/core';
 import { Request, Response } from '@men-mvc/core/lib/express';
 import {
@@ -34,120 +34,135 @@ import {
 } from '../validation/authSchema';
 import { VerificationTokenType } from '../types';
 
-export const register = async (req: Request, res: Response) => {
-  await validateRequestAsync(registerValSchema, req.body);
-  const user = await registerUser(req.body);
+export class AuthController {
+  @ValidateRequestAsync(registerValSchema)
+  public async register(req: Request, res: Response) {
+    const user = await registerUser(req.body);
 
-  return successResponse(res, user.toJSON(), StatusCodes.CREATED);
-};
-
-export const login = async (req: Request, res: Response) => {
-  validateRequest(loginValSchema, req.body);
-  const user = await findUserByEmail(req.body.email);
-  if (!user) {
-    return loginInvalidCredentialsResponse(res);
-  }
-  const accessToken = await loginUser(user, req.body.password);
-  if (!accessToken) {
-    return loginInvalidCredentialsResponse(res);
+    return successResponse(res, user.toJSON(), StatusCodes.CREATED);
   }
 
-  return successResponse(res, constructLoginResponse(accessToken, user));
-};
+  @ValidateRequest(loginValSchema)
+  public async login(req: Request, res: Response) {
+    const user = await findUserByEmail(req.body.email);
+    if (!user) {
+      return this.loginInvalidCredentialsResponse(res);
+    }
+    const accessToken = await loginUser(user, req.body.password);
+    if (!accessToken) {
+      return this.loginInvalidCredentialsResponse(res);
+    }
 
-export const resendVerifyEmailLink = async (req: Request, res: Response) => {
-  validateRequest(resendVerifyEmailLinkValSchema, req.body);
-  const user = await findUserByEmail(req.body.email);
-  if (!user) {
-    return accountDoesNotExistResponse(res);
+    return successResponse(res, this.constructLoginResponse(accessToken, user));
   }
-  const verificationLink = await generateEmailVerificationLink(user);
-  await sendVerifyEmailMail(
-    {
-      email: user.email,
-      name: user.name
-    },
-    verificationLink
-  );
 
-  return emptyResponse(res);
-};
+  @ValidateRequest(resendVerifyEmailLinkValSchema)
+  public async resendVerifyEmailLink(req: Request, res: Response) {
+    const user = await findUserByEmail(req.body.email);
+    if (!user) {
+      return this.accountDoesNotExistResponse(res);
+    }
+    const verificationLink = await generateEmailVerificationLink(user);
+    await sendVerifyEmailMail(
+      {
+        email: user.email,
+        name: user.name
+      },
+      verificationLink
+    );
 
-export const verifyEmail = async (req: Request, res: Response) => {
-  validateRequest(verifyEmailValSchema, req.body);
-  const user = await findUserByEmail(req.body.email);
-  if (!user) {
-    return accountDoesNotExistResponse(res);
+    return emptyResponse(res);
   }
-  if (
-    !(await checkIfVerificationTokenValid(
-      req.body.token,
-      VerificationTokenType.VERIFY_EMAIL,
-      user
-    ))
-  ) {
-    return emptyResponse(res, StatusCodes.BAD_REQUEST);
+
+  @ValidateRequest(verifyEmailValSchema)
+  public async verifyEmail(req: Request, res: Response) {
+    const user = await findUserByEmail(req.body.email);
+    if (!user) {
+      return this.accountDoesNotExistResponse(res);
+    }
+    if (
+      !(await checkIfVerificationTokenValid(
+        req.body.token,
+        VerificationTokenType.VERIFY_EMAIL,
+        user
+      ))
+    ) {
+      return emptyResponse(res, StatusCodes.BAD_REQUEST);
+    }
+    await verifyUserEmail(user, req.body.token);
+
+    return emptyResponse(res);
   }
-  await verifyUserEmail(user, req.body.token);
 
-  return emptyResponse(res);
-};
+  @ValidateRequest(requestPasswordResetValSchema)
+  public async requestPasswordReset(req: Request, res: Response) {
+    const user = await findUserByEmail(req.body.email);
+    if (!user) {
+      return this.accountDoesNotExistResponse(res);
+    }
+    const passwordResetLink = await generatePasswordResetLink(user);
+    await sendPasswordResetMail(
+      {
+        name: user.name,
+        email: user.email
+      },
+      passwordResetLink
+    );
 
-export const requestPasswordReset = async (req: Request, res: Response) => {
-  validateRequest(requestPasswordResetValSchema, req.body);
-  const user = await findUserByEmail(req.body.email);
-  if (!user) {
-    return accountDoesNotExistResponse(res);
+    return emptyResponse(res);
   }
-  const passwordResetLink = await generatePasswordResetLink(user);
-  await sendPasswordResetMail(
-    {
-      name: user.name,
-      email: user.email
-    },
-    passwordResetLink
-  );
 
-  return emptyResponse(res);
-};
+  @ValidateRequest(resetPasswordValSchema)
+  public async resetPassword(req: Request, res: Response) {
+    const user = await findUserByEmail(req.body.email);
+    if (!user) {
+      return this.accountDoesNotExistResponse(res);
+    }
+    if (
+      !(await checkIfVerificationTokenValid(
+        req.body.token,
+        VerificationTokenType.PASSWORD_RESET,
+        user
+      ))
+    ) {
+      return emptyResponse(res, StatusCodes.BAD_REQUEST);
+    }
+    await changePassword(user, req.body.newPassword);
+    await useVerificationToken(req.body.token);
 
-export const resetPassword = async (req: Request, res: Response) => {
-  validateRequest(resetPasswordValSchema, req.body);
-  const user = await findUserByEmail(req.body.email);
-  if (!user) {
-    return accountDoesNotExistResponse(res);
+    return emptyResponse(res);
   }
-  if (
-    !(await checkIfVerificationTokenValid(
-      req.body.token,
-      VerificationTokenType.PASSWORD_RESET,
-      user
-    ))
-  ) {
-    return emptyResponse(res, StatusCodes.BAD_REQUEST);
+
+  public me(req: Request, res: Response) {
+    return successResponse(res, req.authUser);
   }
-  await changePassword(user, req.body.newPassword);
-  await useVerificationToken(req.body.token);
 
-  return emptyResponse(res);
-};
+  private constructLoginResponse(
+    accessToken: string,
+    user: DocumentType<User>
+  ): {
+    accessToken: string;
+    user: DocumentType<User>;
+  } {
+    return {
+      user,
+      accessToken
+    };
+  }
 
-export const me = (req: Request, res: Response) =>
-  successResponse(res, req.authUser);
+  private accountDoesNotExistResponse(res: Response) {
+    return errorResponse(
+      res,
+      `Account does not exist.`,
+      StatusCodes.BAD_REQUEST
+    );
+  }
 
-const constructLoginResponse = (
-  accessToken: string,
-  user: DocumentType<User>
-): {
-  accessToken: string;
-  user: DocumentType<User>;
-} => ({
-  user,
-  accessToken
-});
-
-const accountDoesNotExistResponse = (res: Response) =>
-  errorResponse(res, `Account does not exist.`, StatusCodes.BAD_REQUEST);
-
-const loginInvalidCredentialsResponse = (res: Response) =>
-  errorResponse(res, `Invalid credentials.`, StatusCodes.UNPROCESSABLE_ENTITY);
+  private loginInvalidCredentialsResponse(res: Response) {
+    return errorResponse(
+      res,
+      `Invalid credentials.`,
+      StatusCodes.UNPROCESSABLE_ENTITY
+    );
+  }
+}
