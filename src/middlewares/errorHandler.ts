@@ -3,7 +3,7 @@ import joi from '@men-mvc/core/lib/joi';
 import {
   errorResponse,
   validationErrorResponse,
-  UploadMaxFileSizeException,
+  UploadMaxFileSizeError,
   ValidationError,
   resolveValidationError,
   InsufficientPermissionError,
@@ -43,7 +43,7 @@ export const errorHandler = (
    */
   logger.logError(err);
 
-  if (err instanceof UploadMaxFileSizeException) {
+  if (err instanceof UploadMaxFileSizeError) {
     return errorResponse(
       res,
       {

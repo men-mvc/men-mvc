@@ -6,11 +6,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import hpp from 'hpp';
 import mongoSanitise from 'express-mongo-sanitize';
-import {
-  getAppEnv,
-  AbstractApplication,
-  registerMultipartFormParser
-} from '@men-mvc/core';
+import { getAppEnv, AbstractApplication } from '@men-mvc/core';
 import { logger } from '@men-mvc/logger';
 import { config } from './config';
 import { registerRoutes } from './routes';
@@ -41,7 +37,10 @@ export default class Application extends AbstractApplication {
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(hpp());
     this.app.use(express.json());
-    registerMultipartFormParser(this.app);
+    /**
+     * TODO: uncomment the following line to use @men-mvc/filesystem module after importing registerMultipartFormParser function from the @men-mvc/core module.
+     * registerMultipartFormParser(this.app);
+     */
     this.app.use(helmet());
     this.app.use(mongoSanitise());
     this.app.disable(`x-powered-by`);

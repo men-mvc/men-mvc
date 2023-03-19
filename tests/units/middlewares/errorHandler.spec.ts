@@ -1,6 +1,6 @@
 import { Response, NextFunction } from '@men-mvc/core/lib/express';
 import {
-  UploadMaxFileSizeException,
+  UploadMaxFileSizeError,
   ErrorResponse,
   ErrorCodes,
   StatusCodes
@@ -70,7 +70,7 @@ describe(`ErrorHandler Middleware`, () => {
   });
 
   it(`should return UploadMaxFileSizeException error when the error type is UploadMaxFileSizeException`, async () => {
-    const error = new UploadMaxFileSizeException();
+    const error = new UploadMaxFileSizeError();
     errorHandler(
       error,
       mockExpressRequest(),
