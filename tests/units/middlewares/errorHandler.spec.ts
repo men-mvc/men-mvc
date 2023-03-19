@@ -69,7 +69,7 @@ describe(`ErrorHandler Middleware`, () => {
     );
   });
 
-  it(`should return UploadMaxFileSizeException error when the error type is UploadMaxFileSizeException`, async () => {
+  it(`should return UploadMaxFileSizeError error when the error type is UploadMaxFileSizeException`, async () => {
     const error = new UploadMaxFileSizeError();
     errorHandler(
       error,
