@@ -1,5 +1,5 @@
 import { Request, Response, Router } from '@men-mvc/core/lib/express';
-import { asyncRequestHandler, requestHandler } from '@men-mvc/core';
+import {asyncRequestHandler, requestHandler} from '@men-mvc/core';
 import Application from '../application';
 import { AuthController } from '../controllers/authController';
 import { authenticate } from '../middlewares/authenticate';

@@ -13,6 +13,7 @@ import { registerRoutes } from './routes';
 import { errorHandler } from './middlewares/errorHandler';
 import { apiThrottle } from './middlewares/apiThrottle';
 import { database } from './database';
+// import {registerMultipartFormParser} from "@men-mvc/filesystem";
 
 export default class Application extends AbstractApplication {
   constructor(public app: Express) {
@@ -38,7 +39,7 @@ export default class Application extends AbstractApplication {
     this.app.use(hpp());
     this.app.use(express.json());
     /**
-     * TODO: uncomment the following line to use @men-mvc/filesystem module after importing registerMultipartFormParser function from the @men-mvc/core module.
+     * TODO: uncomment the following line to use @men-mvc/filesystem module after importing registerMultipartFormParser from the module.
      * registerMultipartFormParser(this.app);
      */
     this.app.use(helmet());

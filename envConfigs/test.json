@@ -3,5 +3,8 @@
     "mongo": {
       "uri": ""
     }
+  },
+  "fileSystem": {
+    "storageDriver": "local"
   }
 }

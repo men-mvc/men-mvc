@@ -45,7 +45,13 @@
   },
   "fileSystem": {
     "storageDriver": "local",
-    "maxUploadLimit": 524288000
+    "maxUploadLimit": 524288000,
+    "s3": {
+      "bucket": "",
+      "region": "",
+      "accessKeyId": "",
+      "secretAccessKey": ""
+    }
   },
   "logger": {
     "disabled": false
