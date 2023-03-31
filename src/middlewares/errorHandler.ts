@@ -1,16 +1,16 @@
 import { Request, Response, NextFunction } from '@men-mvc/core/lib/express';
-import { ValidationError as JoiValidationError } from 'joi';
-import { StatusCodes } from 'http-status-codes';
+import joi from '@men-mvc/core/lib/joi';
 import {
   errorResponse,
   validationErrorResponse,
-  logger,
-  UploadMaxFileSizeException,
+  UploadMaxFileSizeError,
   ValidationError,
   resolveValidationError,
   InsufficientPermissionError,
-  insufficientPermissionsResponse
+  insufficientPermissionsResponse,
+  StatusCodes
 } from '@men-mvc/core';
+import { logger } from '@men-mvc/logger';
 
 export const errorHandler = (
   err: Error | null,
@@ -27,7 +27,7 @@ export const errorHandler = (
   if (err instanceof ValidationError) {
     return validationErrorResponse(res, err);
   }
-  if (err instanceof JoiValidationError) {
+  if (err instanceof joi.ValidationError) {
     /**
      * Joi async validation failed.
      */
@@ -37,10 +37,13 @@ export const errorHandler = (
     return insufficientPermissionsResponse(res, err);
   }
 
-  // log the error
+  /**
+   * You can replace with your own logger class here
+   * If you are using your own custom error logging class, you can uninstall @men-mvc/logger module.
+   */
   logger.logError(err);
 
-  if (err instanceof UploadMaxFileSizeException) {
+  if (err instanceof UploadMaxFileSizeError) {
     return errorResponse(
       res,
       {

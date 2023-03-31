@@ -1,0 +1,10 @@
+{
+  "database": {
+    "mongo": {
+      "uri": ""
+    }
+  },
+  "fileSystem": {
+    "storageDriver": "local"
+  }
+}

@@ -6,17 +6,14 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import hpp from 'hpp';
 import mongoSanitise from 'express-mongo-sanitize';
-import {
-  logger,
-  getAppEnv,
-  AbstractApplication,
-  registerMultipartFormParser
-} from '@men-mvc/core';
-import config from 'config';
+import { getAppEnv, AbstractApplication } from '@men-mvc/core';
+import { logger } from '@men-mvc/logger';
+import { config } from './config';
 import { registerRoutes } from './routes';
 import { errorHandler } from './middlewares/errorHandler';
 import { apiThrottle } from './middlewares/apiThrottle';
 import { database } from './database';
+// import {registerMultipartFormParser} from "@men-mvc/filesystem";
 
 export default class Application extends AbstractApplication {
   constructor(public app: Express) {
@@ -24,7 +21,7 @@ export default class Application extends AbstractApplication {
   }
 
   public initialise = async () => {
-    if (config.get<string>('database.mongo.uri')) {
+    if (config.database.mongo.uri) {
       await database.connect();
     }
   };
@@ -41,7 +38,10 @@ export default class Application extends AbstractApplication {
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(hpp());
     this.app.use(express.json());
-    registerMultipartFormParser(this.app);
+    /**
+     * TODO: uncomment the following line to use @men-mvc/filesystem module after importing registerMultipartFormParser from the module.
+     * registerMultipartFormParser(this.app);
+     */
     this.app.use(helmet());
     this.app.use(mongoSanitise());
     this.app.disable(`x-powered-by`);
@@ -69,11 +69,9 @@ export default class Application extends AbstractApplication {
   };
 
   public start = () => {
-    this.app.listen(config.get<number>('server.port'), () => {
+    this.app.listen(config.server.port, () => {
       console.log(
-        `⚡️[server]: Server is running on port ${config.get<number>(
-          'server.port'
-        )}`
+        `⚡️[server]: Server is running on port ${config.server.port}`
       );
     });
   };

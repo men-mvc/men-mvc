@@ -22,7 +22,10 @@
     "user": "MAIL_USER",
     "password": "MAIL_PASSWORD",
     "host": "MAIL_HOST",
-    "port": "MAIL_PORT",
+    "port": {
+      "name": "MAIL_PORT",
+      "type": "number"
+    },
     "service": "MAIL_SERVICE",
     "secure": "MAIL_SECURE",
     "authType": "MAIL_AUTH_TYPE",
@@ -37,14 +40,35 @@
   "cache": {
     "driver": "CACHE_DRIVER",
     "redis": {
-      "port": "REDIS_PORT",
+      "port": {
+        "name": "REDIS_PORT",
+        "type": "number"
+      },
       "host": "REDIS_HOST",
       "password": "REDIS_PASSWORD",
-      "database": "REDIS_DATABASE"
+      "database": {
+        "name": "REDIS_DATABASE",
+        "type": "number"
+      }
     }
   },
   "fileSystem": {
     "storageDriver": "FILESYSTEM_STORAGE_DRIVER",
-    "maxUploadLimit": "FILESYSTEM_MAX_FILE_UPLOAD_LIMIT"
+    "maxUploadLimit": {
+      "name": "FILESYSTEM_MAX_FILE_UPLOAD_LIMIT",
+      "type": "number"
+    },
+    "s3": {
+      "bucket": "AWS_S3_BUCKET_NAME",
+      "region": "AWS_S3_REGION",
+      "accessKeyId": "AWS_S3_ACCESS_KEY_ID",
+      "secretAccessKey": "AWS_S3_SECRET_ACCESS_KEY"
+    }
+  },
+  "logger": {
+    "disabled": {
+      "name": "LOGGING_DISABLED",
+      "type": "boolean"
+    }
   }
 }

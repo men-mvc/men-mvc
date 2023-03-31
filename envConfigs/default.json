@@ -18,7 +18,7 @@
     "emailVerificationLinkDuration": 7200
   },
   "mail": {
-    "driver": "",
+    "driver": "console_log",
     "user": "",
     "password": "",
     "host": "smtp.mailtrap.io",
@@ -45,6 +45,15 @@
   },
   "fileSystem": {
     "storageDriver": "local",
-    "maxUploadLimit": 524288000
+    "maxUploadLimit": 524288000,
+    "s3": {
+      "bucket": "",
+      "region": "",
+      "accessKeyId": "",
+      "secretAccessKey": ""
+    }
+  },
+  "logger": {
+    "disabled": false
   }
 }

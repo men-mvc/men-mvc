@@ -1,12 +1,12 @@
 import { Response, NextFunction } from '@men-mvc/core/lib/express';
 import {
-  logger,
-  UploadMaxFileSizeException,
+  UploadMaxFileSizeError,
   ErrorResponse,
-  ErrorCodes
+  ErrorCodes,
+  StatusCodes
 } from '@men-mvc/core';
+import { logger } from '@men-mvc/logger';
 import sinon, { SinonSpy, SinonStub } from 'sinon';
-import { StatusCodes } from 'http-status-codes';
 import { mockErrorNextFunction, mockExpressRequest } from '../../testUtilities';
 import { errorHandler } from '../../../src/middlewares/errorHandler';
 import { FakeExpressResponse } from '../../types';
@@ -69,8 +69,8 @@ describe(`ErrorHandler Middleware`, () => {
     );
   });
 
-  it(`should return UploadMaxFileSizeException error when the error type is UploadMaxFileSizeException`, async () => {
-    const error = new UploadMaxFileSizeException();
+  it(`should return UploadMaxFileSizeError error when the error type is UploadMaxFileSizeException`, async () => {
+    const error = new UploadMaxFileSizeError();
     errorHandler(
       error,
       mockExpressRequest(),

@@ -1,43 +1,65 @@
 import { Request, Response, Router } from '@men-mvc/core/lib/express';
-import { asyncRequestHandler, requestHandler } from '@men-mvc/core';
+import {asyncRequestHandler, requestHandler} from '@men-mvc/core';
 import Application from '../application';
-import * as authController from '../controllers/authController';
+import { AuthController } from '../controllers/authController';
 import { authenticate } from '../middlewares/authenticate';
+import { config } from '../config';
 
-const apiRoutePrefix = `/api`;
+const authController = new AuthController();
+
+const publicRoutePrefix = `/api/public`;
+const protectedRoutePrefix = `/api/protected`;
 export const registerRoutes = (application: Application) => {
   application.app.get('/', (req: Request, res: Response) => {
-    res.send(`Hello from MEN MVC framework.`);
+    res.send(`Hello from ${config.app.name} framework.`);
   });
   const protectedRouter = Router();
+  protectedRouter.use(authenticate);
   const publicRouter = Router();
-
   /**
    * auth routes
    */
-  publicRouter
-    .route(`/auth/register`)
-    .post(asyncRequestHandler(authController.register));
-  publicRouter
-    .route(`/auth/login`)
-    .post(asyncRequestHandler(authController.login));
-  publicRouter
-    .route(`/auth/request-password-reset`)
-    .post(asyncRequestHandler(authController.requestPasswordReset));
-  publicRouter
-    .route(`/auth/reset-password`)
-    .put(asyncRequestHandler(authController.resetPassword));
-  publicRouter
-    .route(`/auth/verify-email`)
-    .put(asyncRequestHandler(authController.verifyEmail));
-  publicRouter
-    .route(`/auth/email-verification-link/resend`)
-    .post(asyncRequestHandler(authController.resendVerifyEmailLink));
-  protectedRouter.route(`/auth/me`).get(requestHandler(authController.me));
+  publicRouter.post(
+    `/register`,
+    asyncRequestHandler(async (req, res) => {
+      await authController.register(req, res);
+    })
+  );
+  publicRouter.post(
+    `/login`,
+    asyncRequestHandler(async (req, res) => {
+      await authController.login(req, res);
+    })
+  );
+  publicRouter.post(
+    `/request-password-reset`,
+    asyncRequestHandler(async (req, res) => {
+      await authController.requestPasswordReset(req, res);
+    })
+  );
+  publicRouter.put(
+    `/reset-password`,
+    asyncRequestHandler(async (req, res) => {
+      await authController.resetPassword(req, res);
+    })
+  );
+  publicRouter.put(
+    `/verify-email`,
+    asyncRequestHandler(async (req, res) => {
+      await authController.verifyEmail(req, res);
+    })
+  );
+  publicRouter.post(
+    `/email-verification-link/resend`,
+    asyncRequestHandler(async (req, res) => {
+      await authController.resendVerifyEmailLink(req, res);
+    })
+  );
+  protectedRouter.get(`/me`, requestHandler(authController.me));
   /**
    * end auth routes
    */
 
-  application.app.use(apiRoutePrefix, publicRouter);
-  application.app.use(apiRoutePrefix, authenticate, protectedRouter);
+  application.app.use(publicRoutePrefix, publicRouter);
+  application.app.use(protectedRoutePrefix, protectedRouter);
 };
