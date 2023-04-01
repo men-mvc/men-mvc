@@ -10,7 +10,6 @@ import {
 } from '../../../src/services/userService';
 import { User, UserModel } from '../../../src/models/user';
 import { createTestUsers } from '../../factories/userFactory';
-import { FAKE_MONGODB_OBJECT_ID } from '../../globals';
 
 describe(`UserService`, () => {
   withApplication();
@@ -71,7 +70,7 @@ describe(`UserService`, () => {
 
   it(`should return null when there is no user with the input id`, async () => {
     await createTestUsers(3);
-    const user = await findUserById(FAKE_MONGODB_OBJECT_ID);
+    const user = await findUserById(faker.database.mongodbObjectId());
     expect(user).toBeNull();
   });
 
