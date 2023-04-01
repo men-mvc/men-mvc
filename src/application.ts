@@ -1,12 +1,12 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import { Express, express } from '@men-mvc/core/lib/express';
+import { Express, express } from '@men-mvc/essentials/lib/express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import hpp from 'hpp';
 import mongoSanitise from 'express-mongo-sanitize';
-import { getAppEnv, AbstractApplication } from '@men-mvc/core';
+import { getAppEnv, AbstractApplication } from '@men-mvc/essentials';
 import { logger } from '@men-mvc/logger';
 import { config } from './config';
 import { registerRoutes } from './routes';

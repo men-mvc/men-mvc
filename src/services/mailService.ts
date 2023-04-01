@@ -1,4 +1,4 @@
-import { mailer, SendMailOptions } from '@men-mvc/core';
+import { mailer, SendMailOptions } from '@men-mvc/essentials';
 
 const templateLayout = `layout`; // set the layout file, src/views/emails/layout.handlebars
 

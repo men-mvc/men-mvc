@@ -5,8 +5,8 @@ import {
   StatusCodes,
   ValidateRequest,
   ValidateRequestAsync
-} from '@men-mvc/core';
-import { Request, Response } from '@men-mvc/core/lib/express';
+} from '@men-mvc/essentials';
+import { Request, Response } from '@men-mvc/essentials/lib/express';
 import { DocumentType } from '@typegoose/typegoose';
 import {
   changePassword,

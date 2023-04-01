@@ -1,9 +1,9 @@
-import { Request, Response, NextFunction } from '@men-mvc/core/lib/express';
+import { Request, Response, NextFunction } from '@men-mvc/essentials/lib/express';
 import {
   unauthorisedErrorResponse,
   asyncRequestHandler,
   extractBearerToken
-} from '@men-mvc/core';
+} from '@men-mvc/essentials';
 import { verifyAuthToken } from '../services/authService';
 import { findUserById } from '../services/userService';
 

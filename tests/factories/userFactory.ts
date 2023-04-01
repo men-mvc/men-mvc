@@ -1,7 +1,7 @@
+import {hashPassword} from "@men-mvc/essentials";
 import { DocumentType } from '@typegoose/typegoose';
 import { faker } from '@faker-js/faker';
 import { User, UserModel } from '../../src/models/user';
-import { hashPassword } from '../../src/services/authService';
 import { USER_PASSWORD } from '../globals';
 
 const generateData = async (
