@@ -1,5 +1,5 @@
-import { setServerDirectory } from '@men-mvc/core';
-import { express, Express } from '@men-mvc/core/lib/express';
+import { setServerDirectory } from '@men-mvc/essentials';
+import { express, Express } from '@men-mvc/essentials/lib/express';
 import Application from './application';
 const app: Express = express();
 
