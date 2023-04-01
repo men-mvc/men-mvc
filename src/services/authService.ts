@@ -1,7 +1,6 @@
 import { DocumentType } from '@typegoose/typegoose';
-import { generateUuid } from '@men-mvc/core';
+import {generateUuid, hashPassword, validatePassword} from '@men-mvc/essentials';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import dateAndTime from 'date-and-time';
 import { config } from '../config';
@@ -104,20 +103,6 @@ export const generateEmailVerificationLink = async (
     `${config.app.feUrl}/auth/verify-email?token=${token.token}&email=${user.email}`
   );
 };
-
-export const hashPassword = async (
-  plainTextPassword: string
-): Promise<string> => {
-  const salt = await bcrypt.genSalt(10);
-  const hash = await bcrypt.hash(plainTextPassword, salt);
-
-  return hash;
-};
-
-export const validatePassword = async (
-  plainText: string,
-  hash: string
-): Promise<boolean> => await bcrypt.compare(plainText, hash);
 
 export const registerUser = async (data: {
   name: string;

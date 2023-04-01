@@ -1,10 +1,10 @@
-import { Response, NextFunction } from '@men-mvc/core/lib/express';
+import { Response, NextFunction } from '@men-mvc/essentials/lib/express';
 import {
   UploadMaxFileSizeError,
   ErrorResponse,
   ErrorCodes,
   StatusCodes
-} from '@men-mvc/core';
+} from '@men-mvc/essentials';
 import { logger } from '@men-mvc/logger';
 import sinon, { SinonSpy, SinonStub } from 'sinon';
 import { mockErrorNextFunction, mockExpressRequest } from '../../testUtilities';

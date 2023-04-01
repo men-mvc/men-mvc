@@ -1,6 +1,6 @@
 import { SinonStub, stub, assert } from 'sinon';
 import { faker } from '@faker-js/faker';
-import { StatusCodes } from '@men-mvc/core';
+import { StatusCodes, validatePassword } from '@men-mvc/essentials';
 import { config } from '../../../src/config';
 import {
   getPasswordValidationTestData,
@@ -9,7 +9,6 @@ import {
 import * as mailService from '../../../src/services/mailService';
 import { findUserByEmail } from '../../../src/services/userService';
 import {
-  validatePassword,
   verifyAuthToken
 } from '../../../src/services/authService';
 import { RegisterPayload, TestValidationRequestItem } from '../../types';

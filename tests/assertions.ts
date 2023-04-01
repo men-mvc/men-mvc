@@ -1,5 +1,5 @@
 import { DocumentType } from '@typegoose/typegoose';
-import { ValidationErrorResponse } from '@men-mvc/core';
+import { ValidationErrorResponse } from '@men-mvc/essentials';
 import { User } from '../src/models/user';
 
 export const assertResponseHasValidationError = (

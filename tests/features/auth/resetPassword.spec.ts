@@ -1,5 +1,5 @@
 import sinon, { SinonStub } from 'sinon';
-import { StatusCodes } from '@men-mvc/core';
+import { StatusCodes, validatePassword } from '@men-mvc/essentials';
 import dateAndTime from 'date-and-time';
 import { DocumentType } from '@typegoose/typegoose';
 import { faker } from '@faker-js/faker';
@@ -19,7 +19,6 @@ import {
 } from '../../../src/models/verificationToken';
 import { createTestVerificationToken } from '../../factories/verificationTokenFactory';
 import { User } from '../../../src/models/user';
-import { validatePassword } from '../../../src/services/authService';
 import { findUserById } from '../../../src/services/userService';
 import {
   makeLoginRequest,

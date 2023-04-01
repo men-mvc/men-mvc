@@ -1,3 +1,4 @@
+import { validatePassword, hashPassword } from '@men-mvc/essentials';
 import { DocumentType } from '@typegoose/typegoose';
 import jwt from 'jsonwebtoken';
 import dateAndTime from 'date-and-time';
@@ -12,11 +13,9 @@ import {
   generateAuthToken,
   generateEmailVerificationLink,
   generatePasswordResetLink,
-  hashPassword,
   loginUser,
   registerUser,
   useVerificationToken,
-  validatePassword,
   verifyAuthToken,
   verifyEmail
 } from '../../../src/services/authService';

@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from '@men-mvc/core/lib/express';
-import joi from '@men-mvc/core/lib/joi';
+import { Request, Response, NextFunction } from '@men-mvc/essentials/lib/express';
+import joi from '@men-mvc/essentials/lib/joi';
 import {
   errorResponse,
   validationErrorResponse,
@@ -9,7 +9,7 @@ import {
   InsufficientPermissionError,
   insufficientPermissionsResponse,
   StatusCodes
-} from '@men-mvc/core';
+} from '@men-mvc/essentials';
 import { logger } from '@men-mvc/logger';
 
 export const errorHandler = (

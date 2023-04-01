@@ -4,7 +4,7 @@ import { User, UserModel } from '../models/user';
 /**
  * the types below are in this service file because they are tightly tied to this service file.
  */
-export type CreateUserParams = {
+export type CreateUserArgs = {
   name: string;
   email: string;
   password?: string;
@@ -12,12 +12,10 @@ export type CreateUserParams = {
   isActive: boolean;
 };
 
-export type UpdateUserParams = Partial<CreateUserParams>;
-
 const formatEmail = (email: string): string => email.toLowerCase().trim();
 
 export const createUser = async (
-  data: CreateUserParams
+  data: CreateUserArgs
 ): Promise<DocumentType<User>> =>
   UserModel.create({
     ...data,
@@ -35,17 +33,3 @@ export const findUserByEmail = async (
 export const findUserById = async (
   id: string
 ): Promise<DocumentType<User> | null> => UserModel.findById(id);
-
-export const updateUser = async (
-  user: DocumentType<User>,
-  data: UpdateUserParams
-): Promise<DocumentType<User>> => {
-  if (data.email) {
-    data.email = formatEmail(data.email.toLowerCase().trim());
-  }
-  const returnedUser = await UserModel.findByIdAndUpdate(user.id, {
-    $set: data
-  });
-
-  return returnedUser as DocumentType<User>;
-};

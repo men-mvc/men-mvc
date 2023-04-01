@@ -1,4 +1,4 @@
-import joi from '@men-mvc/core/lib/joi';
+import joi from '@men-mvc/essentials/lib/joi';
 import { validateUserEmailUnique } from './rules';
 
 const passwordRule = joi

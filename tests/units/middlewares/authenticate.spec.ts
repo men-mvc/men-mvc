@@ -1,5 +1,5 @@
-import { Response, NextFunction } from '@men-mvc/core/lib/express';
-import { ErrorResponse, StatusCodes } from '@men-mvc/core';
+import { Response, NextFunction } from '@men-mvc/essentials/lib/express';
+import { ErrorResponse, StatusCodes } from '@men-mvc/essentials';
 import sinon, { SinonSpy } from 'sinon';
 import { faker } from '@faker-js/faker';
 import { authenticate } from '../../../src/middlewares/authenticate';
