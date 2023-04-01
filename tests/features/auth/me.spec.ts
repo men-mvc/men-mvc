@@ -1,25 +1,13 @@
 import { StatusCodes } from '@men-mvc/core';
 import { faker } from '@faker-js/faker';
-import {
-  clearDatabase,
-  closeDatabaseConnection,
-  initApplication
-} from '../../testUtilities';
+import { withApplication } from '../../testUtilities';
 import { createTestUser } from '../../factories/userFactory';
 import { makeLoginRequest, makeMeRequest } from '../../requests';
 import { USER_PASSWORD } from '../../globals';
 import { assertUserResponse } from '../../assertions';
 
 describe(`Auth Route - Me`, () => {
-  beforeAll(async () => {
-    await initApplication();
-  });
-  afterAll(async () => {
-    await closeDatabaseConnection();
-  });
-  afterEach(async () => {
-    await clearDatabase();
-  });
+  withApplication();
 
   describe(`GET /api/auth/me`, () => {
     it(`should return unauthorised error when the access token is missing`, async () => {

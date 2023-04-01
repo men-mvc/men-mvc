@@ -19,8 +19,13 @@ export const assertResponseHasValidationError = (
         response.error.details &&
         key === field &&
         response.error.details[key] === expectedError
-    )
-  ).toBe(true);
+    ),
+    `could not find validation error '${expectedError}' in the response.`,
+    {
+      showPrefix: false,
+      showMatcherMessage: false
+    }
+  ).toBeTruthy();
 };
 
 export const assertUserResponse = (

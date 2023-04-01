@@ -1,12 +1,12 @@
 import { DocumentType } from '@typegoose/typegoose';
 import { faker } from '@faker-js/faker';
 import dateAndTime from 'date-and-time';
+import _ from 'lodash';
 import {
   VerificationToken,
   VerificationTokenModel
 } from '../../src/models/verificationToken';
 import { createTestUser } from './userFactory';
-import { getRandomVerificationTokenType } from './utilities';
 import { VerificationTokenType } from '../../src/types';
 
 export const createTestVerificationToken = async (
@@ -38,3 +38,12 @@ export const createTestVerificationToken = async (
     ...data
   });
 };
+
+export const getVerificationTokenTypes = (): VerificationTokenType[] => {
+  return Object.entries(VerificationTokenType)
+    .map((tup) => tup[1])
+    .filter((val) => typeof val !== 'string') as VerificationTokenType[];
+};
+
+export const getRandomVerificationTokenType = (): VerificationTokenType =>
+  _.sample(getVerificationTokenTypes()) as VerificationTokenType;

@@ -2,11 +2,7 @@ import { SinonStub, stub, assert } from 'sinon';
 import { StatusCodes } from '@men-mvc/core';
 import { config } from '../../../src/config';
 import { faker } from '@faker-js/faker';
-import {
-  clearDatabase,
-  closeDatabaseConnection,
-  initApplication
-} from '../../testUtilities';
+import { withApplication } from '../../testUtilities';
 import * as mailService from '../../../src/services/mailService';
 import { createTestUser } from '../../factories/userFactory';
 import { makeResendVerifyEmailLinkRequest } from '../../requests';
@@ -15,15 +11,7 @@ import { VerificationTokenType } from '../../../src/types';
 import { assertResponseHasValidationError } from '../../assertions';
 
 describe(`Auth Route - Resent Verify Email Link`, () => {
-  beforeAll(async () => {
-    await initApplication();
-  });
-  afterAll(async () => {
-    await closeDatabaseConnection();
-  });
-  afterEach(async () => {
-    await clearDatabase();
-  });
+  withApplication();
 
   describe(`POST /api/auth/email-verification-link/resend`, () => {
     let sendVerifyEmailMailStub: SinonStub;

@@ -4,7 +4,7 @@ import {
   successResponse,
   StatusCodes,
   ValidateRequest,
-  ValidateRequestAsync,
+  ValidateRequestAsync
 } from '@men-mvc/core';
 import { Request, Response } from '@men-mvc/core/lib/express';
 import { DocumentType } from '@typegoose/typegoose';

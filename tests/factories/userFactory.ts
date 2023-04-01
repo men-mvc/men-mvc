@@ -1,13 +1,12 @@
 import { DocumentType } from '@typegoose/typegoose';
-import { DeepPartial } from '@men-mvc/core';
 import { faker } from '@faker-js/faker';
 import { User, UserModel } from '../../src/models/user';
 import { hashPassword } from '../../src/services/authService';
 import { USER_PASSWORD } from '../globals';
 
-const getData = async (
-  data: DeepPartial<User> = {}
-): Promise<DeepPartial<User>> => {
+const generateData = async (
+  data: Partial<User> = {}
+): Promise<Partial<User>> => {
   const defaultData: User = {
     name: faker.name.fullName(),
     email: faker.internet.email().toLowerCase(),
@@ -23,20 +22,16 @@ const getData = async (
 };
 
 export const createTestUser = async (
-  data: DeepPartial<User> = {}
-): Promise<DocumentType<User>> => {
-  const user = await UserModel.create(await getData(data));
-
-  return user;
-};
+  data: Partial<User> = {}
+): Promise<DocumentType<User>> => UserModel.create(await generateData(data));
 
 export const createTestUsers = async (
   count: number,
-  data: DeepPartial<User> = {}
+  data: Partial<User> = {}
 ): Promise<DocumentType<User>[]> => {
-  const manyData: DeepPartial<User>[] = [];
+  const manyData: Partial<User>[] = [];
   for (let i = 0; i < count; i++) {
-    const finalData = await getData(data);
+    const finalData = await generateData(data);
     manyData.push(finalData);
   }
 

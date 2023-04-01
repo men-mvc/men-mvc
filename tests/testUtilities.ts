@@ -41,6 +41,18 @@ export const clearDatabase = async () => {
   await database.drop();
 };
 
+export const withApplication = () => {
+  beforeAll(async () => {
+    await initApplication();
+  });
+  afterAll(async () => {
+    await closeDatabaseConnection();
+  });
+  afterEach(async () => {
+    await clearDatabase();
+  });
+};
+
 export const mockErrorNextFunction = (): NextFunction => {
   return (() => {
     throw new Error(`Next function was invoked.`);
