@@ -4,7 +4,7 @@ import dateAndTime from 'date-and-time';
 import { mockNow, restoreNowMock, withApplication } from '../../testUtilities';
 import {
   createUser,
-  CreateUserParams,
+  CreateUserArgs,
   findUserByEmail,
   findUserById
 } from '../../../src/services/userService';
@@ -76,7 +76,7 @@ describe(`UserService`, () => {
 
   const assertUserHasData = (
     user: DocumentType<User>,
-    data: CreateUserParams
+    data: CreateUserArgs
   ) => {
     expect(user.name).toBe(data.name);
     expect(user.email).toBe(data.email.toLowerCase());
@@ -88,7 +88,7 @@ describe(`UserService`, () => {
     expect(user.createdAt.getTime()).toBe(new Date().getTime());
   };
 
-  const generateUserData = (): CreateUserParams => ({
+  const generateUserData = (): CreateUserArgs => ({
     name: faker.name.fullName(),
     email: faker.internet.email(),
     password: faker.datatype.uuid(),
