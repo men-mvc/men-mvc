@@ -1,13 +1,7 @@
 import { DocumentType } from '@typegoose/typegoose';
 import { faker } from '@faker-js/faker';
 import dateAndTime from 'date-and-time';
-import {
-  clearDatabase,
-  closeDatabaseConnection,
-  initApplication,
-  mockNow,
-  restoreNowMock
-} from '../../testUtilities';
+import { mockNow, restoreNowMock, withApplication } from '../../testUtilities';
 import {
   createUser,
   CreateUserParams,
@@ -19,17 +13,10 @@ import { createTestUsers } from '../../factories/userFactory';
 import { FAKE_MONGODB_OBJECT_ID } from '../../globals';
 
 describe(`UserService`, () => {
-  beforeAll(async () => {
-    mockNow();
-    await initApplication();
-  });
-  afterAll(async () => {
-    restoreNowMock();
-    await closeDatabaseConnection();
-  });
-  afterEach(async () => {
-    await clearDatabase();
-  });
+  withApplication();
+
+  beforeAll(mockNow);
+  afterAll(restoreNowMock);
 
   it(`should create user`, async () => {
     const data = generateUserData();

@@ -1,10 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { StatusCodes } from '@men-mvc/core';
-import {
-  clearDatabase,
-  closeDatabaseConnection,
-  initApplication
-} from '../../testUtilities';
+import { withApplication } from '../../testUtilities';
 import { TestValidationRequestItem } from '../../types';
 import { createTestUser } from '../../factories/userFactory';
 import { verifyAuthToken } from '../../../src/services/authService';
@@ -16,15 +12,8 @@ import {
 } from '../../assertions';
 
 describe(`Auth Route - Login`, () => {
-  beforeAll(async () => {
-    await initApplication();
-  });
-  afterAll(async () => {
-    await closeDatabaseConnection();
-  });
-  afterEach(async () => {
-    await clearDatabase();
-  });
+  withApplication();
+
   describe(`POST /api/auth/login`, () => {
     it(`should generate and return access token when login credentials are correct`, async () => {
       const user = await createTestUser();

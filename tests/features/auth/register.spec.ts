@@ -3,10 +3,8 @@ import { faker } from '@faker-js/faker';
 import { StatusCodes } from '@men-mvc/core';
 import { config } from '../../../src/config';
 import {
-  clearDatabase,
-  closeDatabaseConnection,
   getPasswordValidationTestData,
-  initApplication
+  withApplication
 } from '../../testUtilities';
 import * as mailService from '../../../src/services/mailService';
 import { findUserByEmail } from '../../../src/services/userService';
@@ -25,15 +23,8 @@ import {
 } from '../../assertions';
 
 describe(`Auth Route - Register`, () => {
-  beforeAll(async () => {
-    await initApplication();
-  });
-  afterAll(async () => {
-    await closeDatabaseConnection();
-  });
-  afterEach(async () => {
-    await clearDatabase();
-  });
+  withApplication();
+
   describe(`POST /api/auth/register`, () => {
     let sendWelcomeMailStub: SinonStub;
     let sendVerifyEmailMailStub: SinonStub;

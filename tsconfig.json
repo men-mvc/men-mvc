@@ -13,5 +13,8 @@
     "resolveJsonModule": true
   },
   "include": ["src"],
-  "files": ["typings/express/index.d.ts", "node_modules/jest-expect-message/types/index.d.ts"]
+  "files": [
+    "typings/express/index.d.ts",
+    "node_modules/jest-expect-message/types/index.d.ts"
+  ]
 }

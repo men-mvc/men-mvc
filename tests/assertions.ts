@@ -7,25 +7,25 @@ export const assertResponseHasValidationError = (
   field: string,
   expectedError: string
 ) => {
-    if (
-        !response.error.details ||
-        Object.keys(response.error.details).length < 1
-    ) {
-        throw new Error(`Validation errors missing.`);
+  if (
+    !response.error.details ||
+    Object.keys(response.error.details).length < 1
+  ) {
+    throw new Error(`Validation errors missing.`);
+  }
+  expect(
+    Object.keys(response.error.details).some(
+      (key) =>
+        response.error.details &&
+        key === field &&
+        response.error.details[key] === expectedError
+    ),
+    `could not find validation error '${expectedError}' in the response.`,
+    {
+      showPrefix: false,
+      showMatcherMessage: false
     }
-    expect(
-        Object.keys(response.error.details).some(
-            (key) =>
-                response.error.details &&
-                key === field &&
-                response.error.details[key] === expectedError
-        ),
-        `could not find validation error '${expectedError}' in the response.`,
-        {
-            showPrefix: false,
-            showMatcherMessage: false
-        }
-    ).toBeTruthy();
+  ).toBeTruthy();
 };
 
 export const assertUserResponse = (

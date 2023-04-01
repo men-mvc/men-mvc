@@ -20,13 +20,7 @@ import {
   verifyAuthToken,
   verifyEmail
 } from '../../../src/services/authService';
-import {
-  clearDatabase,
-  closeDatabaseConnection,
-  initApplication,
-  mockNow,
-  restoreNowMock
-} from '../../testUtilities';
+import { mockNow, restoreNowMock, withApplication } from '../../testUtilities';
 import { createTestUser } from '../../factories/userFactory';
 import {
   VerificationToken,
@@ -43,22 +37,16 @@ import { AuthTokenPayload } from '../../../src/types';
 import { getRandomVerificationTokenType } from '../../factories/verificationTokenFactory';
 
 describe(`AuthService`, () => {
+  withApplication();
   let sendWelcomeMailStub: SinonStub;
   let sendVerifyEmailMailStub: SinonStub;
-  beforeAll(async () => {
-    mockNow();
-    await initApplication();
-  });
-  afterAll(async () => {
-    restoreNowMock();
-    await closeDatabaseConnection();
-  });
+  beforeAll(mockNow);
+  afterAll(restoreNowMock);
   beforeEach(async () => {
     sendWelcomeMailStub = sinon.stub(mailService, `sendWelcomeMail`);
     sendVerifyEmailMailStub = sinon.stub(mailService, `sendVerifyEmailMail`);
   });
   afterEach(async () => {
-    await clearDatabase();
     sendWelcomeMailStub.restore();
     sendVerifyEmailMailStub.restore();
   });

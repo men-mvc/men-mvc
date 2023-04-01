@@ -2,13 +2,7 @@ import { DocumentType } from '@typegoose/typegoose';
 import { faker } from '@faker-js/faker';
 import { StatusCodes } from '@men-mvc/core';
 import dateAndTime from 'date-and-time';
-import {
-  clearDatabase,
-  closeDatabaseConnection,
-  initApplication,
-  mockNow,
-  restoreNowMock
-} from '../../testUtilities';
+import { mockNow, restoreNowMock, withApplication } from '../../testUtilities';
 import { createTestVerificationToken } from '../../factories/verificationTokenFactory';
 import { User } from '../../../src/models/user';
 import { makeVerifyEmailRequest } from '../../requests';
@@ -23,17 +17,9 @@ import { assertResponseHasValidationError } from '../../assertions';
 import { VerificationTokenType } from '../../../src/types';
 
 describe(`Auth Route - Verify Email`, () => {
-  beforeAll(async () => {
-    mockNow();
-    await initApplication();
-  });
-  afterAll(async () => {
-    restoreNowMock();
-    await closeDatabaseConnection();
-  });
-  afterEach(async () => {
-    await clearDatabase();
-  });
+  withApplication();
+  beforeAll(mockNow);
+  afterAll(restoreNowMock);
 
   describe(`PUT /api/auth/verify-email`, () => {
     it(`should mark verification token as used when the email is verified`, async () => {

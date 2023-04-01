@@ -6,24 +6,18 @@ import { authenticate } from '../../../src/middlewares/authenticate';
 import { createTestUser } from '../../factories/userFactory';
 import { generateAuthToken } from '../../../src/services/authService';
 import {
-  clearDatabase,
-  initApplication,
   mockErrorNextFunction,
-  mockExpressRequest
+  mockExpressRequest,
+  withApplication
 } from '../../testUtilities';
 import { UserModel } from '../../../src/models/user';
 import { FakeExpressResponse } from '../../types';
 
 const response = new FakeExpressResponse() as Response;
 describe(`Authenticate Middleware`, () => {
+  withApplication();
   let statusSpy: SinonSpy;
   let jsonSpy: SinonSpy;
-  beforeAll(async () => {
-    await initApplication();
-  });
-  afterAll(async () => {
-    await clearDatabase();
-  });
   beforeEach(() => {
     statusSpy = sinon.spy(response, `status`);
     jsonSpy = sinon.spy(response, `json`);

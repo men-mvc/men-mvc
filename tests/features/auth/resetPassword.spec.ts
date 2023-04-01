@@ -5,12 +5,10 @@ import { DocumentType } from '@typegoose/typegoose';
 import { faker } from '@faker-js/faker';
 import { config } from '../../../src/config';
 import {
-  clearDatabase,
-  closeDatabaseConnection,
   getPasswordValidationTestData,
-  initApplication,
   mockNow,
-  restoreNowMock
+  restoreNowMock,
+  withApplication
 } from '../../testUtilities';
 import { ResetPasswordPayload, TestValidationRequestItem } from '../../types';
 import { createTestUser } from '../../factories/userFactory';
@@ -33,23 +31,21 @@ import { assertResponseHasValidationError } from '../../assertions';
 import { VerificationTokenType } from '../../../src/types';
 
 describe(`Auth Route - Reset Password`, () => {
+  withApplication();
+
   let sendPasswordResetMailStub: SinonStub;
-  beforeAll(async () => {
-    mockNow();
-    await initApplication();
-  });
-  afterAll(async () => {
-    restoreNowMock();
-    await closeDatabaseConnection();
-  });
+
+  beforeAll(mockNow);
+  afterAll(restoreNowMock);
+
   beforeEach(async () => {
     sendPasswordResetMailStub = sinon.stub(
       mailService,
       `sendPasswordResetMail`
     );
   });
+
   afterEach(async () => {
-    await clearDatabase();
     sendPasswordResetMailStub.restore();
   });
 
