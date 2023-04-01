@@ -9,7 +9,8 @@ const config: Config.InitialOptions = {
   transform: {
     '^.+\\.tsx?$': 'ts-jest'
   },
-  preset: '@shelf/jest-mongodb',
-  coveragePathIgnorePatterns: ['node_modules', '<rootDir>/tests']
+  preset: 'ts-jest',
+  coveragePathIgnorePatterns: ['node_modules', '<rootDir>/tests'],
+  setupFilesAfterEnv: ['jest-expect-message']
 };
 export default config;

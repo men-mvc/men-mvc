@@ -1,7 +1,7 @@
 {
   "database": {
     "mongo": {
-      "uri": ""
+      "uri": "mongodb://localhost:27017/men-mvc-test"
     }
   },
   "fileSystem": {

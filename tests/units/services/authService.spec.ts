@@ -40,7 +40,7 @@ import * as mailService from '../../../src/services/mailService';
 import { createTestVerificationToken } from '../../factories/verificationTokenFactory';
 import { USER_PASSWORD } from '../../globals';
 import { AuthTokenPayload } from '../../../src/types';
-import { getRandomVerificationTokenType } from '../../factories/utilities';
+import { getRandomVerificationTokenType } from '../../factories/verificationTokenFactory';
 
 describe(`AuthService`, () => {
   let sendWelcomeMailStub: SinonStub;
