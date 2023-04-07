@@ -2,7 +2,7 @@ import { StatusCodes } from '@men-mvc/essentials';
 import { faker } from '@faker-js/faker';
 import { withApplication } from '../../testUtilities';
 import { createTestUser } from '../../factories/userFactory';
-import { makeLoginRequest, makeMeRequest } from '../../requests';
+import { makeLoginRequest, makeMeRequest } from '../requests';
 import { USER_PASSWORD } from '../../globals';
 import { assertUserResponse } from '../../assertions';
 

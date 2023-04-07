@@ -4,7 +4,7 @@ import { withApplication } from '../../testUtilities';
 import { TestValidationRequestItem } from '../../types';
 import { createTestUser } from '../../factories/userFactory';
 import { verifyAuthToken } from '../../../src/services/authService';
-import { makeLoginRequest } from '../../requests';
+import { makeLoginRequest } from '../requests';
 import { USER_PASSWORD } from '../../globals';
 import {
   assertResponseHasValidationError,

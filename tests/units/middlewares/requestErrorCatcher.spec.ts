@@ -8,7 +8,7 @@ import {
 import { logger } from '@men-mvc/logger';
 import sinon, { SinonSpy, SinonStub } from 'sinon';
 import { mockErrorNextFunction, mockExpressRequest } from '../../testUtilities';
-import { errorHandler } from '../../../src/middlewares/errorHandler';
+import { requestErrorCatcher } from '../../../src/middlewares/requestErrorCatcher';
 import { FakeExpressResponse } from '../../types';
 
 const response = new FakeExpressResponse() as Response;
@@ -31,14 +31,14 @@ describe(`ErrorHandler Middleware`, () => {
     const next = (() => {
       nextFunctionCalled = true;
     }) as NextFunction;
-    errorHandler(null, mockExpressRequest(), response, next);
+    requestErrorCatcher(null, mockExpressRequest(), response, next);
 
     expect(nextFunctionCalled).toBeTruthy();
   });
 
   it(`should log error when there is an error`, () => {
     const error = new Error(`Something went wrong.`);
-    errorHandler(
+    requestErrorCatcher(
       error,
       mockExpressRequest(),
       response,
@@ -50,7 +50,7 @@ describe(`ErrorHandler Middleware`, () => {
 
   it(`should return internal server response when there is an error`, () => {
     const error = new Error(`Something went wrong.`);
-    errorHandler(
+    requestErrorCatcher(
       error,
       mockExpressRequest(),
       response,
@@ -71,7 +71,7 @@ describe(`ErrorHandler Middleware`, () => {
 
   it(`should return UploadMaxFileSizeError error when the error type is UploadMaxFileSizeException`, async () => {
     const error = new UploadMaxFileSizeError();
-    errorHandler(
+    requestErrorCatcher(
       error,
       mockExpressRequest(),
       response,

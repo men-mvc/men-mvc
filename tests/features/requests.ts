@@ -1,34 +1,32 @@
 import supertest from 'supertest';
+import { getExpressApp } from '../testUtilities';
+import { protectedRoutePrefix, publicRoutePrefix } from '../../src/routes';
 import {
   LoginPayload,
   RegisterPayload,
   ResetPasswordPayload,
   VerifyEmailPayload
 } from './types';
-import { getExpressApp } from './testUtilities';
-
-const pubicRoutePrefix = `/api/public`;
-const protectedRoutePrefix = `/api/protected`;
 
 export const makeRegisterRequest = async (
   payload: Partial<RegisterPayload>
 ): Promise<supertest.Test> =>
   supertest(await getExpressApp())
-    .post(`${pubicRoutePrefix}/register`)
+    .post(`${publicRoutePrefix}/register`)
     .send(payload);
 
 export const makeLoginRequest = async (
   payload: Partial<LoginPayload>
 ): Promise<supertest.Test> =>
   supertest(await getExpressApp())
-    .post(`${pubicRoutePrefix}/login`)
+    .post(`${publicRoutePrefix}/login`)
     .send(payload);
 
 export const makeRequestPasswordResetRequest = async (
   email: string
 ): Promise<supertest.Test> =>
   supertest(await getExpressApp())
-    .post(`${pubicRoutePrefix}/request-password-reset`)
+    .post(`${publicRoutePrefix}/request-password-reset`)
     .send({
       email
     });
@@ -37,21 +35,21 @@ export const makeResetPasswordRequest = async (
   payload: Partial<ResetPasswordPayload>
 ): Promise<supertest.Test> =>
   supertest(await getExpressApp())
-    .put(`${pubicRoutePrefix}/reset-password`)
+    .put(`${publicRoutePrefix}/reset-password`)
     .send(payload);
 
 export const makeVerifyEmailRequest = async (
   payload: Partial<VerifyEmailPayload>
 ): Promise<supertest.Test> =>
   supertest(await getExpressApp())
-    .put(`${pubicRoutePrefix}/verify-email`)
+    .put(`${publicRoutePrefix}/verify-email`)
     .send(payload);
 
 export const makeResendVerifyEmailLinkRequest = async (
   email: string
 ): Promise<supertest.Test> =>
   supertest(await getExpressApp())
-    .post(`${pubicRoutePrefix}/email-verification-link/resend`)
+    .post(`${publicRoutePrefix}/email-verification-link/resend`)
     .send({ email });
 
 export const makeMeRequest = async (

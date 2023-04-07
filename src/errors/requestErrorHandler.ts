@@ -1,26 +1,22 @@
-import { Request, Response, NextFunction } from '@men-mvc/essentials/lib/express';
-import joi from '@men-mvc/essentials/lib/joi';
+import { Request, Response } from '@men-mvc/essentials/lib/express';
 import {
   errorResponse,
-  validationErrorResponse,
-  UploadMaxFileSizeError,
-  ValidationError,
-  resolveValidationError,
   InsufficientPermissionError,
   insufficientPermissionsResponse,
-  StatusCodes
+  resolveValidationError,
+  StatusCodes,
+  UploadMaxFileSizeError,
+  ValidationError,
+  validationErrorResponse
 } from '@men-mvc/essentials';
-import { logger } from '@men-mvc/logger';
+import joi from '@men-mvc/essentials/lib/joi';
+import { applicationErrorHandler } from './applicationErrorHandler';
 
-export const errorHandler = (
-  err: Error | null,
+export const requestErrorHandler = (
+  err: Error,
   req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  if (!err) {
-    return next();
-  }
+  res: Response
+): Response => {
   /**
    * does not log error for validation error
    */
@@ -37,11 +33,7 @@ export const errorHandler = (
     return insufficientPermissionsResponse(res, err);
   }
 
-  /**
-   * You can replace with your own logger class here
-   * If you are using your own custom error logging class, you can uninstall @men-mvc/logger module.
-   */
-  logger.logError(err);
+  applicationErrorHandler(err);
 
   if (err instanceof UploadMaxFileSizeError) {
     return errorResponse(
