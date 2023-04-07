@@ -1,7 +1,7 @@
 import { validatePassword, hashPassword } from '@men-mvc/essentials';
 import { DocumentType } from '@typegoose/typegoose';
 import jwt from 'jsonwebtoken';
-import dateAndTime from 'date-and-time';
+import moment from 'moment';
 import { faker } from '@faker-js/faker';
 import sinon, { SinonStub } from 'sinon';
 import { config } from '../../../src/config';
@@ -66,7 +66,7 @@ describe(`AuthService`, () => {
     const data = {
       token: faker.datatype.uuid(),
       type: getRandomVerificationTokenType(),
-      expiresAt: dateAndTime.addDays(new Date(), 2),
+      expiresAt: moment().add(2, 'days').toDate(),
       userId: user._id
     };
     const token = await createVerificationToken(data);
@@ -307,7 +307,7 @@ describe(`AuthService`, () => {
   it(`should return false if expiresAt is later than now`, async () => {
     const verificationToken: DocumentType<VerificationToken> =
       await createTestVerificationToken({
-        expiresAt: dateAndTime.addSeconds(new Date(), -10)
+        expiresAt: moment().subtract(10, 'seconds').toDate()
       });
     const user = await verificationToken.getUser();
     if (!user) {
@@ -324,7 +324,7 @@ describe(`AuthService`, () => {
   it(`should return true if expiresAt is earlier than now`, async () => {
     const verificationToken: DocumentType<VerificationToken> =
       await createTestVerificationToken({
-        expiresAt: dateAndTime.addSeconds(new Date(), 10)
+        expiresAt: moment().add(10, 'seconds').toDate()
       });
     const user = await verificationToken.getUser();
     if (!user) {

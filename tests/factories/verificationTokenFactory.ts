@@ -1,7 +1,7 @@
 import { DocumentType } from '@typegoose/typegoose';
 import { faker } from '@faker-js/faker';
-import dateAndTime from 'date-and-time';
 import _ from 'lodash';
+import moment from 'moment';
 import {
   VerificationToken,
   VerificationTokenModel
@@ -29,7 +29,7 @@ export const createTestVerificationToken = async (
     token: faker.datatype.uuid(),
     type: getRandomVerificationTokenType(),
     createdAt: new Date(),
-    expiresAt: dateAndTime.addDays(new Date(), 3),
+    expiresAt: moment().add(3, 'days'),
     user: userId
   };
 
