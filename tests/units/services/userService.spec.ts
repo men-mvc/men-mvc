@@ -1,7 +1,7 @@
 import { DocumentType } from '@typegoose/typegoose';
 import { faker } from '@faker-js/faker';
 import moment from 'moment';
-import { mockNow, restoreNowMock, withApplication } from '../../testUtilities';
+import { withMockDate, withApplication } from '../../testUtilities';
 import {
   createUser,
   CreateUserArgs,
@@ -13,9 +13,7 @@ import { createTestUsers } from '../../factories/userFactory';
 
 describe(`UserService`, () => {
   withApplication();
-
-  beforeAll(mockNow);
-  afterAll(restoreNowMock);
+  withMockDate();
 
   it(`should create user`, async () => {
     const data = generateUserData();
