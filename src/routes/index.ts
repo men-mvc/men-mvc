@@ -7,8 +7,8 @@ import { config } from '../config';
 
 const authController = new AuthController();
 
-const publicRoutePrefix = `/api/public`;
-const protectedRoutePrefix = `/api/protected`;
+export const publicRoutePrefix = `/api/public`;
+export const protectedRoutePrefix = `/api/protected`;
 export const registerRoutes = (application: Application) => {
   application.app.get('/', (req: Request, res: Response) => {
     res.send(`Hello from ${config.app.name} framework.`);

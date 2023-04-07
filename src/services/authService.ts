@@ -1,5 +1,9 @@
 import { DocumentType } from '@typegoose/typegoose';
-import {generateUuid, hashPassword, validatePassword} from '@men-mvc/essentials';
+import {
+  generateUuid,
+  hashPassword,
+  validatePassword
+} from '@men-mvc/essentials';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import dateAndTime from 'date-and-time';

@@ -27,26 +27,3 @@ export class FakeExpressResponse {
     jest.fn().mockReturnValue(data); // only faking a function to make use of data parameter. but this has no impact on the tests.
   };
 }
-
-export type RegisterPayload = {
-  name: string;
-  email: string;
-  password: string;
-};
-
-export type LoginPayload = {
-  email: string;
-  password: string;
-};
-
-export type ResetPasswordPayload = {
-  email: string;
-  token: string;
-  newPassword: string;
-  passwordConfirmation: string;
-};
-
-export type VerifyEmailPayload = {
-  email: string;
-  token: string;
-};

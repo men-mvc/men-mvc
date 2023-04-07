@@ -8,18 +8,17 @@ import {
 } from '../../testUtilities';
 import * as mailService from '../../../src/services/mailService';
 import { findUserByEmail } from '../../../src/services/userService';
-import {
-  verifyAuthToken
-} from '../../../src/services/authService';
-import { RegisterPayload, TestValidationRequestItem } from '../../types';
+import { verifyAuthToken } from '../../../src/services/authService';
+import { TestValidationRequestItem } from '../../types';
 import { VerificationTokenModel } from '../../../src/models/verificationToken';
 import { createTestUser } from '../../factories/userFactory';
-import { makeLoginRequest, makeRegisterRequest } from '../../requests';
+import { makeLoginRequest, makeRegisterRequest } from '../requests';
 import { USER_PASSWORD } from '../../globals';
 import {
   assertResponseHasValidationError,
   assertUserResponse
 } from '../../assertions';
+import { RegisterPayload } from '../types';
 
 describe(`Auth Route - Register`, () => {
   withApplication();

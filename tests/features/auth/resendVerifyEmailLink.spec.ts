@@ -5,7 +5,7 @@ import { faker } from '@faker-js/faker';
 import { withApplication } from '../../testUtilities';
 import * as mailService from '../../../src/services/mailService';
 import { createTestUser } from '../../factories/userFactory';
-import { makeResendVerifyEmailLinkRequest } from '../../requests';
+import { makeResendVerifyEmailLinkRequest } from '../requests';
 import { VerificationTokenModel } from '../../../src/models/verificationToken';
 import { VerificationTokenType } from '../../../src/types';
 import { assertResponseHasValidationError } from '../../assertions';

@@ -1,4 +1,4 @@
-import {hashPassword} from "@men-mvc/essentials";
+import { hashPassword } from '@men-mvc/essentials';
 import { DocumentType } from '@typegoose/typegoose';
 import { faker } from '@faker-js/faker';
 import { User, UserModel } from '../../src/models/user';

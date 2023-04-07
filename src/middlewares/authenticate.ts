@@ -1,4 +1,8 @@
-import { Request, Response, NextFunction } from '@men-mvc/essentials/lib/express';
+import {
+  Request,
+  Response,
+  NextFunction
+} from '@men-mvc/essentials/lib/express';
 import {
   unauthorisedErrorResponse,
   asyncRequestHandler,

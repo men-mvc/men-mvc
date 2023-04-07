@@ -10,7 +10,7 @@ import {
   restoreNowMock,
   withApplication
 } from '../../testUtilities';
-import { ResetPasswordPayload, TestValidationRequestItem } from '../../types';
+import { TestValidationRequestItem } from '../../types';
 import { createTestUser } from '../../factories/userFactory';
 import * as mailService from '../../../src/services/mailService';
 import {
@@ -24,10 +24,11 @@ import {
   makeLoginRequest,
   makeRequestPasswordResetRequest,
   makeResetPasswordRequest
-} from '../../requests';
+} from '../requests';
 import { USER_PASSWORD } from '../../globals';
 import { assertResponseHasValidationError } from '../../assertions';
 import { VerificationTokenType } from '../../../src/types';
+import { ResetPasswordPayload } from '../types';
 
 describe(`Auth Route - Reset Password`, () => {
   withApplication();

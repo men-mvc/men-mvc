@@ -10,7 +10,7 @@ import { getAppEnv, AbstractApplication } from '@men-mvc/essentials';
 import { logger } from '@men-mvc/logger';
 import { config } from './config';
 import { registerRoutes } from './routes';
-import { errorHandler } from './middlewares/errorHandler';
+import { requestErrorCatcher } from './middlewares/requestErrorCatcher';
 import { apiThrottle } from './middlewares/apiThrottle';
 import { database } from './database';
 // import {registerMultipartFormParser} from "@men-mvc/filesystem";
@@ -65,7 +65,7 @@ export default class Application extends AbstractApplication {
 
   public initialisePostMiddlewares = () => {
     // register new middlewares here
-    this.app.use(errorHandler);
+    this.app.use(requestErrorCatcher);
   };
 
   public start = () => {

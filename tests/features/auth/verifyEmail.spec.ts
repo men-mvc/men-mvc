@@ -5,7 +5,7 @@ import dateAndTime from 'date-and-time';
 import { mockNow, restoreNowMock, withApplication } from '../../testUtilities';
 import { createTestVerificationToken } from '../../factories/verificationTokenFactory';
 import { User } from '../../../src/models/user';
-import { makeVerifyEmailRequest } from '../../requests';
+import { makeVerifyEmailRequest } from '../requests';
 import {
   VerificationToken,
   VerificationTokenModel
