@@ -1,7 +1,7 @@
 import { DocumentType } from '@typegoose/typegoose';
 import { faker } from '@faker-js/faker';
 import { StatusCodes } from '@men-mvc/essentials';
-import dateAndTime from 'date-and-time';
+import moment from 'moment';
 import { mockNow, restoreNowMock, withApplication } from '../../testUtilities';
 import { createTestVerificationToken } from '../../factories/verificationTokenFactory';
 import { User } from '../../../src/models/user';
@@ -86,7 +86,7 @@ describe(`Auth Route - Verify Email`, () => {
     it(`should return error when the token is expired`, async () => {
       const verificationToken = await createTestVerificationToken({
         type: VerificationTokenType.VERIFY_EMAIL,
-        expiresAt: dateAndTime.addSeconds(new Date(), -20)
+        expiresAt: moment().subtract(20, 'seconds').toDate()
       });
       const user = (await verificationToken.getUser()) as DocumentType<User>;
       const { status } = await makeVerifyEmailRequest({
@@ -100,7 +100,7 @@ describe(`Auth Route - Verify Email`, () => {
     it(`should return error when the token belongs to different user`, async () => {
       const verificationToken = await createTestVerificationToken({
         type: VerificationTokenType.VERIFY_EMAIL,
-        expiresAt: dateAndTime.addHours(new Date(), 20)
+        expiresAt: moment().add(20, 'hours').toDate()
       });
       const differentUser = await createTestUser();
       const { status } = await makeVerifyEmailRequest({
@@ -114,8 +114,8 @@ describe(`Auth Route - Verify Email`, () => {
     it(`should return error when the token is already used`, async () => {
       const verificationToken = await createTestVerificationToken({
         type: VerificationTokenType.VERIFY_EMAIL,
-        expiresAt: dateAndTime.addHours(new Date(), 20),
-        verifiedAt: dateAndTime.addDays(new Date(), -1)
+        expiresAt: moment().add(20, 'hours').toDate(),
+        verifiedAt: moment().subtract(1, 'day').toDate()
       });
       const user = (await verificationToken.getUser()) as DocumentType<User>;
       const { status } = await makeVerifyEmailRequest({
@@ -129,8 +129,8 @@ describe(`Auth Route - Verify Email`, () => {
     it(`should return error when the user with the email does not exist`, async () => {
       const verificationToken = await createTestVerificationToken({
         type: VerificationTokenType.VERIFY_EMAIL,
-        expiresAt: dateAndTime.addHours(new Date(), 20),
-        verifiedAt: dateAndTime.addDays(new Date(), -1)
+        expiresAt: moment().add(20, 'hours').toDate(),
+        verifiedAt: moment().subtract(1, 'day').toDate()
       });
       const { status } = await makeVerifyEmailRequest({
         email: faker.internet.email(),

@@ -6,7 +6,7 @@ import {
 } from '@men-mvc/essentials';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
-import dateAndTime from 'date-and-time';
+import moment from 'moment';
 import { config } from '../config';
 import { AuthTokenPayload, VerificationTokenType } from '../types';
 import { User, UserModel } from '../models/user';
@@ -59,10 +59,9 @@ const generateVerificationToken = (): string =>
 const generatePasswordResetVerificationToken = async (
   user: DocumentType<User>
 ): Promise<VerificationToken> => {
-  const expiresAt = dateAndTime.addSeconds(
-    new Date(),
-    config.auth.passwordResetLinkDuration
-  );
+  const expiresAt = moment()
+    .add(config.auth.passwordResetLinkDuration, 'seconds')
+    .toDate();
   const token = generateVerificationToken();
   return await createVerificationToken({
     token,
@@ -75,10 +74,9 @@ const generatePasswordResetVerificationToken = async (
 const generateVerifyEmailVerificationToken = async (
   user: DocumentType<User>
 ): Promise<VerificationToken> => {
-  const expiresAt = dateAndTime.addSeconds(
-    new Date(),
-    config.auth.emailVerificationLinkDuration
-  );
+  const expiresAt = moment()
+    .add(config.auth.emailVerificationLinkDuration, 'seconds')
+    .toDate();
   const token = generateVerificationToken();
   return await createVerificationToken({
     token,

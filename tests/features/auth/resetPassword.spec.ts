@@ -1,6 +1,6 @@
 import sinon, { SinonStub } from 'sinon';
 import { StatusCodes, validatePassword } from '@men-mvc/essentials';
-import dateAndTime from 'date-and-time';
+import moment from 'moment';
 import { DocumentType } from '@typegoose/typegoose';
 import { faker } from '@faker-js/faker';
 import { config } from '../../../src/config';
@@ -182,7 +182,7 @@ describe(`Auth Route - Reset Password`, () => {
     it(`should return error when the token has expired`, async () => {
       const verificationToken = await createTestVerificationToken({
         type: VerificationTokenType.PASSWORD_RESET,
-        expiresAt: dateAndTime.addSeconds(new Date(), -100)
+        expiresAt: moment().subtract(100, 'seconds').toDate()
       });
       const user = (await verificationToken.getUser()) as DocumentType<User>;
       const { status } = await makeResetPasswordRequest(
@@ -198,7 +198,7 @@ describe(`Auth Route - Reset Password`, () => {
     it(`should return error when the token type is wrong`, async () => {
       const verificationToken = await createTestVerificationToken({
         type: VerificationTokenType.VERIFY_EMAIL,
-        expiresAt: dateAndTime.addDays(new Date(), 5)
+        expiresAt: moment().add(5, 'days').toDate()
       });
       const user = (await verificationToken.getUser()) as DocumentType<User>;
       const { status } = await makeResetPasswordRequest(
@@ -214,7 +214,7 @@ describe(`Auth Route - Reset Password`, () => {
     it(`should return error when the token belongs to different user`, async () => {
       const verificationToken = await createTestVerificationToken({
         type: VerificationTokenType.PASSWORD_RESET,
-        expiresAt: dateAndTime.addDays(new Date(), 5)
+        expiresAt: moment().add(5, 'days').toDate()
       });
       const differentUser = await createTestUser();
       const { status } = await makeResetPasswordRequest(
@@ -230,8 +230,8 @@ describe(`Auth Route - Reset Password`, () => {
     it(`should return error when the token is already used`, async () => {
       const verificationToken = await createTestVerificationToken({
         type: VerificationTokenType.PASSWORD_RESET,
-        expiresAt: dateAndTime.addDays(new Date(), 5),
-        verifiedAt: dateAndTime.addDays(new Date(), -5)
+        expiresAt: moment().add(5, 'days').toDate(),
+        verifiedAt: moment().subtract(5, 'days').toDate()
       });
       const user = (await verificationToken.getUser()) as DocumentType<User>;
       const { status } = await makeResetPasswordRequest(

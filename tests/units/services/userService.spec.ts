@@ -1,6 +1,6 @@
 import { DocumentType } from '@typegoose/typegoose';
 import { faker } from '@faker-js/faker';
-import dateAndTime from 'date-and-time';
+import moment from 'moment';
 import { mockNow, restoreNowMock, withApplication } from '../../testUtilities';
 import {
   createUser,
@@ -92,7 +92,7 @@ describe(`UserService`, () => {
     name: faker.name.fullName(),
     email: faker.internet.email(),
     password: faker.datatype.uuid(),
-    emailVerifiedAt: dateAndTime.addSeconds(new Date(), -10),
+    emailVerifiedAt: moment().subtract(10, 'seconds').toDate(),
     isActive: faker.datatype.boolean()
   });
 });
