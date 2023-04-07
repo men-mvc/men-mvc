@@ -2,7 +2,7 @@ import { Request } from '@men-mvc/essentials/lib/express';
 import { DocumentType } from '@typegoose/typegoose';
 import { User } from '../src/models/user';
 
-export type TestValidationRequestItem = {
+export type InputValidationTestData = {
   field: string;
   value: string;
   expectedError: string;

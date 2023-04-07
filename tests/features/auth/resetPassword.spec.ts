@@ -9,7 +9,7 @@ import {
   withApplication,
   withMockDate
 } from '../../testUtilities';
-import { TestValidationRequestItem } from '../../types';
+import { InputValidationTestData } from '../../types';
 import { createTestUser } from '../../factories/userFactory';
 import * as mailService from '../../../src/services/mailService';
 import {
@@ -240,7 +240,7 @@ describe(`Auth Route - Reset Password`, () => {
       expect(status).toBe(StatusCodes.BAD_REQUEST);
     });
 
-    const testRequestData: TestValidationRequestItem[] = [
+    const testRequestData: InputValidationTestData[] = [
       {
         field: `email`,
         value: ``,

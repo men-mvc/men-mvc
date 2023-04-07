@@ -12,7 +12,7 @@ import {
 } from '../../../src/models/verificationToken';
 import { findUserById } from '../../../src/services/userService';
 import { createTestUser } from '../../factories/userFactory';
-import { TestValidationRequestItem } from '../../types';
+import { InputValidationTestData } from '../../types';
 import { assertResponseHasValidationError } from '../../assertions';
 import { VerificationTokenType } from '../../../src/types';
 
@@ -139,7 +139,7 @@ describe(`Auth Route - Verify Email`, () => {
       expect(status).toBe(StatusCodes.BAD_REQUEST);
     });
 
-    const testRequestData: TestValidationRequestItem[] = [
+    const testRequestData: InputValidationTestData[] = [
       {
         field: `token`,
         value: ``,

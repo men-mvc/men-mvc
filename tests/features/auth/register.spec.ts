@@ -9,7 +9,7 @@ import {
 import * as mailService from '../../../src/services/mailService';
 import { findUserByEmail } from '../../../src/services/userService';
 import { verifyAuthToken } from '../../../src/services/authService';
-import { TestValidationRequestItem } from '../../types';
+import { InputValidationTestData } from '../../types';
 import { VerificationTokenModel } from '../../../src/models/verificationToken';
 import { createTestUser } from '../../factories/userFactory';
 import { makeLoginRequest, makeRegisterRequest } from '../requests';
@@ -126,7 +126,7 @@ describe(`Auth Route - Register`, () => {
       );
     });
 
-    const testRequestData: TestValidationRequestItem[] = [
+    const testRequestData: InputValidationTestData[] = [
       {
         field: `name`,
         value: ``,

@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { StatusCodes } from '@men-mvc/essentials';
 import { withApplication } from '../../testUtilities';
-import { TestValidationRequestItem } from '../../types';
+import { InputValidationTestData } from '../../types';
 import { createTestUser } from '../../factories/userFactory';
 import { verifyAuthToken } from '../../../src/services/authService';
 import { makeLoginRequest } from '../requests';
@@ -37,7 +37,7 @@ describe(`Auth Route - Login`, () => {
       assertUserResponse(body.data.user, user);
     });
 
-    const testRequestData: TestValidationRequestItem[] = [
+    const testRequestData: InputValidationTestData[] = [
       {
         field: `email`,
         value: ``,
