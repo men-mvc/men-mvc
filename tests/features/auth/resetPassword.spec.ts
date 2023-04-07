@@ -27,7 +27,7 @@ import {
 import { USER_PASSWORD } from '../../globals';
 import { assertResponseHasValidationError } from '../../assertions';
 import { VerificationTokenType } from '../../../src/types';
-import { ResetPasswordPayload } from '../types';
+import { ResetPasswordPayload } from '../../../src/requests/types';
 
 describe(`Auth Route - Reset Password`, () => {
   withApplication();

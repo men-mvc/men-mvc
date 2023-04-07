@@ -31,7 +31,7 @@ import {
   resendVerifyEmailLinkValSchema,
   resetPasswordValSchema,
   verifyEmailValSchema
-} from '../validation/authSchema';
+} from '../requests/validation/authSchema';
 import { VerificationTokenType } from '../types';
 
 export class AuthController {

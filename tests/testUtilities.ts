@@ -6,7 +6,6 @@ import {
 } from '@men-mvc/essentials/lib/express';
 import { DeepPartial } from '@men-mvc/essentials';
 import { faker } from '@faker-js/faker';
-import sinon from 'sinon';
 import _ from 'lodash';
 import { set as setMockDate, reset as resetMockDate } from 'mockdate';
 import Application from '../src/application';
@@ -16,7 +15,6 @@ import { defaultNowForTest } from './globals';
 
 // shared variables
 let application: Application | null;
-let dateNowStub: sinon.SinonStub;
 
 export const initApplication = async (): Promise<Application> => {
   if (!application) {
