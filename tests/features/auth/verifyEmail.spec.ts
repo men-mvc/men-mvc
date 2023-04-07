@@ -2,7 +2,7 @@ import { DocumentType } from '@typegoose/typegoose';
 import { faker } from '@faker-js/faker';
 import { StatusCodes } from '@men-mvc/essentials';
 import moment from 'moment';
-import { mockNow, restoreNowMock, withApplication } from '../../testUtilities';
+import { withMockDate, withApplication } from '../../testUtilities';
 import { createTestVerificationToken } from '../../factories/verificationTokenFactory';
 import { User } from '../../../src/models/user';
 import { makeVerifyEmailRequest } from '../requests';
@@ -18,8 +18,7 @@ import { VerificationTokenType } from '../../../src/types';
 
 describe(`Auth Route - Verify Email`, () => {
   withApplication();
-  beforeAll(mockNow);
-  afterAll(restoreNowMock);
+  withMockDate();
 
   describe(`PUT /api/auth/verify-email`, () => {
     it(`should mark verification token as used when the email is verified`, async () => {

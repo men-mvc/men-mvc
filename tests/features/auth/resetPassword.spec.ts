@@ -6,9 +6,8 @@ import { faker } from '@faker-js/faker';
 import { config } from '../../../src/config';
 import {
   getPasswordValidationTestData,
-  mockNow,
-  restoreNowMock,
-  withApplication
+  withApplication,
+  withMockDate
 } from '../../testUtilities';
 import { TestValidationRequestItem } from '../../types';
 import { createTestUser } from '../../factories/userFactory';
@@ -32,12 +31,9 @@ import { ResetPasswordPayload } from '../types';
 
 describe(`Auth Route - Reset Password`, () => {
   withApplication();
+  withMockDate();
 
   let sendPasswordResetMailStub: SinonStub;
-
-  beforeAll(mockNow);
-  afterAll(restoreNowMock);
-
   beforeEach(async () => {
     sendPasswordResetMailStub = sinon.stub(
       mailService,

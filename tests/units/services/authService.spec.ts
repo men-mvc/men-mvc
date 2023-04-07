@@ -19,7 +19,7 @@ import {
   verifyAuthToken,
   verifyEmail
 } from '../../../src/services/authService';
-import { mockNow, restoreNowMock, withApplication } from '../../testUtilities';
+import { withMockDate, withApplication } from '../../testUtilities';
 import { createTestUser } from '../../factories/userFactory';
 import {
   VerificationToken,
@@ -37,10 +37,9 @@ import { getRandomVerificationTokenType } from '../../factories/verificationToke
 
 describe(`AuthService`, () => {
   withApplication();
+  withMockDate();
   let sendWelcomeMailStub: SinonStub;
   let sendVerifyEmailMailStub: SinonStub;
-  beforeAll(mockNow);
-  afterAll(restoreNowMock);
   beforeEach(async () => {
     sendWelcomeMailStub = sinon.stub(mailService, `sendWelcomeMail`);
     sendVerifyEmailMailStub = sinon.stub(mailService, `sendVerifyEmailMail`);
