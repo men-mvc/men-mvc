@@ -6,7 +6,7 @@ import {
   RegisterPayload,
   ResetPasswordPayload,
   VerifyEmailPayload
-} from './types';
+} from '../../src/requests/types';
 
 export const makeRegisterRequest = async (
   payload: Partial<RegisterPayload>

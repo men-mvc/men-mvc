@@ -18,7 +18,7 @@ import {
   assertResponseHasValidationError,
   assertUserResponse
 } from '../../assertions';
-import { RegisterPayload } from '../types';
+import { RegisterPayload } from '../../../src/requests/types';
 
 describe(`Auth Route - Register`, () => {
   withApplication();

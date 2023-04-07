@@ -1,5 +1,5 @@
 import { failValidationForField } from '@men-mvc/essentials';
-import { findUserByEmail } from '../services/userService';
+import { findUserByEmail } from '../../services/userService';
 
 export const validateUserEmailUnique = async (
   value: string,
