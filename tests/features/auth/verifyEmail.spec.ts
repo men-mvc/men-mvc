@@ -36,8 +36,8 @@ describe(`Auth Route - Verify Email`, () => {
       verificationToken = (await VerificationTokenModel.findById(
         verificationToken.id
       )) as DocumentType<VerificationToken>;
-      expect((verificationToken.verifiedAt as Date).getTime()).toBe(
-        new Date().getTime()
+      expect(moment(verificationToken.verifiedAt).milliseconds()).toBe(
+        moment().milliseconds()
       );
     });
 
@@ -54,8 +54,8 @@ describe(`Auth Route - Verify Email`, () => {
 
       expect(status).toBe(StatusCodes.NO_CONTENT);
       user = (await findUserById(user.id)) as DocumentType<User>;
-      expect((user.emailVerifiedAt as Date).getTime()).toBe(
-        new Date().getTime()
+      expect(moment(user.emailVerifiedAt).milliseconds()).toBe(
+        moment().milliseconds()
       );
     });
 

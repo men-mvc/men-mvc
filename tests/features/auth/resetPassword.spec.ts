@@ -139,8 +139,8 @@ describe(`Auth Route - Reset Password`, () => {
         verificationToken.id
       )) as DocumentType<VerificationToken>;
       expect(verificationToken.verifiedAt).not.toBeUndefined();
-      expect((verificationToken.verifiedAt as Date).getTime()).toBe(
-        new Date().getTime()
+      expect(moment(verificationToken.verifiedAt).milliseconds()).toBe(
+        moment().milliseconds()
       );
     });
 

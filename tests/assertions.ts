@@ -1,5 +1,6 @@
 import { DocumentType } from '@typegoose/typegoose';
 import { ValidationErrorResponse } from '@men-mvc/essentials';
+import moment from 'moment';
 import { User } from '../src/models/user';
 
 export const assertResponseHasValidationError = (
@@ -43,8 +44,8 @@ export const assertUserResponse = (
   expect(responseUser.name).toBe(userModel.name);
   expect(responseUser.email).toBe(userModel.email);
   if (responseUser.emailVerifiedAt) {
-    expect(new Date(responseUser.emailVerifiedAt).getTime()).toBe(
-      (userModel.emailVerifiedAt as Date).getTime()
+    expect(moment(responseUser.emailVerifiedAt).milliseconds()).toBe(
+      moment(userModel.emailVerifiedAt).milliseconds()
     );
   } else {
     expect(responseUser.emailVerifiedAt).toBe(userModel.emailVerifiedAt);
