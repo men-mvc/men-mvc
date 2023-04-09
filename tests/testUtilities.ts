@@ -1,5 +1,4 @@
 import {
-  express,
   Request,
   Express,
   NextFunction
@@ -8,19 +7,18 @@ import { DeepPartial } from '@men-mvc/essentials';
 import { faker } from '@faker-js/faker';
 import _ from 'lodash';
 import { set as setMockDate, reset as resetMockDate } from 'mockdate';
-import Application from '../src/application';
+import { Application } from '../src/application';
 import { CustomExpressRequest, FakeExpressRequestData } from './types';
 import { database } from '../src/database';
 import { defaultNowForTest } from './globals';
+import { createApplication } from '../src/server';
 
 // shared variables
 let application: Application | null;
 
 export const initApplication = async (): Promise<Application> => {
   if (!application) {
-    const app: Express = express();
-    application = new Application(app);
-    await application.setUp();
+    application = application = await createApplication();
   }
   return application;
 };

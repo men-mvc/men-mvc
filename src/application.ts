@@ -15,7 +15,7 @@ import { apiThrottle } from './middlewares/apiThrottle';
 import { database } from './database';
 // import {registerMultipartFormParser} from "@men-mvc/filesystem";
 
-export default class Application extends AbstractApplication {
+export class Application extends AbstractApplication {
   constructor(public app: Express) {
     super(app);
   }
