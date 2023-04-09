@@ -80,7 +80,9 @@ describe(`AuthService`, () => {
     }
     expect(createdUser.name).toBe(user.name);
     expect(createdUser.email).toBe(user.email);
-    expect(createdUser.createdAt.getTime()).toBe(new Date().getTime());
+    expect(moment(createdUser.createdAt).milliseconds()).toBe(
+      moment().milliseconds()
+    );
   });
 
   it(`should generate password-reset link in correct format creating verification token`, async () => {
@@ -253,8 +255,8 @@ describe(`AuthService`, () => {
       throw new Error(`Verification token does not exist.`);
     }
     expect(verificationToken.verifiedAt).not.toBeUndefined();
-    expect((verificationToken.verifiedAt as Date).getTime()).toBe(
-      new Date().getTime()
+    expect(moment(verificationToken.verifiedAt).milliseconds()).toBe(
+      moment().milliseconds()
     );
   });
 
@@ -349,7 +351,9 @@ describe(`AuthService`, () => {
       throw new Error(`User does not exist.`);
     }
     expect(user.emailVerifiedAt).not.toBeUndefined();
-    expect((user.emailVerifiedAt as Date).getTime()).toBe(new Date().getTime());
+    expect(moment(user.emailVerifiedAt).milliseconds()).toBe(
+      moment().milliseconds()
+    );
   });
 
   it(`should also use the verification token`, async () => {
@@ -366,8 +370,8 @@ describe(`AuthService`, () => {
       throw new Error(`Verification token does not exist.`);
     }
     expect(verificationToken.verifiedAt).not.toBeUndefined();
-    expect((verificationToken.verifiedAt as Date).getTime()).toBe(
-      new Date().getTime()
+    expect(moment(verificationToken.verifiedAt).milliseconds()).toBe(
+      moment().milliseconds()
     );
   });
 

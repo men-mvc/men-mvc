@@ -79,11 +79,11 @@ describe(`UserService`, () => {
     expect(user.name).toBe(data.name);
     expect(user.email).toBe(data.email.toLowerCase());
     expect(user.password).toBe(data.password);
-    expect(user.emailVerifiedAt?.getTime()).toBe(
-      data.emailVerifiedAt?.getTime()
+    expect(moment(user.emailVerifiedAt).milliseconds()).toBe(
+      moment(data.emailVerifiedAt).milliseconds()
     );
     expect(user.isActive).toBe(data.isActive);
-    expect(user.createdAt.getTime()).toBe(new Date().getTime());
+    expect(moment(user.createdAt).milliseconds()).toBe(moment().milliseconds());
   };
 
   const generateUserData = (): CreateUserArgs => ({
