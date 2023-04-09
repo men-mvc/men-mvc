@@ -10,7 +10,6 @@ import { set as setMockDate, reset as resetMockDate } from 'mockdate';
 import { Application } from '../src/application';
 import { CustomExpressRequest, FakeExpressRequestData } from './types';
 import { database } from '../src/database';
-import { defaultNowForTest } from './globals';
 import { createApplication } from '../src/server';
 
 // shared variables
@@ -53,7 +52,7 @@ export const withApplication = () => {
 
 export const withMockDate = () => {
   beforeAll(() => {
-    setMockDate(defaultNowForTest);
+    setMockDate(new Date().toISOString());
   });
 
   afterAll(resetMockDate);
