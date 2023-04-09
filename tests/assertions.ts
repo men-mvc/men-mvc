@@ -1,7 +1,7 @@
 import { DocumentType } from '@typegoose/typegoose';
 import { ValidationErrorResponse } from '@men-mvc/essentials';
-import { User } from '../src/models/user';
 import moment from 'moment';
+import { User } from '../src/models/user';
 
 export const assertResponseHasValidationError = (
   response: ValidationErrorResponse,
