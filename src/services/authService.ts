@@ -67,7 +67,7 @@ const generatePasswordResetVerificationToken = async (
     token,
     type: VerificationTokenType.PASSWORD_RESET,
     expiresAt,
-    userId: user._id
+    userId: user.id
   });
 };
 
@@ -82,7 +82,7 @@ const generateVerifyEmailVerificationToken = async (
     token,
     type: VerificationTokenType.VERIFY_EMAIL,
     expiresAt,
-    userId: user._id
+    userId: user.id
   });
 };
 

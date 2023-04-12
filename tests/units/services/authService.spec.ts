@@ -66,13 +66,13 @@ describe(`AuthService`, () => {
       token: faker.datatype.uuid(),
       type: getRandomVerificationTokenType(),
       expiresAt: moment().add(2, 'days').toDate(),
-      userId: user._id
+      userId: user.id
     };
     const token = await createVerificationToken(data);
 
     expect(token).not.toBeNull();
     expect(token.token).toBe(data.token);
-    expect(token.user).toBe(data.userId);
+    expect(token.user.toString()).toBe(data.userId);
     const createdUser = await token.getUser();
     expect(createdUser).not.toBeNull();
     if (!createdUser) {
