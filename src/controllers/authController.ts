@@ -25,24 +25,24 @@ import {
 } from '../services/mailService';
 import { User } from '../models/user';
 import {
-  loginValSchema,
-  registerValSchema,
-  requestPasswordResetValSchema,
-  resendVerifyEmailLinkValSchema,
-  resetPasswordValSchema,
-  verifyEmailValSchema
+  loginSchema,
+  registerSchema,
+  requestPasswordResetSchema,
+  resendVerifyEmailLinkSchema,
+  resetPasswordSchema,
+  verifyEmailSchema
 } from '../requests/validation/authSchema';
 import { VerificationTokenType } from '../types';
 
 export class AuthController {
-  @ValidateRequestAsync(registerValSchema)
+  @ValidateRequestAsync(registerSchema)
   public async register(req: Request, res: Response) {
     const user = await registerUser(req.body);
 
     return successResponse(res, user.toJSON(), StatusCodes.CREATED);
   }
 
-  @ValidateRequest(loginValSchema)
+  @ValidateRequest(loginSchema)
   public async login(req: Request, res: Response) {
     const user = await findUserByEmail(req.body.email);
     if (!user) {
@@ -56,7 +56,7 @@ export class AuthController {
     return successResponse(res, this.constructLoginResponse(accessToken, user));
   }
 
-  @ValidateRequest(resendVerifyEmailLinkValSchema)
+  @ValidateRequest(resendVerifyEmailLinkSchema)
   public async resendVerifyEmailLink(req: Request, res: Response) {
     const user = await findUserByEmail(req.body.email);
     if (!user) {
@@ -74,7 +74,7 @@ export class AuthController {
     return emptyResponse(res);
   }
 
-  @ValidateRequest(verifyEmailValSchema)
+  @ValidateRequest(verifyEmailSchema)
   public async verifyEmail(req: Request, res: Response) {
     const user = await findUserByEmail(req.body.email);
     if (!user) {
@@ -94,7 +94,7 @@ export class AuthController {
     return emptyResponse(res);
   }
 
-  @ValidateRequest(requestPasswordResetValSchema)
+  @ValidateRequest(requestPasswordResetSchema)
   public async requestPasswordReset(req: Request, res: Response) {
     const user = await findUserByEmail(req.body.email);
     if (!user) {
@@ -112,7 +112,7 @@ export class AuthController {
     return emptyResponse(res);
   }
 
-  @ValidateRequest(resetPasswordValSchema)
+  @ValidateRequest(resetPasswordSchema)
   public async resetPassword(req: Request, res: Response) {
     const user = await findUserByEmail(req.body.email);
     if (!user) {

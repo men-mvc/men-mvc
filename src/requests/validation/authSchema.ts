@@ -24,7 +24,7 @@ const passwordRule = joi
     'string.pattern.base': `Password must contain at least 1 lowercase letter, 1 uppercase letter, 1 digit, 1 special character and have at least 8 characters.`
   });
 
-export const loginValSchema = joi.object<LoginPayload>().keys({
+export const loginSchema = joi.object<LoginPayload>().keys({
   email: joi.string().required().trim().email().messages({
     'string.empty': `Email is required.`,
     'any.required': `Email is required.`,
@@ -36,7 +36,7 @@ export const loginValSchema = joi.object<LoginPayload>().keys({
   })
 });
 
-export const registerValSchema = joi.object<RegisterPayload>().keys({
+export const registerSchema = joi.object<RegisterPayload>().keys({
   name: joi.string().required().trim().messages({
     'string.empty': `Name is required.`,
     'any.required': `Name is required.`
@@ -57,7 +57,7 @@ export const registerValSchema = joi.object<RegisterPayload>().keys({
   password: passwordRule
 });
 
-export const requestPasswordResetValSchema = joi
+export const requestPasswordResetSchema = joi
   .object<RequestPasswordResetPayload>()
   .keys({
     email: joi.string().required().trim().messages({
@@ -66,7 +66,7 @@ export const requestPasswordResetValSchema = joi
     })
   });
 
-export const resetPasswordValSchema = joi.object<ResetPasswordPayload>().keys({
+export const resetPasswordSchema = joi.object<ResetPasswordPayload>().keys({
   email: joi.string().required().trim().messages({
     'string.empty': `Email is required.`,
     'any.required': `Email is required.`
@@ -87,7 +87,7 @@ export const resetPasswordValSchema = joi.object<ResetPasswordPayload>().keys({
     })
 });
 
-export const verifyEmailValSchema = joi.object<VerifyEmailPayload>().keys({
+export const verifyEmailSchema = joi.object<VerifyEmailPayload>().keys({
   email: joi.string().required().trim().messages({
     'string.empty': `Email is required.`,
     'any.required': `Email is required.`
@@ -98,7 +98,7 @@ export const verifyEmailValSchema = joi.object<VerifyEmailPayload>().keys({
   })
 });
 
-export const resendVerifyEmailLinkValSchema = joi
+export const resendVerifyEmailLinkSchema = joi
   .object<ResendVerifyEmailLinkPayload>()
   .keys({
     email: joi.string().required().trim().messages({

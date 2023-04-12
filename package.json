@@ -19,9 +19,9 @@
   "author": "Wai Yan Hein",
   "license": "ISC",
   "dependencies": {
-    "@men-mvc/essentials": "^0.86.0",
-    "@men-mvc/logger": "^0.86.0",
-    "@typegoose/typegoose": "^9.13.2",
+    "@men-mvc/essentials": "^0.92.0",
+    "@men-mvc/logger": "^0.92.0",
+    "@typegoose/typegoose": "^11.0.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express-mongo-sanitize": "^2.2.0",
