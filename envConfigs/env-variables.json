@@ -59,10 +59,31 @@
       "type": "number"
     },
     "s3": {
-      "bucket": "AWS_S3_BUCKET_NAME",
-      "region": "AWS_S3_REGION",
-      "accessKeyId": "AWS_S3_ACCESS_KEY_ID",
-      "secretAccessKey": "AWS_S3_SECRET_ACCESS_KEY"
+      "bucket": "S3_BUCKET_NAME",
+      "region": "S3_REGION",
+      "accessKeyId": "S3_ACCESS_KEY_ID",
+      "secretAccessKey": "S3_SECRET_ACCESS_KEY",
+      "retryMode": "S3_RETRY_MODE",
+      "maxRetryAttempts": {
+        "name": "S3_MAX_RETRY_ATTEMPTS",
+        "type": "number"
+      },
+      "cloudfront": {
+        "domainName": "S3_CF_DOMAIN_NAME",
+        "publicKeyId": "S3_CF_PUBLIC_KEY_ID",
+        "privateKeyString": "S3_CF_PRIVATE_KEY_STRING",
+        "signedUrlDurationInSeconds": {
+          "name": "S3_CF_SIGNED_URL_DURATION",
+          "type": "number"
+        }
+      }
+    },
+    "local": {
+      "urlSignerSecret": "LOCAL_URL_SIGNER_SECRET",
+      "signedUrlDurationInSeconds": {
+        "name": "LOCAL_SIGNED_URL_DURATION",
+        "type": "number"
+      }
     }
   },
   "logger": {
