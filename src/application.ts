@@ -58,7 +58,7 @@ export class Application extends BaseApplication {
       );
     }
     /**
-     * TODO: uncomment the following line to use @men-mvc/filesystem module after importing registerFilesystem from the module.
+     * TODO: uncomment the following line to use the @men-mvc/filesystem module after importing registerFilesystem from the module.
      * registerFilesystem(this.app);
      */
     // register new middlewares here.
