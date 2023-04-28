@@ -22,7 +22,7 @@ export const start = async (): Promise<void> => {
   }
 };
 
-export const cleanUp = async (): Promise<void> => {
+const cleanUp = async (): Promise<void> => {
   try {
     await application.cleanUp();
   } catch (e) {
