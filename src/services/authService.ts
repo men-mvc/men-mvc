@@ -156,7 +156,7 @@ export const changePassword = async (
 ): Promise<void> => {
   const passwordHash = await hashPassword(newPassword);
 
-  await UserModel.findByIdAndUpdate(user._id, {
+  await UserModel.findByIdAndUpdate(user.id, {
     $set: {
       password: passwordHash
     }
@@ -185,7 +185,7 @@ export const checkIfVerificationTokenValid = async (
   const tokenModel: VerificationToken | null =
     await VerificationTokenModel.findOne({
       token,
-      user: user._id,
+      user: user.id,
       type
     });
   if (!tokenModel) {
@@ -194,7 +194,7 @@ export const checkIfVerificationTokenValid = async (
   const now: Date = new Date();
   if (now.getTime() < tokenModel.expiresAt.getTime()) {
     // also check if token is already verified
-    return tokenModel.verifiedAt ? false : true;
+    return !tokenModel.verifiedAt;
   }
 
   // token already expired

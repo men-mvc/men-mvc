@@ -1,12 +1,13 @@
-import { setServerDirectory } from '@men-mvc/essentials';
+import { BaseApplication, setServerDirectory } from '@men-mvc/essentials';
 import { express, Express } from '@men-mvc/essentials/lib/express';
 import { Application } from './application';
 import { applicationErrorHandler } from './errors/applicationErrorHandler';
-const app: Express = express();
+const expressApp: Express = express();
 
+let application: Application;
 export const createApplication = async (): Promise<Application> => {
   setServerDirectory(__dirname);
-  const application = new Application(app);
+  application = BaseApplication.init(new Application(expressApp));
   await application.setUp();
 
   return application;
@@ -20,3 +21,11 @@ export const start = async (): Promise<void> => {
     process.exit(1);
   }
 };
+
+const cleanUp = async (): Promise<void> => {
+  await application.cleanUp();
+};
+
+process.on(`SIGINT`, cleanUp);
+process.on(`SIGTERM`, cleanUp);
+process.on(`close`, cleanUp);

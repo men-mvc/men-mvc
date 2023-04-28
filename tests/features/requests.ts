@@ -1,4 +1,4 @@
-import supertest from 'supertest';
+import supertest from '@men-mvc/test/lib/supertest';
 import { getExpressApp } from '../testUtilities';
 import { protectedRoutePrefix, publicRoutePrefix } from '../../src/routes';
 import {

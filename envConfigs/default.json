@@ -50,7 +50,13 @@
       "bucket": "",
       "region": "",
       "accessKeyId": "",
-      "secretAccessKey": ""
+      "secretAccessKey": "",
+      "cloudfront": {
+        "domainName": "",
+        "publicKeyId": "",
+        "privateKeyString": "",
+        "signedUrlDurationInSeconds": 3600
+      }
     }
   },
   "logger": {

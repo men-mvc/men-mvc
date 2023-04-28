@@ -6,16 +6,18 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import hpp from 'hpp';
 import mongoSanitise from 'express-mongo-sanitize';
-import { getAppEnv, AbstractApplication } from '@men-mvc/essentials';
+import { getAppEnv, BaseApplication } from '@men-mvc/essentials';
 import { logger } from '@men-mvc/logger';
 import { config } from './config';
 import { registerRoutes } from './routes';
+import { init } from './middlewares/init';
 import { requestErrorCatcher } from './middlewares/requestErrorCatcher';
 import { apiThrottle } from './middlewares/apiThrottle';
 import { database } from './database';
-// import {registerMultipartFormParser} from "@men-mvc/filesystem";
+import { applicationErrorHandler } from './errors/applicationErrorHandler';
+// import {registerFilesystem} from "@men-mvc/filesystem";
 
-export class Application extends AbstractApplication {
+export class Application extends BaseApplication {
   constructor(public app: Express) {
     super(app);
   }
@@ -31,17 +33,13 @@ export class Application extends AbstractApplication {
   };
 
   public initialisePreMiddlewares = () => {
-    this.app.use(express.static('/public')); // for sharing/ serve files publicly
+    this.app.use(init);
     if (getAppEnv() !== 'test') {
       this.app.use(apiThrottle);
     }
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(hpp());
     this.app.use(express.json());
-    /**
-     * TODO: uncomment the following line to use @men-mvc/filesystem module after importing registerMultipartFormParser from the module.
-     * registerMultipartFormParser(this.app);
-     */
     this.app.use(helmet());
     this.app.use(mongoSanitise());
     this.app.disable(`x-powered-by`);
@@ -60,12 +58,26 @@ export class Application extends AbstractApplication {
         )
       );
     }
+    /**
+     * TODO: uncomment the following line to use the @men-mvc/filesystem module after importing registerFilesystem from the module.
+     * registerFilesystem(this.app);
+     */
     // register new middlewares here.
   };
 
   public initialisePostMiddlewares = () => {
     // register new middlewares here
     this.app.use(requestErrorCatcher);
+  };
+
+  public cleanUp = async (): Promise<void> => {
+    try {
+      if (config.database.mongo.uri) {
+        await database.close();
+      }
+    } catch (e) {
+      applicationErrorHandler(e as Error);
+    }
   };
 
   public start = () => {
