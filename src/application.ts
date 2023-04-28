@@ -14,6 +14,7 @@ import { init } from './middlewares/init';
 import { requestErrorCatcher } from './middlewares/requestErrorCatcher';
 import { apiThrottle } from './middlewares/apiThrottle';
 import { database } from './database';
+import { applicationErrorHandler } from './errors/applicationErrorHandler';
 // import {registerFilesystem} from "@men-mvc/filesystem";
 
 export class Application extends BaseApplication {
@@ -70,8 +71,12 @@ export class Application extends BaseApplication {
   };
 
   public cleanUp = async (): Promise<void> => {
-    if (config.database.mongo.uri) {
-      await database.close();
+    try {
+      if (config.database.mongo.uri) {
+        await database.close();
+      }
+    } catch (e) {
+      applicationErrorHandler(e as Error);
     }
   };
 

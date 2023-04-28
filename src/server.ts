@@ -23,11 +23,7 @@ export const start = async (): Promise<void> => {
 };
 
 const cleanUp = async (): Promise<void> => {
-  try {
-    await application.cleanUp();
-  } catch (e) {
-    applicationErrorHandler(e as Error);
-  }
+  await application.cleanUp();
 };
 
 process.on(`SIGINT`, cleanUp);
