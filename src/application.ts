@@ -14,7 +14,7 @@ import { init } from './middlewares/init';
 import { requestErrorCatcher } from './middlewares/requestErrorCatcher';
 import { apiThrottle } from './middlewares/apiThrottle';
 import { database } from './database';
-// import {registerMultipartFormParser} from "@men-mvc/filesystem";
+// import {registerFilesystem} from "@men-mvc/filesystem";
 
 export class Application extends BaseApplication {
   constructor(public app: Express) {
