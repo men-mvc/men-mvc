@@ -6,5 +6,8 @@
   },
   "fileSystem": {
     "storageDriver": "local"
+  },
+  "logging": {
+    "driver": "console"
   }
 }
