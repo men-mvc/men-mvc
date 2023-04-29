@@ -23,17 +23,6 @@ export class Application extends BaseApplication {
     super(app);
   }
 
-  private getControllersInstance = (): Controllers => {
-    if (!this.controllers) {
-      this.controllers = new Controllers();
-    }
-    return this.controllers;
-  };
-
-  public getController = <T>(token: string): T => {
-    return this.getControllersInstance().getController<T>(token);
-  };
-
   public initialise = async () => {
     if (config.database.mongo.uri) {
       await database.connect();
@@ -93,5 +82,16 @@ export class Application extends BaseApplication {
         `⚡️[server]: Server is running on port ${config.server.port}`
       );
     });
+  };
+
+  public getController = <T>(token: string): T => {
+    return this.getControllersInstance().getController<T>(token);
+  };
+
+  private getControllersInstance = (): Controllers => {
+    if (!this.controllers) {
+      this.controllers = new Controllers();
+    }
+    return this.controllers;
   };
 }
