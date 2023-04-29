@@ -5,11 +5,17 @@ import { AuthController } from '../controllers/authController';
 import { authenticate } from '../middlewares';
 import { config } from '../config';
 
-const authController = new AuthController();
-
 export const publicRoutePrefix = `/api/public`;
 export const protectedRoutePrefix = `/api/protected`;
 export const registerRoutes = (application: Application) => {
+  /**
+   * controller instances should be inside registerRoutes function
+   */
+  const authController =
+    Application.getInstance().getController<AuthController>(
+      AuthController.token
+    );
+
   application.app.get('/', (req: Request, res: Response) => {
     res.send(`Hello from ${config.app.name} framework.`);
   });

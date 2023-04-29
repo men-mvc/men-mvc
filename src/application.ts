@@ -12,13 +12,27 @@ import { config } from './config';
 import { registerRoutes } from './routes';
 import { init, apiThrottle, requestErrorCatcher } from './middlewares';
 import { database } from './database';
+import { Controllers } from './controllers';
 import { applicationErrorHandler } from './errors/applicationErrorHandler';
 // import {registerFilesystem} from "@men-mvc/filesystem";
 
 export class Application extends BaseApplication {
+  private controllers: Controllers | null = null;
+
   constructor(public app: Express) {
     super(app);
   }
+
+  private getControllersInstance = (): Controllers => {
+    if (!this.controllers) {
+      this.controllers = new Controllers();
+    }
+    return this.controllers;
+  };
+
+  public getController = <T>(token: string): T => {
+    return this.getControllersInstance().getController<T>(token);
+  };
 
   public initialise = async () => {
     if (config.database.mongo.uri) {

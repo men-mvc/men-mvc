@@ -35,6 +35,8 @@ import {
 import { VerificationTokenType } from '../types';
 
 export class AuthController {
+  static token = 'auth-controller';
+
   @ValidateRequestAsync(registerSchema)
   public async register(req: Request, res: Response) {
     const user = await registerUser(req.body);
