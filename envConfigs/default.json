@@ -9,7 +9,7 @@
     }
   },
   "server": {
-    "port": 8000
+    "port": 5000
   },
   "auth": {
     "secret": "private-auth-secret",
@@ -60,6 +60,11 @@
     }
   },
   "logger": {
-    "disabled": false
+    "driver": "console",
+    "disabled": false,
+    "sentry": {
+      "dsn": "",
+      "tracesSampleRate": 1.0
+    }
   }
 }

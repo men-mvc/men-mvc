@@ -87,9 +87,17 @@
     }
   },
   "logger": {
+    "driver": "LOG_DRIVER",
     "disabled": {
       "name": "LOGGING_DISABLED",
       "type": "boolean"
+    },
+    "sentry": {
+      "dsn": "LOG_SENTRY_DSN",
+      "tracesSampleRate": {
+        "name": "LOG_SENTRY_TRACES_SAMPLE_RATE",
+        "type": "number"
+      }
     }
   }
 }

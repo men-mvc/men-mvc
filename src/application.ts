@@ -10,9 +10,7 @@ import { getAppEnv, BaseApplication } from '@men-mvc/essentials';
 import { logger } from '@men-mvc/logger';
 import { config } from './config';
 import { registerRoutes } from './routes';
-import { init } from './middlewares/init';
-import { requestErrorCatcher } from './middlewares/requestErrorCatcher';
-import { apiThrottle } from './middlewares/apiThrottle';
+import { init, apiThrottle, requestErrorCatcher } from './middlewares';
 import { database } from './database';
 import { applicationErrorHandler } from './errors/applicationErrorHandler';
 // import {registerFilesystem} from "@men-mvc/filesystem";
@@ -33,6 +31,7 @@ export class Application extends BaseApplication {
   };
 
   public initialisePreMiddlewares = () => {
+    logger.init();
     this.app.use(init);
     if (getAppEnv() !== 'test') {
       this.app.use(apiThrottle);
@@ -45,6 +44,10 @@ export class Application extends BaseApplication {
     this.app.disable(`x-powered-by`);
     this.app.use(cors());
     if (getAppEnv() !== 'production' && getAppEnv() !== 'test') {
+      /**
+       * @description - log the incoming request.
+       * TODO: You can uncomment/ remove the below code snippet if you  do not want to log the request.
+       */
       this.app.use(
         morgan(
           ':method :url :status :res[content-length] - :response-time ms',
@@ -68,16 +71,6 @@ export class Application extends BaseApplication {
   public initialisePostMiddlewares = () => {
     // register new middlewares here
     this.app.use(requestErrorCatcher);
-  };
-
-  public cleanUp = async (): Promise<void> => {
-    try {
-      if (config.database.mongo.uri) {
-        await database.close();
-      }
-    } catch (e) {
-      applicationErrorHandler(e as Error);
-    }
   };
 
   public start = () => {
