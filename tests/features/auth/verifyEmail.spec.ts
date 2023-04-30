@@ -1,6 +1,6 @@
 import { DocumentType } from '@typegoose/typegoose';
 import { faker } from '@faker-js/faker';
-import { StatusCodes } from '@men-mvc/essentials';
+import { StatusCodes } from '@men-mvc/foundation';
 import moment from 'moment';
 import { withMockDate, withApplication } from '../../testUtilities';
 import { createTestVerificationToken } from '../../factories/verificationTokenFactory';

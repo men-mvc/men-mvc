@@ -1,5 +1,5 @@
 import { DocumentType } from '@typegoose/typegoose';
-import { ValidationErrorResponse } from '@men-mvc/essentials';
+import { ValidationErrorResponse } from '@men-mvc/foundation';
 import moment from 'moment';
 import { User } from '../src/models/user';
 

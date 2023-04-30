@@ -1,4 +1,4 @@
-import { Request, Response } from '@men-mvc/essentials/lib/express';
+import { Request, Response } from '@men-mvc/foundation/lib/express';
 import {
   errorResponse,
   InsufficientPermissionError,
@@ -8,8 +8,8 @@ import {
   UploadMaxFileSizeError,
   ValidationError,
   validationErrorResponse
-} from '@men-mvc/essentials';
-import joi from '@men-mvc/essentials/lib/joi';
+} from '@men-mvc/foundation';
+import joi from '@men-mvc/foundation/lib/joi';
 import { applicationErrorHandler } from './applicationErrorHandler';
 
 export const requestErrorHandler = (

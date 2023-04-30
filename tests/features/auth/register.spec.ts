@@ -1,6 +1,6 @@
 import { SinonStub, stub, assert } from 'sinon';
 import { faker } from '@faker-js/faker';
-import { StatusCodes, validatePassword } from '@men-mvc/essentials';
+import { StatusCodes, validatePassword } from '@men-mvc/foundation';
 import { config } from '../../../src/config';
 import {
   getPasswordValidationTestData,

@@ -1,4 +1,4 @@
-import { BaseConfig, Config } from '@men-mvc/essentials';
+import { BaseConfig, Config } from '@men-mvc/foundation';
 
 /**
  * You can prop/ type declaration your own config/ environment variables inside this class.
