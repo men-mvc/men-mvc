@@ -1,10 +1,8 @@
 /node_modules
 /dist
 .env
-
-/public
-
 /storage
+/testStorage
 /coverage
 /.idea
 /mailLogs
