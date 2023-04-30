@@ -5,6 +5,7 @@
     }
   },
   "fileSystem": {
+    "storageDirname": "testStorage",
     "storageDriver": "local"
   },
   "logging": {
