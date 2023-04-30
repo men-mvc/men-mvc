@@ -49,7 +49,7 @@ export class Application extends BaseApplication {
     if (getAppEnv() !== 'production' && getAppEnv() !== 'test') {
       /**
        * @description - log the incoming request.
-       * TODO: You can uncomment/ remove the below code snippet if you  do not want to log the request.
+       * TODO: You can comment/ remove the below code snippet if you  do not want to log the request.
        */
       this.app.use(
         morgan(
