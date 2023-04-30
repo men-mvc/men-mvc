@@ -1,4 +1,4 @@
-import joi from '@men-mvc/essentials/lib/joi';
+import joi from '@men-mvc/foundation/lib/joi';
 import { validateUserEmailUnique } from './rules';
 import {
   LoginPayload,

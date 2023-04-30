@@ -3,7 +3,7 @@ import {
   generateUuid,
   hashPassword,
   validatePassword
-} from '@men-mvc/essentials';
+} from '@men-mvc/foundation';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import moment from 'moment';

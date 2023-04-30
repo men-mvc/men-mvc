@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { StatusCodes } from '@men-mvc/essentials';
+import { StatusCodes } from '@men-mvc/foundation';
 import { withApplication } from '../../testUtilities';
 import { InputValidationTestData } from '../../types';
 import { createTestUser } from '../../factories/userFactory';

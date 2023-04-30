@@ -2,8 +2,8 @@ import {
   Request,
   Express,
   NextFunction
-} from '@men-mvc/essentials/lib/express';
-import { DeepPartial } from '@men-mvc/essentials';
+} from '@men-mvc/foundation/lib/express';
+import { DeepPartial } from '@men-mvc/foundation';
 import { faker } from '@faker-js/faker';
 import _ from 'lodash';
 import { set as setMockDate, reset as resetMockDate } from 'mockdate';

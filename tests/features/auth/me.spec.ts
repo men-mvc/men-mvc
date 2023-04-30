@@ -1,4 +1,4 @@
-import { StatusCodes } from '@men-mvc/essentials';
+import { StatusCodes } from '@men-mvc/foundation';
 import { faker } from '@faker-js/faker';
 import { withApplication } from '../../testUtilities';
 import { createTestUser } from '../../factories/userFactory';

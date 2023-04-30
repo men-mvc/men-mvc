@@ -1,4 +1,4 @@
-import { validatePassword, hashPassword } from '@men-mvc/essentials';
+import { validatePassword, hashPassword } from '@men-mvc/foundation';
 import { DocumentType } from '@typegoose/typegoose';
 import jwt from 'jsonwebtoken';
 import moment from 'moment';

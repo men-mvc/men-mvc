@@ -1,5 +1,5 @@
 import sinon, { SinonStub } from 'sinon';
-import { StatusCodes, validatePassword } from '@men-mvc/essentials';
+import { StatusCodes, validatePassword } from '@men-mvc/foundation';
 import moment from 'moment';
 import { DocumentType } from '@typegoose/typegoose';
 import { faker } from '@faker-js/faker';

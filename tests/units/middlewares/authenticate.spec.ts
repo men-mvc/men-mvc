@@ -1,8 +1,8 @@
-import { Response, NextFunction } from '@men-mvc/essentials/lib/express';
-import { ErrorResponse, StatusCodes } from '@men-mvc/essentials';
+import { Response, NextFunction } from '@men-mvc/foundation/lib/express';
+import { ErrorResponse, StatusCodes } from '@men-mvc/foundation';
 import sinon, { SinonSpy } from 'sinon';
 import { faker } from '@faker-js/faker';
-import { authenticate } from '../../../src/middlewares/authenticate';
+import { authenticate } from '../../../src/middlewares';
 import { createTestUser } from '../../factories/userFactory';
 import { generateAuthToken } from '../../../src/services/authService';
 import {

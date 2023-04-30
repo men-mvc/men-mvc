@@ -2,7 +2,7 @@ import {
   Request,
   Response,
   NextFunction
-} from '@men-mvc/essentials/lib/express';
+} from '@men-mvc/foundation/lib/express';
 import { requestErrorHandler } from '../errors/requestErrorHandler';
 
 export const requestErrorCatcher = (

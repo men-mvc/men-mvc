@@ -1,14 +1,14 @@
-import { Response, NextFunction } from '@men-mvc/essentials/lib/express';
+import { Response, NextFunction } from '@men-mvc/foundation/lib/express';
 import {
   UploadMaxFileSizeError,
   ErrorResponse,
   ErrorCodes,
   StatusCodes
-} from '@men-mvc/essentials';
+} from '@men-mvc/foundation';
 import { logger } from '@men-mvc/logger';
 import sinon, { SinonSpy, SinonStub } from 'sinon';
 import { mockErrorNextFunction, mockExpressRequest } from '../../testUtilities';
-import { requestErrorCatcher } from '../../../src/middlewares/requestErrorCatcher';
+import { requestErrorCatcher } from '../../../src/middlewares';
 import { FakeExpressResponse } from '../../types';
 
 const response = new FakeExpressResponse() as Response;

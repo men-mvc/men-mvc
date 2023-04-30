@@ -2,12 +2,12 @@ import {
   Request,
   Response,
   NextFunction
-} from '@men-mvc/essentials/lib/express';
+} from '@men-mvc/foundation/lib/express';
 import {
   unauthorisedErrorResponse,
   asyncRequestHandler,
   extractBearerToken
-} from '@men-mvc/essentials';
+} from '@men-mvc/foundation';
 import { verifyAuthToken } from '../services/authService';
 import { findUserById } from '../services/userService';
 

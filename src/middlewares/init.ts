@@ -1,9 +1,9 @@
-import { BaseApplication, requestHandler } from '@men-mvc/essentials';
+import { BaseApplication, requestHandler } from '@men-mvc/foundation';
 import {
   NextFunction,
   Request,
   Response
-} from '@men-mvc/essentials/lib/express';
+} from '@men-mvc/foundation/lib/express';
 
 const handler = (req: Request, res: Response, next: NextFunction) => {
   BaseApplication.getInstance().setCurrentRequest(req);
