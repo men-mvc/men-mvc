@@ -13,7 +13,6 @@ import { registerRoutes } from './routes';
 import { init, apiThrottle, requestErrorCatcher } from './middlewares';
 import { database } from './database';
 import { Controllers } from './controllers';
-import { applicationErrorHandler } from './errors/applicationErrorHandler';
 // import {registerFilesystem} from "@men-mvc/filesystem";
 
 export class Application extends BaseApplication {
