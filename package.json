@@ -6,8 +6,9 @@
   "main": "src/start.ts",
   "scripts": {
     "clean": "rimraf dist/",
-    "build:copy:non-ts-files": "copyfiles -u 1 envConfigs/*.json dist/envConfigs/ && copyfiles -u 1 src/views/*.handlebars src/views/**/* src/views/**/**/* dist/",
-    "build": "npm run clean && mkdir dist && npx tsc && npm run build:copy:non-ts-files",
+    "build:copy:env-config-files": "copyfiles -u 1 envConfigs/*.json dist/envConfigs/",
+    "build:copy:view-files": "copyfiles -u 1 src/views/*.handlebars src/views/**/* src/views/**/**/* dist/",
+    "build": "npm run clean && mkdir dist && npx tsc && npm run build:copy:env-config-files && npm run build:copy:view-files",
     "start": "node dist/start.js",
     "dev": "ts-node-dev src/start.ts",
     "lint": "eslint . --ext .ts",
