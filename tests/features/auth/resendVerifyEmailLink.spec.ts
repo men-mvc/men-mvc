@@ -8,7 +8,7 @@ import { createTestUser } from '../../factories/userFactory';
 import { makeResendVerifyEmailLinkRequest } from '../requests';
 import { VerificationTokenModel } from '../../../src/models/verificationToken';
 import { VerificationTokenType } from '../../../src/types';
-import { assertResponseHasValidationError } from '../../assertions';
+import { assertHasValidationError } from '../../assertions';
 
 describe(`Auth Route - Resent Verify Email Link`, () => {
   withApplication();
@@ -61,7 +61,7 @@ describe(`Auth Route - Resent Verify Email Link`, () => {
       const { body, status } = await makeResendVerifyEmailLinkRequest(``);
 
       expect(status).toBe(StatusCodes.UNPROCESSABLE_ENTITY);
-      assertResponseHasValidationError(body, 'email', 'Email is required.');
+      assertHasValidationError(body, 'email', 'Email is required.');
     });
   });
 });

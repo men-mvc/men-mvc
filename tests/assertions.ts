@@ -3,7 +3,7 @@ import { ValidationErrorResponse } from '@men-mvc/foundation';
 import moment from 'moment';
 import { User } from '../src/models/user';
 
-export const assertResponseHasValidationError = (
+export const assertHasValidationError = (
   response: ValidationErrorResponse,
   field: string,
   expectedError: string
