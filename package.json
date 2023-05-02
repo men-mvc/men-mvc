@@ -6,7 +6,7 @@
   "main": "src/start.ts",
   "scripts": {
     "clean": "rimraf dist/",
-    "build:copy:non-ts-files": "copyfiles -u 1 envConfigs/*.json dist/envConfigs/ && copyfiles -u 1 src/**/*.html src/**/*.handlebars src/**/*. src/**/*.css dist/",
+    "build:copy:non-ts-files": "copyfiles -u 1 envConfigs/*.json dist/envConfigs/ && copyfiles -u 1 src/views/**/* dist/views/",
     "build": "npm run clean && mkdir dist && npx tsc && npm run build:copy:non-ts-files",
     "start": "node dist/start.js",
     "dev": "ts-node-dev src/start.ts",
