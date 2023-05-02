@@ -25,7 +25,7 @@ import {
   makeResetPasswordRequest
 } from '../requests';
 import { USER_PASSWORD } from '../../globals';
-import { assertResponseHasValidationError } from '../../assertions';
+import { assertHasValidationError } from '../../assertions';
 import { VerificationTokenType } from '../../../src/types';
 import { ResetPasswordPayload } from '../../../src/requests/types';
 
@@ -85,7 +85,7 @@ describe(`Auth Route - Reset Password`, () => {
       const { body, status } = await makeRequestPasswordResetRequest(``);
 
       expect(status).toBe(StatusCodes.UNPROCESSABLE_ENTITY);
-      assertResponseHasValidationError(body, 'email', 'Email is required.');
+      assertHasValidationError(body, 'email', 'Email is required.');
     });
 
     it(`should fail validation when user with email does not exist`, async () => {
@@ -260,7 +260,7 @@ describe(`Auth Route - Reset Password`, () => {
         });
 
         expect(status).toBe(StatusCodes.UNPROCESSABLE_ENTITY);
-        assertResponseHasValidationError(
+        assertHasValidationError(
           body,
           fieldData.field,
           fieldData.expectedError
@@ -277,7 +277,7 @@ describe(`Auth Route - Reset Password`, () => {
       );
 
       expect(status).toBe(StatusCodes.UNPROCESSABLE_ENTITY);
-      assertResponseHasValidationError(
+      assertHasValidationError(
         body,
         `passwordConfirmation`,
         `Please confirm your password.`
@@ -293,7 +293,7 @@ describe(`Auth Route - Reset Password`, () => {
       );
 
       expect(status).toBe(StatusCodes.UNPROCESSABLE_ENTITY);
-      assertResponseHasValidationError(
+      assertHasValidationError(
         body,
         `passwordConfirmation`,
         `Passwords do not match.`

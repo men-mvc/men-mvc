@@ -14,10 +14,7 @@ import { VerificationTokenModel } from '../../../src/models/verificationToken';
 import { createTestUser } from '../../factories/userFactory';
 import { makeLoginRequest, makeRegisterRequest } from '../requests';
 import { USER_PASSWORD } from '../../globals';
-import {
-  assertResponseHasValidationError,
-  assertUserResponse
-} from '../../assertions';
+import { assertHasValidationError, assertUserResponse } from '../../assertions';
 import { RegisterPayload } from '../../../src/requests/types';
 
 describe(`Auth Route - Register`, () => {
@@ -156,7 +153,7 @@ describe(`Auth Route - Register`, () => {
         });
 
         expect(status).toBe(StatusCodes.UNPROCESSABLE_ENTITY);
-        assertResponseHasValidationError(
+        assertHasValidationError(
           body,
           fieldData.field,
           fieldData.expectedError
@@ -173,11 +170,7 @@ describe(`Auth Route - Register`, () => {
       );
 
       expect(status).toBe(StatusCodes.UNPROCESSABLE_ENTITY);
-      assertResponseHasValidationError(
-        body,
-        `email`,
-        `Email has already been taken.`
-      );
+      assertHasValidationError(body, `email`, `Email has already been taken.`);
     });
 
     const getPayload = (

@@ -13,7 +13,7 @@ import {
 import { findUserById } from '../../../src/services/userService';
 import { createTestUser } from '../../factories/userFactory';
 import { InputValidationTestData } from '../../types';
-import { assertResponseHasValidationError } from '../../assertions';
+import { assertHasValidationError } from '../../assertions';
 import { VerificationTokenType } from '../../../src/types';
 
 describe(`Auth Route - Verify Email`, () => {
@@ -158,7 +158,7 @@ describe(`Auth Route - Verify Email`, () => {
         });
 
         expect(status).toBe(StatusCodes.UNPROCESSABLE_ENTITY);
-        assertResponseHasValidationError(
+        assertHasValidationError(
           body,
           fieldData.field,
           fieldData.expectedError

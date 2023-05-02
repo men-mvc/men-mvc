@@ -6,10 +6,7 @@ import { createTestUser } from '../../factories/userFactory';
 import { verifyAuthToken } from '../../../src/services/authService';
 import { makeLoginRequest } from '../requests';
 import { USER_PASSWORD } from '../../globals';
-import {
-  assertResponseHasValidationError,
-  assertUserResponse
-} from '../../assertions';
+import { assertHasValidationError, assertUserResponse } from '../../assertions';
 
 describe(`Auth Route - Login`, () => {
   withApplication();
@@ -61,7 +58,7 @@ describe(`Auth Route - Login`, () => {
         });
 
         expect(status).toBe(StatusCodes.UNPROCESSABLE_ENTITY);
-        assertResponseHasValidationError(
+        assertHasValidationError(
           body,
           fieldData.field,
           fieldData.expectedError
