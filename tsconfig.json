@@ -11,9 +11,9 @@
     "typeRoots": ["./node_modules/@types", "./typings"],
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "rootDir": "./src"
+    "rootDir": "./"
   },
-  "include": ["src"],
+  "include": ["./src"],
   "files": [
     "typings/express/index.d.ts",
     "node_modules/jest-expect-message/types/index.d.ts"
