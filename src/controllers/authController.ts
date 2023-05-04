@@ -25,8 +25,6 @@ import { VerificationTokenType } from '../types';
 
 @Service()
 export class AuthController {
-  static token = 'auth-controller';
-
   constructor(
     private readonly authService: AuthService,
     private readonly userService: UserService,
