@@ -1,15 +1,17 @@
 import { faker } from '@faker-js/faker';
 import { StatusCodes } from '@men-mvc/foundation';
+import { Container } from 'typedi';
 import { withApplication } from '../../testUtilities';
 import { InputValidationTestData } from '../../types';
 import { createTestUser } from '../../factories/userFactory';
-import { verifyAuthToken } from '../../../src/services/authService';
+import { AuthService } from '../../../src/services/authService';
 import { makeLoginRequest } from '../requests';
 import { USER_PASSWORD } from '../../globals';
 import { assertHasValidationError, assertUserResponse } from '../../assertions';
 
 describe(`Auth Route - Login`, () => {
   withApplication();
+  const authService = Container.get(AuthService);
 
   describe(`POST /api/auth/login`, () => {
     it(`should generate and return access token when login credentials are correct`, async () => {
@@ -20,7 +22,9 @@ describe(`Auth Route - Login`, () => {
       });
 
       expect(status).toBe(StatusCodes.OK);
-      expect(await verifyAuthToken(body.data.accessToken)).not.toBeNull();
+      expect(
+        await authService.verifyAuthToken(body.data.accessToken)
+      ).not.toBeNull();
     });
 
     it(`should return user when the login credentials are correct`, async () => {

@@ -3,6 +3,7 @@ import { StatusCodes, validatePassword } from '@men-mvc/foundation';
 import moment from 'moment';
 import { DocumentType } from '@typegoose/typegoose';
 import { faker } from '@faker-js/faker';
+import { Container } from 'typedi';
 import { config } from '../../../src/config';
 import {
   getPasswordValidationTestData,
@@ -11,14 +12,12 @@ import {
 } from '../../testUtilities';
 import { InputValidationTestData } from '../../types';
 import { createTestUser } from '../../factories/userFactory';
-import * as mailService from '../../../src/services/mailService';
 import {
   VerificationToken,
   VerificationTokenModel
 } from '../../../src/models/verificationToken';
 import { createTestVerificationToken } from '../../factories/verificationTokenFactory';
 import { User } from '../../../src/models/user';
-import { findUserById } from '../../../src/services/userService';
 import {
   makeLoginRequest,
   makeRequestPasswordResetRequest,
@@ -28,10 +27,14 @@ import { USER_PASSWORD } from '../../globals';
 import { assertHasValidationError } from '../../assertions';
 import { VerificationTokenType } from '../../../src/types';
 import { ResetPasswordPayload } from '../../../src/requests/types';
+import { MailService } from '../../../src/services/mailService';
+import { UserService } from '../../../src/services/userService';
 
 describe(`Auth Route - Reset Password`, () => {
   withApplication();
   withMockDate();
+  const mailService = Container.get(MailService);
+  const userService = Container.get(UserService);
 
   let sendPasswordResetMailStub: SinonStub;
   beforeEach(async () => {
@@ -115,7 +118,7 @@ describe(`Auth Route - Reset Password`, () => {
       );
 
       expect(status).toBe(StatusCodes.NO_CONTENT);
-      user = (await findUserById(user.id)) as DocumentType<User>;
+      user = (await userService.findUserById(user.id)) as DocumentType<User>;
       expect(
         await validatePassword(`NewPassword.1234`, user.password as string)
       ).toBeTruthy();

@@ -1,14 +1,15 @@
 import { SinonStub, stub, assert } from 'sinon';
 import { faker } from '@faker-js/faker';
 import { StatusCodes, validatePassword } from '@men-mvc/foundation';
+import { Container } from 'typedi';
 import { config } from '../../../src/config';
 import {
   getPasswordValidationTestData,
   withApplication
 } from '../../testUtilities';
-import * as mailService from '../../../src/services/mailService';
-import { findUserByEmail } from '../../../src/services/userService';
-import { verifyAuthToken } from '../../../src/services/authService';
+import { MailService } from '../../../src/services/mailService';
+import { UserService } from '../../../src/services/userService';
+import { AuthService } from '../../../src/services/authService';
 import { InputValidationTestData } from '../../types';
 import { VerificationTokenModel } from '../../../src/models/verificationToken';
 import { createTestUser } from '../../factories/userFactory';
@@ -19,6 +20,9 @@ import { RegisterPayload } from '../../../src/requests/types';
 
 describe(`Auth Route - Register`, () => {
   withApplication();
+  const mailService = Container.get(MailService);
+  const userService = Container.get(UserService);
+  const authService = Container.get(AuthService);
 
   describe(`POST /api/auth/register`, () => {
     let sendWelcomeMailStub: SinonStub;
@@ -36,7 +40,7 @@ describe(`Auth Route - Register`, () => {
       const payload = getPayload();
       const { body, status } = await makeRegisterRequest(payload);
 
-      const user = await findUserByEmail(body.data.email);
+      const user = await userService.findUserByEmail(body.data.email);
       expect(status).toBe(StatusCodes.CREATED);
       expect(user).not.toBeNull();
       if (!user) {
@@ -57,7 +61,7 @@ describe(`Auth Route - Register`, () => {
       const payload = getPayload();
       const { body, status } = await makeRegisterRequest(payload);
 
-      const user = await findUserByEmail(body.data.email);
+      const user = await userService.findUserByEmail(body.data.email);
       expect(status).toBe(StatusCodes.CREATED);
       expect(user).not.toBeNull();
       if (!user) {
@@ -77,7 +81,9 @@ describe(`Auth Route - Register`, () => {
         password: registerPayload.password
       });
       expect(loginStatus).toBe(StatusCodes.OK);
-      expect(await verifyAuthToken(loginBody.data.accessToken)).toBeTruthy();
+      expect(
+        await authService.verifyAuthToken(loginBody.data.accessToken)
+      ).toBeTruthy();
     });
 
     it(`should send welcome email when the user is registered`, async () => {
@@ -85,7 +91,7 @@ describe(`Auth Route - Register`, () => {
       const { status } = await makeRegisterRequest(payload);
 
       expect(status).toBe(StatusCodes.CREATED);
-      const user = await findUserByEmail(payload.email as string);
+      const user = await userService.findUserByEmail(payload.email as string);
       if (!user) {
         throw new Error(`User does not exist.`);
       }
@@ -100,7 +106,7 @@ describe(`Auth Route - Register`, () => {
       const { status } = await makeRegisterRequest(payload);
 
       expect(status).toBe(StatusCodes.CREATED);
-      const user = await findUserByEmail(payload.email as string);
+      const user = await userService.findUserByEmail(payload.email as string);
       if (!user) {
         throw new Error(`User does not exist.`);
       }

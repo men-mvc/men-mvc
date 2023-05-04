@@ -7,26 +7,15 @@ import {
   ValidateRequestAsync
 } from '@men-mvc/foundation';
 import { Request, Response } from '@men-mvc/foundation/lib/express';
+import { Container, Service } from 'typedi';
 import { DocumentType } from '@typegoose/typegoose';
-import {
-  changePassword,
-  checkIfVerificationTokenValid,
-  generateEmailVerificationLink,
-  generatePasswordResetLink,
-  loginUser,
-  registerUser,
-  useVerificationToken,
-  verifyEmail as verifyUserEmail
-} from '../services/authService';
-import { findUserByEmail } from '../services/userService';
-import {
-  sendPasswordResetMail,
-  sendVerifyEmailMail
-} from '../services/mailService';
+import { AuthService } from '../services/authService';
+import { UserService } from '../services/userService';
+import { MailService } from '../services/mailService';
 import { User } from '../models/user';
 import {
   loginSchema,
-  registerSchema,
+  RegisterValidator,
   requestPasswordResetSchema,
   resendVerifyEmailLinkSchema,
   resetPasswordSchema,
@@ -34,23 +23,33 @@ import {
 } from '../requests/validation/authSchema';
 import { VerificationTokenType } from '../types';
 
+@Service()
 export class AuthController {
   static token = 'auth-controller';
 
-  @ValidateRequestAsync(registerSchema)
+  constructor(
+    private readonly authService: AuthService,
+    private readonly userService: UserService,
+    private readonly mailService: MailService
+  ) {}
+
+  @ValidateRequestAsync(Container.get(RegisterValidator))
   public async register(req: Request, res: Response) {
-    const user = await registerUser(req.body);
+    const user = await this.authService.registerUser(req.body);
 
     return successResponse(res, user.toJSON(), StatusCodes.CREATED);
   }
 
   @ValidateRequest(loginSchema)
   public async login(req: Request, res: Response) {
-    const user = await findUserByEmail(req.body.email);
+    const user = await this.userService.findUserByEmail(req.body.email);
     if (!user) {
       return this.loginInvalidCredentialsResponse(res);
     }
-    const accessToken = await loginUser(user, req.body.password);
+    const accessToken = await this.authService.loginUser(
+      user,
+      req.body.password
+    );
     if (!accessToken) {
       return this.loginInvalidCredentialsResponse(res);
     }
@@ -60,12 +59,13 @@ export class AuthController {
 
   @ValidateRequest(resendVerifyEmailLinkSchema)
   public async resendVerifyEmailLink(req: Request, res: Response) {
-    const user = await findUserByEmail(req.body.email);
+    const user = await this.userService.findUserByEmail(req.body.email);
     if (!user) {
       return this.accountDoesNotExistResponse(res);
     }
-    const verificationLink = await generateEmailVerificationLink(user);
-    await sendVerifyEmailMail(
+    const verificationLink =
+      await this.authService.generateEmailVerificationLink(user);
+    await this.mailService.sendVerifyEmailMail(
       {
         email: user.email,
         name: user.name
@@ -78,12 +78,12 @@ export class AuthController {
 
   @ValidateRequest(verifyEmailSchema)
   public async verifyEmail(req: Request, res: Response) {
-    const user = await findUserByEmail(req.body.email);
+    const user = await this.userService.findUserByEmail(req.body.email);
     if (!user) {
       return this.accountDoesNotExistResponse(res);
     }
     if (
-      !(await checkIfVerificationTokenValid(
+      !(await this.authService.checkIfVerificationTokenValid(
         req.body.token,
         VerificationTokenType.VERIFY_EMAIL,
         user
@@ -91,19 +91,21 @@ export class AuthController {
     ) {
       return emptyResponse(res, StatusCodes.BAD_REQUEST);
     }
-    await verifyUserEmail(user, req.body.token);
+    await this.authService.verifyEmail(user, req.body.token);
 
     return emptyResponse(res);
   }
 
   @ValidateRequest(requestPasswordResetSchema)
   public async requestPasswordReset(req: Request, res: Response) {
-    const user = await findUserByEmail(req.body.email);
+    const user = await this.userService.findUserByEmail(req.body.email);
     if (!user) {
       return this.accountDoesNotExistResponse(res);
     }
-    const passwordResetLink = await generatePasswordResetLink(user);
-    await sendPasswordResetMail(
+    const passwordResetLink = await this.authService.generatePasswordResetLink(
+      user
+    );
+    await this.mailService.sendPasswordResetMail(
       {
         name: user.name,
         email: user.email
@@ -116,12 +118,12 @@ export class AuthController {
 
   @ValidateRequest(resetPasswordSchema)
   public async resetPassword(req: Request, res: Response) {
-    const user = await findUserByEmail(req.body.email);
+    const user = await this.userService.findUserByEmail(req.body.email);
     if (!user) {
       return this.accountDoesNotExistResponse(res);
     }
     if (
-      !(await checkIfVerificationTokenValid(
+      !(await this.authService.checkIfVerificationTokenValid(
         req.body.token,
         VerificationTokenType.PASSWORD_RESET,
         user
@@ -129,8 +131,8 @@ export class AuthController {
     ) {
       return emptyResponse(res, StatusCodes.BAD_REQUEST);
     }
-    await changePassword(user, req.body.newPassword);
-    await useVerificationToken(req.body.token);
+    await this.authService.changePassword(user, req.body.newPassword);
+    await this.authService.useVerificationToken(req.body.token);
 
     return emptyResponse(res);
   }

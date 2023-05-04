@@ -2,9 +2,10 @@ import { Response, NextFunction } from '@men-mvc/foundation/lib/express';
 import { ErrorResponse, StatusCodes } from '@men-mvc/foundation';
 import sinon, { SinonSpy } from 'sinon';
 import { faker } from '@faker-js/faker';
+import { Container } from 'typedi';
 import { authenticate } from '../../../src/middlewares';
 import { createTestUser } from '../../factories/userFactory';
-import { generateAuthToken } from '../../../src/services/authService';
+import { AuthService } from '../../../src/services/authService';
 import {
   mockErrorNextFunction,
   mockExpressRequest,
@@ -16,6 +17,7 @@ import { FakeExpressResponse } from '../../types';
 const response = new FakeExpressResponse() as Response;
 describe(`Authenticate Middleware`, () => {
   withApplication();
+  const authService = Container.get(AuthService);
   let statusSpy: SinonSpy;
   let jsonSpy: SinonSpy;
   beforeEach(() => {
@@ -48,7 +50,7 @@ describe(`Authenticate Middleware`, () => {
 
   it(`should return unauthorised error when Bearer prefix is missing from the Authorization header`, async () => {
     const user = await createTestUser();
-    const accessToken = generateAuthToken(user);
+    const accessToken = authService.generateAuthToken(user);
     const request = mockExpressRequest({
       headerValues: {
         Authorization: accessToken
@@ -89,7 +91,7 @@ describe(`Authenticate Middleware`, () => {
     await UserModel.deleteOne({
       _id: user.id
     });
-    const accessToken = generateAuthToken(user);
+    const accessToken = authService.generateAuthToken(user);
     const request = mockExpressRequest({
       headerValues: {
         Authorization: `Bearer ${accessToken}`
@@ -109,7 +111,7 @@ describe(`Authenticate Middleware`, () => {
 
   it(`should invoke next without error when access token is valid`, async () => {
     const user = await createTestUser();
-    const accessToken = generateAuthToken(user);
+    const accessToken = authService.generateAuthToken(user);
     const request = mockExpressRequest({
       headerValues: {
         Authorization: `Bearer ${accessToken}`
@@ -131,7 +133,7 @@ describe(`Authenticate Middleware`, () => {
 
   it(`should set request.authUser with the user data when the access token is valid`, async () => {
     const user = await createTestUser();
-    const accessToken = generateAuthToken(user);
+    const accessToken = authService.generateAuthToken(user);
     const request = mockExpressRequest({
       headerValues: {
         Authorization: `Bearer ${accessToken}`

@@ -1,8 +1,9 @@
 import {
+  DocumentType,
   getModelForClass,
   modelOptions,
   prop,
-  DocumentType
+  Severity
 } from '@typegoose/typegoose';
 
 @modelOptions({
@@ -12,6 +13,9 @@ import {
         delete ret.password;
       }
     }
+  },
+  options: {
+    allowMixed: Severity.ALLOW
   }
 })
 export class User {

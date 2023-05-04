@@ -12,12 +12,9 @@ import { config } from './config';
 import { registerRoutes } from './routes';
 import { init, apiThrottle, requestErrorCatcher } from './middlewares';
 import { database } from './database';
-import { Controllers } from './controllers';
 // import {registerFilesystem} from "@men-mvc/filesystem";
 
 export class Application extends BaseApplication {
-  private controllers: Controllers | null = null;
-
   constructor(public app: Express) {
     super(app);
   }
@@ -81,16 +78,5 @@ export class Application extends BaseApplication {
         `⚡️[server]: Server is running on port ${config.server.port}`
       );
     });
-  };
-
-  public getController = <T>(token: string): T => {
-    return this.getControllersInstance().getController<T>(token);
-  };
-
-  private getControllersInstance = (): Controllers => {
-    if (!this.controllers) {
-      this.controllers = new Controllers();
-    }
-    return this.controllers;
   };
 }

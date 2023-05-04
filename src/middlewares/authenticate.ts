@@ -8,25 +8,36 @@ import {
   asyncRequestHandler,
   extractBearerToken
 } from '@men-mvc/foundation';
-import { verifyAuthToken } from '../services/authService';
-import { findUserById } from '../services/userService';
+import { Container, Service } from 'typedi';
+import { AuthService } from '../services/authService';
+import { UserService } from '../services/userService';
 
-const handler = async (req: Request, res: Response, next: NextFunction) => {
-  const accessToken = extractBearerToken(req);
-  if (!accessToken) {
-    return unauthorisedErrorResponse(res);
-  }
-  const payload = await verifyAuthToken(accessToken);
-  if (!payload) {
-    return unauthorisedErrorResponse(res);
-  }
-  const user = await findUserById(payload.id);
-  if (!user) {
-    return unauthorisedErrorResponse(res);
-  }
-  req.authUser = user;
+@Service()
+class Authenticate {
+  constructor(
+    private readonly userService: UserService,
+    private readonly authService: AuthService
+  ) {}
 
-  return next();
-};
+  public async handle(req: Request, res: Response, next: NextFunction) {
+    const accessToken = extractBearerToken(req);
+    if (!accessToken) {
+      return unauthorisedErrorResponse(res);
+    }
+    const payload = await this.authService.verifyAuthToken(accessToken);
+    if (!payload) {
+      return unauthorisedErrorResponse(res);
+    }
+    const user = await this.userService.findUserById(payload.id);
+    if (!user) {
+      return unauthorisedErrorResponse(res);
+    }
+    req.authUser = user;
 
-export const authenticate = asyncRequestHandler(handler);
+    return next();
+  }
+}
+
+export const authenticate = asyncRequestHandler(async (req, res, next) => {
+  await Container.get(Authenticate).handle(req, res, next);
+});

@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "es2016",
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "module": "commonjs",
     "outDir": "./dist",
     "esModuleInterop": true,
@@ -13,7 +14,7 @@
     "resolveJsonModule": true,
     "rootDir": "./"
   },
-  "include": ["./src"],
+  "include": ["src"],
   "files": [
     "typings/express/index.d.ts",
     "node_modules/jest-expect-message/types/index.d.ts"
