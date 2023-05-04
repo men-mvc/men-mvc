@@ -1,9 +1,10 @@
 import { SinonStub, stub, assert } from 'sinon';
 import { StatusCodes } from '@men-mvc/foundation';
-import { config } from '../../../src/config';
+import { Container } from 'typedi';
 import { faker } from '@faker-js/faker';
+import { config } from '../../../src/config';
 import { withApplication } from '../../testUtilities';
-import * as mailService from '../../../src/services/mailService';
+import { MailService } from '../../../src/services/mailService';
 import { createTestUser } from '../../factories/userFactory';
 import { makeResendVerifyEmailLinkRequest } from '../requests';
 import { VerificationTokenModel } from '../../../src/models/verificationToken';
@@ -12,6 +13,7 @@ import { assertHasValidationError } from '../../assertions';
 
 describe(`Auth Route - Resent Verify Email Link`, () => {
   withApplication();
+  const mailService = Container.get(MailService);
 
   describe(`POST /api/auth/email-verification-link/resend`, () => {
     let sendVerifyEmailMailStub: SinonStub;

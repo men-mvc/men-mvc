@@ -10,15 +10,17 @@ import {
   VerificationToken,
   VerificationTokenModel
 } from '../../../src/models/verificationToken';
-import { findUserById } from '../../../src/services/userService';
+import { UserService } from '../../../src/services/userService';
 import { createTestUser } from '../../factories/userFactory';
 import { InputValidationTestData } from '../../types';
 import { assertHasValidationError } from '../../assertions';
 import { VerificationTokenType } from '../../../src/types';
+import { Container } from 'typedi';
 
 describe(`Auth Route - Verify Email`, () => {
   withApplication();
   withMockDate();
+  const userService = Container.get(UserService);
 
   describe(`PUT /api/auth/verify-email`, () => {
     it(`should mark verification token as used when the email is verified`, async () => {
@@ -53,7 +55,7 @@ describe(`Auth Route - Verify Email`, () => {
       });
 
       expect(status).toBe(StatusCodes.NO_CONTENT);
-      user = (await findUserById(user.id)) as DocumentType<User>;
+      user = (await userService.findUserById(user.id)) as DocumentType<User>;
       expect(moment(user.emailVerifiedAt).milliseconds()).toBe(
         moment().milliseconds()
       );

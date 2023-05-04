@@ -1,5 +1,6 @@
 import { Request, Response, Router } from '@men-mvc/foundation/lib/express';
 import { asyncRequestHandler, requestHandler } from '@men-mvc/foundation';
+import { Container } from 'typedi';
 import { Application } from '../application';
 import { AuthController } from '../controllers/authController';
 import { authenticate } from '../middlewares';
@@ -11,10 +12,7 @@ export const registerRoutes = (application: Application) => {
   /**
    * controller instances should be inside registerRoutes function
    */
-  const authController =
-    Application.getInstance().getController<AuthController>(
-      AuthController.token
-    );
+  const authController = Container.get(AuthController);
 
   application.app.get('/', (req: Request, res: Response) => {
     res.send(`Hello from ${config.app.name} framework.`);

@@ -5,11 +5,10 @@
   "homepage": "https://menmvc.com",
   "main": "src/start.ts",
   "scripts": {
-    "clean": "rimraf dist/",
     "build:copy:env-config-files": "cp -rf envConfigs dist/envConfigs",
     "build:copy:view-files": "cp -rf src/views dist/",
     "build:extract-src": "cp -rf dist/src/ dist/ && rm -rf dist/src/",
-    "build": "npm run clean && mkdir dist && npx tsc && npm run build:copy:env-config-files && npm run build:copy:view-files && npm run build:extract-src",
+    "build": "rm -rf dist && mkdir dist && npx tsc && npm run build:copy:env-config-files && npm run build:copy:view-files && npm run build:extract-src",
     "start": "node dist/start.js",
     "dev": "ts-node-dev src/start.ts",
     "lint": "eslint . --ext .ts",
@@ -21,9 +20,9 @@
   "author": "Wai Yan Hein",
   "license": "ISC",
   "dependencies": {
-    "@men-mvc/foundation": "^0.122.0",
-    "@men-mvc/logger": "^0.122.0",
-    "@men-mvc/mail": "^0.122.0",
+    "@men-mvc/foundation": "^0.123.0",
+    "@men-mvc/logger": "^0.123.0",
+    "@men-mvc/mail": "^0.123.0",
     "@typegoose/typegoose": "^11.0.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
@@ -33,11 +32,13 @@
     "hpp": "^0.2.3",
     "jsonwebtoken": "^9.0.0",
     "moment": "^2.29.4",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "reflect-metadata": "^0.1.13",
+    "typedi": "^0.10.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
-    "@men-mvc/test": "^0.122.0",
+    "@men-mvc/test": "^0.123.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.13",
     "@types/express-rate-limit": "^6.0.0",

@@ -1,5 +1,7 @@
 import joi from '@men-mvc/foundation/lib/joi';
-import { validateUserEmailUnique } from './rules';
+import { RequestValidator } from '@men-mvc/foundation';
+import { Service } from 'typedi';
+import { UserEmailUnique } from './rules';
 import {
   LoginPayload,
   RegisterPayload,
@@ -36,26 +38,33 @@ export const loginSchema = joi.object<LoginPayload>().keys({
   })
 });
 
-export const registerSchema = joi.object<RegisterPayload>().keys({
-  name: joi.string().required().trim().messages({
-    'string.empty': `Name is required.`,
-    'any.required': `Name is required.`
-  }),
-  email: joi
-    .string()
-    .required()
-    .trim()
-    .email()
-    .external(async (value) => {
-      await validateUserEmailUnique(value, `email`);
-    })
-    .messages({
-      'string.empty': `Email is required.`,
-      'any.required': `Email is required.`,
-      'string.email': `Email format is invalid.`
-    }),
-  password: passwordRule
-});
+@Service()
+export class RegisterValidator implements RequestValidator {
+  constructor(private readonly userEmailUnique: UserEmailUnique) {}
+
+  getSchema(): joi.ObjectSchema {
+    return joi.object<RegisterPayload>().keys({
+      name: joi.string().required().trim().messages({
+        'string.empty': `Name is required.`,
+        'any.required': `Name is required.`
+      }),
+      email: joi
+        .string()
+        .required()
+        .trim()
+        .email()
+        .external(async (value) => {
+          await this.userEmailUnique.validate(value, `email`);
+        })
+        .messages({
+          'string.empty': `Email is required.`,
+          'any.required': `Email is required.`,
+          'string.email': `Email format is invalid.`
+        }),
+      password: passwordRule
+    });
+  }
+}
 
 export const requestPasswordResetSchema = joi
   .object<RequestPasswordResetPayload>()

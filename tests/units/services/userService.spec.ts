@@ -1,23 +1,20 @@
 import { DocumentType } from '@typegoose/typegoose';
 import { faker } from '@faker-js/faker';
 import moment from 'moment';
+import { Container } from 'typedi';
 import { withMockDate, withApplication } from '../../testUtilities';
-import {
-  createUser,
-  CreateUserArgs,
-  findUserByEmail,
-  findUserById
-} from '../../../src/services/userService';
+import { CreateUserArgs, UserService } from '../../../src/services/userService';
 import { User, UserModel } from '../../../src/models/user';
 import { createTestUsers } from '../../factories/userFactory';
 
 describe(`UserService`, () => {
   withApplication();
   withMockDate();
+  const userService = Container.get(UserService);
 
   it(`should create user`, async () => {
     const data = generateUserData();
-    await createUser(data);
+    await userService.createUser(data);
     const user = await UserModel.findOne({
       email: data.email.toLowerCase()
     });
@@ -30,7 +27,7 @@ describe(`UserService`, () => {
 
   it(`should return created user`, async () => {
     const data = generateUserData();
-    const user = await createUser(data);
+    const user = await userService.createUser(data);
 
     expect(user).not.toBeNull();
     assertUserHasData(user, data);
@@ -39,7 +36,7 @@ describe(`UserService`, () => {
   it(`should only return the user has the input email`, async () => {
     const users = await createTestUsers(3);
     const targetUser = users[1];
-    const returnedUser = await findUserByEmail(targetUser.email);
+    const returnedUser = await userService.findUserByEmail(targetUser.email);
     expect(returnedUser).not.toBeNull();
     if (!returnedUser) {
       throw new Error(`User does not exist.`);
@@ -50,14 +47,14 @@ describe(`UserService`, () => {
 
   it(`should return null when there is no user with the input email`, async () => {
     await createTestUsers(2);
-    const user = await findUserByEmail(faker.internet.email());
+    const user = await userService.findUserByEmail(faker.internet.email());
     expect(user).toBeNull();
   });
 
   it(`should only return the user that has the input id`, async () => {
     const users = await createTestUsers(3);
     const targetUser = users[1];
-    const returnedUser = await findUserById(targetUser.id);
+    const returnedUser = await userService.findUserById(targetUser.id);
     expect(returnedUser).not.toBeNull();
     if (!returnedUser) {
       throw new Error(`User does not exist.`);
@@ -68,7 +65,9 @@ describe(`UserService`, () => {
 
   it(`should return null when there is no user with the input id`, async () => {
     await createTestUsers(3);
-    const user = await findUserById(faker.database.mongodbObjectId());
+    const user = await userService.findUserById(
+      faker.database.mongodbObjectId()
+    );
     expect(user).toBeNull();
   });
 

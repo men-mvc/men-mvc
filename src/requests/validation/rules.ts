@@ -1,13 +1,17 @@
 import { failValidationForField } from '@men-mvc/foundation';
-import { findUserByEmail } from '../../services/userService';
+import { Service } from 'typedi';
+import { UserService } from '../../services/userService';
 
-export const validateUserEmailUnique = async (
-  value: string,
-  field: string,
-  message?: string
-) => {
-  const user = await findUserByEmail(value);
-  if (user) {
-    failValidationForField(`email`, message ?? `Email has already been taken.`);
+@Service()
+export class UserEmailUnique {
+  constructor(private readonly userService: UserService) {}
+
+  async validate(value: string, field: string, message?: string) {
+    if (await this.userService.findUserByEmail(value)) {
+      failValidationForField(
+        `email`,
+        message ?? `Email has already been taken.`
+      );
+    }
   }
-};
+}

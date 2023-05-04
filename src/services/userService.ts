@@ -1,4 +1,5 @@
 import { DocumentType } from '@typegoose/typegoose';
+import { Service } from 'typedi';
 import { User, UserModel } from '../models/user';
 
 /**
@@ -12,24 +13,27 @@ export type CreateUserArgs = {
   isActive: boolean;
 };
 
-const formatEmail = (email: string): string => email.toLowerCase().trim();
+@Service()
+export class UserService {
+  private formatEmail(email: string): string {
+    return email.toLowerCase().trim();
+  }
 
-export const createUser = async (
-  data: CreateUserArgs
-): Promise<DocumentType<User>> =>
-  UserModel.create({
-    ...data,
-    email: formatEmail(data.email),
-    createdAt: Date.now()
-  });
+  public createUser(data: CreateUserArgs): Promise<DocumentType<User>> {
+    return UserModel.create({
+      ...data,
+      email: this.formatEmail(data.email),
+      createdAt: Date.now()
+    });
+  }
 
-export const findUserByEmail = async (
-  email: string
-): Promise<DocumentType<User> | null> =>
-  UserModel.findOne({
-    email: email.toLowerCase().trim()
-  });
+  public findUserByEmail(email: string): Promise<DocumentType<User> | null> {
+    return UserModel.findOne({
+      email: this.formatEmail(email)
+    });
+  }
 
-export const findUserById = async (
-  id: string
-): Promise<DocumentType<User> | null> => UserModel.findById(id);
+  public findUserById(id: string): Promise<DocumentType<User> | null> {
+    return UserModel.findById(id);
+  }
+}
