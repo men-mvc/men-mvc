@@ -93,11 +93,18 @@
       "type": "boolean"
     },
     "sentry": {
-      "dsn": "LOG_SENTRY_DSN",
+      "dsn": "SENTRY_DSN",
       "tracesSampleRate": {
-        "name": "LOG_SENTRY_TRACES_SAMPLE_RATE",
+        "name": "SENTRY_TRACES_SAMPLE_RATE",
         "type": "number"
       }
+    },
+    "cloudwatch": {
+      "logGroupName": "CLOUDWATCH_LOG_GROUP_NAME",
+      "region": "CLOUDWATCH_REGION",
+      "accessKeyId": "CLOUDWATCH_ACCESS_KEY_ID",
+      "secretAccessKey": "CLOUDWATCH_SECRET_ACCESS_KEY",
+      "logStreamPrefix": "CLOUDWATCH_LOG_STREAM_PREFIX"
     }
   }
 }
