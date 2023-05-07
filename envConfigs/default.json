@@ -65,6 +65,13 @@
     "sentry": {
       "dsn": "",
       "tracesSampleRate": 1.0
+    },
+    "cloudwatch": {
+      "logGroupName": "",
+      "region": "",
+      "accessKeyId": "",
+      "secretAccessKey": "",
+      "logStreamPrefix": ""
     }
   }
 }

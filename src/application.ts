@@ -29,8 +29,8 @@ export class Application extends BaseApplication {
     registerRoutes(this);
   };
 
-  public initialisePreMiddlewares = () => {
-    logger.init();
+  public initialisePreMiddlewares = async () => {
+    await logger.init();
     this.app.use(init);
     if (getAppEnv() !== 'test') {
       this.app.use(apiThrottle);

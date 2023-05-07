@@ -20,9 +20,9 @@
   "author": "Wai Yan Hein",
   "license": "ISC",
   "dependencies": {
-    "@men-mvc/foundation": "^0.123.0",
-    "@men-mvc/logger": "^0.123.0",
-    "@men-mvc/mail": "^0.123.0",
+    "@men-mvc/foundation": "^0.124.0",
+    "@men-mvc/logger": "^0.124.0",
+    "@men-mvc/mail": "^0.124.0",
     "@typegoose/typegoose": "^11.0.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
-    "@men-mvc/test": "^0.123.0",
+    "@men-mvc/test": "^0.124.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.13",
     "@types/express-rate-limit": "^6.0.0",
