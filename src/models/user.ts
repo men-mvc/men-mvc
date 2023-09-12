@@ -1,5 +1,4 @@
 import {
-  DocumentType,
   getModelForClass,
   modelOptions,
   prop,
@@ -9,7 +8,7 @@ import {
 @modelOptions({
   schemaOptions: {
     toJSON: {
-      transform: (doc: DocumentType<User>, ret) => {
+      transform: (doc: unknown, ret) => {
         delete ret.password;
       }
     }
