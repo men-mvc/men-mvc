@@ -4,5 +4,5 @@ MEN MVC application.
 
 ## Documentation
 
-- http://menmvc.com/
+- [https://men-mvc-doc-1013bee7025c.herokuapp.com/](https://men-mvc-doc-1013bee7025c.herokuapp.com/)
 
